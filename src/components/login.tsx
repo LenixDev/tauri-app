@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -10,9 +9,23 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
+import { supabase } from "@/lib/supabase"
+import { useState } from "react"
+import { toast } from "sonner"
 
 export const LoginForm = () => {
+  const [identification, setIdentification] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSubmit = async (event: React.SyntheticEvent) => {
+    event.preventDefault()
+    const { error } = await supabase.auth.signInWithPassword({
+      email: `${identification}@institute.fake`,
+      password
+    })
+    if (error) toast.error(error.message)
+    toast.success(`Log in successful with #${identification}`)
+  }
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -23,12 +36,13 @@ export const LoginForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form id="login-form" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="id">Identification Number</Label>
               <Input
-                id="id"
+                value={identification} onChange={e => setIdentification(e.target.value)}
+                name="id"
                 type="number"
                 placeholder="6901120"
                 required
@@ -39,19 +53,20 @@ export const LoginForm = () => {
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
                 <a
+                  /* implement the logic */
                   href="#"
                   className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                 >
                   Forgot your password?
                 </a>
               </div>
-              <Input id="password" type="password" required />
+              <Input value={password} onChange={e => setPassword(e.target.value)} name="password" type="password" required />
             </div>
           </div>
         </form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
+        <Button form="login-form" type="submit" className="w-full">
           Login
         </Button>
       </CardFooter>
