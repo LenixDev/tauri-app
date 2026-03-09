@@ -13,7 +13,7 @@ function App() {
   }
 
   return (
-    <main>
+    <main className="min-h-screen flex justify-center items-center">
       <LoginForm/>
       {/* <form
         className="row"
