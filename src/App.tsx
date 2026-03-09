@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
+import { LoginForm } from "./components/login";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -13,7 +14,8 @@ function App() {
 
   return (
     <main>
-      <form
+      <LoginForm/>
+      {/* <form
         className="row"
         onSubmit={(e) => {
           e.preventDefault();
@@ -27,7 +29,7 @@ function App() {
         />
         <button type="submit">Greet</button>
       </form>
-      <p>{greetMsg}</p>
+      <p>{greetMsg}</p> */}
     </main>
   );
 }
