@@ -12,7 +12,7 @@ DialogTrigger,
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { User } from "@/lib/user"
+import { useAuth } from "@/hooks/auth"
 import React, { useState } from "react"
 import { toast } from "sonner"
 
@@ -24,9 +24,14 @@ export const Users = () => {
     password: "",
     confirmPassword: "",
   })
+
+  const { user } = useAuth()
+  if (!user) throw new Error("User `null` or `undefined`")
+  
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
-    const [success, result] = await User.createUser(id, password, confirmPassword)
+
+    const [success, result] = await user.createUser(id, password, confirmPassword)
     if (!success) {
       toast.error(result)
       return

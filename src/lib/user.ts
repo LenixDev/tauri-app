@@ -23,7 +23,7 @@ export class User {
     this.role = role
   }
 
-  public static async signIn(identification: number, password: string) {
+  public async signIn(identification: number, password: string) {
     const { error } = await supabase.auth.signInWithPassword({
       email: `${identification}@institute.fake`,
       password
@@ -33,7 +33,7 @@ export class User {
     return [true, `Log in successful with #${identification}`]
   }
 
-  public static async createUser(identification: string, password: string, confirmPassword: string) {
+  public async createUser(identification: string, password: string, confirmPassword: string) {
     if (password !== confirmPassword) return [false, "Passwords do not match"]
     const { error } = await supabase.functions.invoke('create-user', {
       body: { identification, password }
