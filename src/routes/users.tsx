@@ -12,7 +12,7 @@ DialogTrigger,
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { supabase } from "@/lib/supabase"
+import { User } from "@/lib/user"
 import React, { useState } from "react"
 import { toast } from "sonner"
 
@@ -26,18 +26,12 @@ export const Users = () => {
   })
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match')
+    const [success, result] = await User.createUser(id, password, confirmPassword)
+    if (!success) {
+      toast.error(result)
       return
     }
-    const { error } = await supabase.functions.invoke('create-user', {
-      body: { identification: parseInt(id), password }
-    })
-    if (error) {
-      toast.error(error.message)
-      return
-    }
-    toast.success('User created successfully')
+    toast.success(result)
   }
   return ( 
     <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={handleSubmit}>

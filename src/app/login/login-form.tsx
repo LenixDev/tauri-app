@@ -6,10 +6,10 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { supabase } from "@/lib/supabase"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
+import { User } from "@/lib/user"
 
 export const LoginForm = ({
   className,
@@ -20,15 +20,12 @@ export const LoginForm = ({
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
-    const { error } = await supabase.auth.signInWithPassword({
-      email: `${identification}@institute.fake`,
-      password
-    })
-    if (error) {
-      toast.error(error.message)
+    const [success, result] = await User.signIn(parseInt(identification), password)
+    if (success) {
+      toast.error(result)
       return
     }
-    toast.success(`Log in successful with #${identification}`)
+    toast.success(result)
     navigate('/')
   }
   return (

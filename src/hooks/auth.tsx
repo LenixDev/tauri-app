@@ -1,19 +1,37 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import type { Session } from "@supabase/supabase-js"
 import { supabase } from "@/lib/supabase"
+import { User } from "@/lib/user"
+import { AuthState } from "@/lib/types"
 
-const AuthContext = createContext<Session | null | undefined>(undefined)
+const AuthContext = createContext<AuthState>({ session: undefined, user: undefined })
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [session, setSession] = useState<Session | null | undefined>(undefined)
+  const [state, setState] = useState<AuthState>({ session: undefined, user: undefined })
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session))
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, s) => setSession(s))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_, session) => {
+      if (!session) {
+        setState({ session: null, user: null })
+        return
+      }
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('identification, role')
+        .eq('id', session.user.id)
+        .single()
+
+      if (error) {
+        setState({ session, user: null })
+        return
+      }
+
+      setState({ session, user: new User(session.user.id, data.identification, data.role) })
+    })
+
     return () => subscription.unsubscribe()
   }, [])
 
-  return <AuthContext.Provider value={session}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>
 }
 
-export const useSession = () => useContext(AuthContext)
+export const useAuth = () => useContext(AuthContext)
