@@ -29,7 +29,7 @@ export const LoginForm = ({
       return
     }
     toast.success(`Log in successful with #${identification}`)
-    navigate('/dashboard')
+    navigate('/')
   }
   return (
     <form className={cn("flex flex-col gap-6", className)}

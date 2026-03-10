@@ -1,15 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router";
-import { Toaster } from "sonner";
-import { Login } from "./app/login";
-import { Dashboard } from "./app/dashboard";
-import "./App.css";
-import { TooltipProvider } from "./components/ui/tooltip";
-import { Users } from "./app/users";
+import React from "react"
+import ReactDOM from "react-dom/client"
+import { BrowserRouter, Routes, Route } from "react-router"
+import { Toaster } from "sonner"
+import { TooltipProvider } from "./components/ui/tooltip"
+import { Login } from "./app/login"
+import { Dashboard } from "./app/dashboard"
+import { Users } from "./routes/users"
+import "./App.css"
+import { Session } from "./routes/session"
+import { AuthProvider } from "./hooks/auth"
 
-if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
-
+if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+  document.documentElement.classList.add('dark')
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
   document.documentElement.classList.toggle('dark', e.matches)
 })
@@ -17,17 +19,19 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <TooltipProvider>
-        <Toaster />
-        <Routes>
-          {/*TODO:  add an idle logout */}
-          <Route path="/login" element={<Login />} />
-          {/* TODO: redirect to the dashboard instead and check for session tokens */}
-          <Route path="/" element={<Dashboard />}>
-            <Route path="users" element={<Users />} />
-          </Route>
-        </Routes>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route element={<Session />}>
+              <Route path="/" element={<Dashboard />}>
+                <Route path="users" element={<Users />} />
+              </Route>
+            </Route>
+          </Routes>
+        </TooltipProvider>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
-);
+)
