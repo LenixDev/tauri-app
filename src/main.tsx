@@ -6,6 +6,7 @@ import { Login } from "./app/login";
 import { Dashboard } from "./app/dashboard";
 import "./App.css";
 import { TooltipProvider } from "./components/ui/tooltip";
+import { Users } from "./app/users";
 
 if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
 
@@ -19,9 +20,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <TooltipProvider>
         <Toaster />
         <Routes>
-          {/* add an idle logout */}
+          {/*TODO:  add an idle logout */}
           <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* TODO: redirect to the dashboard instead and check for session tokens */}
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="users" element={<Users />} />
         </Routes>
       </TooltipProvider>
     </BrowserRouter>

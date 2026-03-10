@@ -40,7 +40,7 @@ export const LoginForm = ({
           <h1 className="text-2xl font-bold">Login to your account</h1>
           <p className="text-sm text-balance text-muted-foreground">
             Enter your credentials below to login to your account
-            {/* @TODO: add explaination where we can find the id */}
+            {/* TODO: add explaination where we can find the id */}
           </p>
         </div>
         <Field>
@@ -57,10 +57,11 @@ export const LoginForm = ({
           />
         </Field>
         <Field>
+          {/* TODO: ignore the focus on forgot password when pressing tab */}
           <div className="flex items-center">
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <a
-              /* implement the logic */
+              /* TODO: implement the logic */
               href="#"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >

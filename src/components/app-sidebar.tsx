@@ -16,7 +16,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { ComputerTerminalIcon, RoboticIcon, BookOpen02Icon, Settings05Icon, ChartRingIcon, SentIcon, CropIcon, PieChartIcon, MapsIcon, CommandIcon } from "@hugeicons/core-free-icons"
+import { ComputerTerminalIcon, RoboticIcon, BookOpen02Icon, Settings05Icon, ChartRingIcon, SentIcon, CropIcon, PieChartIcon, MapsIcon, CommandIcon, NewTab, Plus, ManagerFreeIcons } from "@hugeicons/core-free-icons"
 
 const data = {
   user: {
@@ -155,6 +155,13 @@ const data = {
       url: "#",
       icon: (
         <HugeiconsIcon icon={MapsIcon} strokeWidth={2} />
+      ),
+    },
+    {
+      name: "Manage Users",
+      url: "#users",
+      icon: (
+        <HugeiconsIcon icon={ManagerFreeIcons} strokeWidth={2} />
       ),
     },
   ],
