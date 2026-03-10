@@ -1,14 +1,18 @@
 import { supabase } from "./supabase"
 
-interface RolePermissions {
+type Role = 'director' | 'student'
+
+type Permission =
+  | 'users:create'
+  | 'users:read'
+  | 'users:delete'
+
+const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   director: ['users:create', 'users:read', 'users:delete'],
   student: [],
-}
+} as const
 
-type Role = keyof RolePermissions
-type Permission = RolePermissions[Role]
-
-export class User implements RolePermissions {
+export class User {
   private readonly id: string
   private readonly identification: number
   private readonly role: Role
@@ -39,6 +43,6 @@ export class User implements RolePermissions {
   }
 
   public can(permission: Permission): boolean {
-    return Permission[this.role].includes(permission)
+    return ROLE_PERMISSIONS[this.role].includes(permission)
   }
 }
