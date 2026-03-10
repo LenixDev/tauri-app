@@ -159,7 +159,7 @@ const data = {
     },
     {
       name: "Manage Users",
-      url: "#users",
+      url: "users",
       icon: (
         <HugeiconsIcon icon={ManagerFreeIcons} strokeWidth={2} />
       ),

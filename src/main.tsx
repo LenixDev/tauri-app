@@ -23,8 +23,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           {/*TODO:  add an idle logout */}
           <Route path="/" element={<Login />} />
           {/* TODO: redirect to the dashboard instead and check for session tokens */}
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="users" element={<Users />} />
+          <Route path="dashboard" element={<Dashboard />}>
+            <Route path="users" element={<Users />} />
+          </Route>
         </Routes>
       </TooltipProvider>
     </BrowserRouter>

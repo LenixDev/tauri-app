@@ -13,6 +13,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { Outlet } from "react-router"
 
 export const Dashboard = () => {
   return (
@@ -41,7 +42,7 @@ export const Dashboard = () => {
             </Breadcrumb>
           </div>
         </header>
-        {/* I want to add the user creation here, using routes */}
+        <Outlet/>
       </SidebarInset>
     </SidebarProvider>
   )

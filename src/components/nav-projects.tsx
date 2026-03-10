@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sidebar"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { MoreHorizontalCircle01Icon, FolderIcon, Share03Icon, Delete02Icon } from "@hugeicons/core-free-icons"
+import { Link } from "react-router"
 
 export function NavProjects({
   projects,
@@ -37,10 +38,10 @@ export function NavProjects({
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <a href={item.url}>
+              <Link to={item.url}>
                 {item.icon}
                 <span>{item.name}</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
