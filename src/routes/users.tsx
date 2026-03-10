@@ -31,7 +31,7 @@ export const Users = () => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
 
-    const [success, result] = await user.createUser(id, password, confirmPassword)
+    const [success, result] = await user.createUser(parseInt(id), password, confirmPassword)
     if (!success) {
       toast.error(result)
       return

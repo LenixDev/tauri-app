@@ -30,10 +30,10 @@ export class User {
     })
     if (error) return [false, error.message]
 
-    return [true, `Log in successful with #${identification}`]
+    return [true, `Sign in successful with #${identification}`]
   }
 
-  public async createUser(identification: string, password: string, confirmPassword: string) {
+  public async createUser(identification: number, password: string, confirmPassword: string) {
     if (password !== confirmPassword) return [false, "Passwords do not match"]
     const { error } = await supabase.functions.invoke('create-user', {
       body: { identification, password }
