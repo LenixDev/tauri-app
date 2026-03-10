@@ -31,7 +31,7 @@ export const Users = () => {
       return
     }
     const { error } = await supabase.functions.invoke('create-user', {
-      body: { identification: id, password }
+      body: { identification: parseInt(id), password }
     })
     if (error) {
       toast.error(error.message)
