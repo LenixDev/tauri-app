@@ -25,13 +25,14 @@ export const Users = () => {
     confirmPassword: "",
   })
   const handleSubmit = async (e: React.SyntheticEvent) => {
-    console.log(true)
     e.preventDefault()
     if (password !== confirmPassword) {
       toast.error('Passwords do not match')
       return
     }
-    const { error } = await supabase.auth.admin.createUser({ id, password })
+    const { error } = await supabase.functions.invoke('create-user', {
+      body: { identification: id, password }
+    })
     if (error) {
       toast.error(error.message)
       return
