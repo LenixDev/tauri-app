@@ -24,7 +24,6 @@ export const Users = () => {
     password: "",
     confirmPassword: "",
   })
-
   const { user } = useAuth()
   if (!user) throw new Error("User `null` or `undefined`")
   
@@ -37,6 +36,7 @@ export const Users = () => {
       return
     }
     toast.success(result)
+    
   }
   return ( 
     <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={handleSubmit}>

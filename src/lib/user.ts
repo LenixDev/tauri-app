@@ -34,6 +34,8 @@ export class User {
   }
 
   public async createUser(identification: number, password: string, confirmPassword: string) {
+    if (!Number.isFinite(identification) || identification < 0) return [false, "Identification is required"]
+    if (password.length < 0) return [false, "Password is required"]
     if (password !== confirmPassword) return [false, "Passwords do not match"]
     const { error } = await supabase.functions.invoke('create-user', {
       body: { identification, password }
