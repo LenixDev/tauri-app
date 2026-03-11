@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <TooltipProvider>
           <Toaster />
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="login" element={<Login />} />
             <Route element={<Session />}>
               <Route path="/" element={<Dashboard />}>
                 <Route path="users" element={<Users />} />
