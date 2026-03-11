@@ -26,13 +26,16 @@ Deno.serve(async (req) => {
   )
 
   const { data: { user } } = await supabaseClient.auth.getUser()
+  if (!user)
+    return new Response('Unauthorized', { status: 401, headers: corsHeaders })
+
   const { data: profile } = await supabaseClient
     .from('profiles')
     .select('role')
     .single()
 
   if (profile?.role !== 'manager')
-    return new Response('Access denied', { status: 403 })
+    return new Response('Forbidden', { status: 403 })
 
   const adminClient = createClient(
     Deno.env.get('SUPABASE_URL')!,
