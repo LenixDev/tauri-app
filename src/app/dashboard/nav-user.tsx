@@ -24,7 +24,7 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { UnfoldMoreIcon, CheckmarkBadgeIcon, NotificationIcon, LogoutIcon } from "@hugeicons/core-free-icons"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
-import { useAuth } from "@/hooks/use-hook"
+import { useAuth, useUser } from "@/hooks/use-hook"
 
 export function NavUser({
   user,
@@ -36,7 +36,7 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-  const { user: authUser } = useAuth()
+  const authUser = useUser()
   const navigate = useNavigate()
   const signOut = async () => {
     const [success, result] = await authUser.signOut()

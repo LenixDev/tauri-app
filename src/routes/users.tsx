@@ -12,7 +12,7 @@ DialogTrigger,
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useAuth } from "@/hooks/use-hook"
+import { useAuth, useUser } from "@/hooks/use-hook"
 import React, { useState } from "react"
 import { toast } from "sonner"
 
@@ -24,7 +24,7 @@ export const Users = () => {
     password: "",
     confirmPassword: "",
   })
-  const { user } = useAuth()
+  const user = useUser()
   
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
