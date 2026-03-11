@@ -1,6 +1,4 @@
-import { useNavigate } from "react-router"
 import { supabase } from "./supabase"
-import { toast } from "sonner"
 import { Response } from "./types"
 
 type Role = 'director' | 'student'
@@ -27,7 +25,7 @@ export class User {
   }
 
   public async createUser(identification: number, password: string, confirmPassword: string): Response {
-    if (!Number.isFinite(identification) || identification < 0) return [false, "Identification is required"]
+    if (!Number.isInteger(identification) || identification < 0) return [false, "Identification is required"]
     if (password.length === 0) return [false, "Password is required"]
     if (password !== confirmPassword) return [false, "Passwords do not match"]
     
@@ -47,7 +45,7 @@ export class User {
     return this.identification
   }
 
-  public async signOut() {
+  public async signOut(): Response {
     const { error } = await supabase.auth.signOut({ scope: 'local' })
     if (error) return [false, error.message]
     return [true, "Logged out successfully"]

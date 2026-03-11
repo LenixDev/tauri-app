@@ -25,7 +25,6 @@ export const Users = () => {
     confirmPassword: "",
   })
   const { user } = useAuth()
-  if (!user) throw new Error("User `null` or `undefined`")
   
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()

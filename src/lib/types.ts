@@ -1,9 +1,9 @@
 import type { Session } from "@supabase/supabase-js"
 import { User } from "./user"
 
-export type AuthState = {
-  session: Session | null | undefined
-  user: User
-}
+export type AuthState =
+  | { status: 'loading'; session: undefined; user: undefined }
+  | { status: 'unauthenticated'; session: null; user: null }
+  | { status: 'authenticated'; session: Session; user: User }
 
 export type Response = Promise<[boolean, string]>
