@@ -23,16 +23,6 @@ export class User {
     this.role = role
   }
 
-  public async signIn(identification: number, password: string) {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: `${identification}@institute.fake`,
-      password
-    })
-    if (error) return [false, error.message]
-
-    return [true, `Sign in successful with #${identification}`]
-  }
-
   public async createUser(identification: number, password: string, confirmPassword: string) {
     if (!Number.isFinite(identification) || identification < 0) return [false, "Identification is required"]
     if (password.length < 0) return [false, "Password is required"]

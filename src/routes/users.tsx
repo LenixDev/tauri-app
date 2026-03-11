@@ -36,7 +36,6 @@ export const Users = () => {
       return
     }
     toast.success(result)
-    
   }
   return ( 
     <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={handleSubmit}>

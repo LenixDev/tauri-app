@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
-import { useAuth } from "@/hooks/auth"
+import { signIn } from "@/lib/auth"
 
 export const LoginForm = ({
   className,
@@ -17,13 +17,11 @@ export const LoginForm = ({
   const [identification, setIdentification] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
-  const { user } = useAuth()
-  if (!user) throw new Error("User `null` or `undefined`")
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
-    const [success, result] = await user.signIn(parseInt(identification), password)
-    if (success) {
+    const [success, result] = await signIn(parseInt(identification), password)
+    if (!success) {
       toast.error(result)
       return
     }
