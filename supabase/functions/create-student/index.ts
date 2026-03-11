@@ -7,16 +7,15 @@ console.log("Hello from Functions!")
 
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
-Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-      },
-    })
-  }
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
 
+Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS')
+    return new Response(null, { headers: corsHeaders })
+  
   const authHeader = req.headers.get('Authorization')
   console.log('auth header:', authHeader)
 
@@ -48,9 +47,13 @@ Deno.serve(async (req) => {
     email_confirm: true,
   })
 
-  if (error) return new Response(error.message, { status: 400 })
+  if (profile?.role !== 'manager')
+    return new Response('Access denied', { status: 403, headers: corsHeaders })
 
-  return new Response('OK', { status: 200 })
+  if (error)
+    return new Response(error.message, { status: 400, headers: corsHeaders })
+
+  return new Response('OK', { status: 200, headers: corsHeaders })
 })
 
 /* To invoke locally:
