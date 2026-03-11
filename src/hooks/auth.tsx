@@ -15,7 +15,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return
       }
       const { data, error } = await supabase
-        .from('profiles')
+        .from('users')
         .select('identification, role')
         .eq('id', session.user.id)
         .single()
@@ -25,7 +25,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return
       }
 
-      setState({ session, user: new User(session.user.id, data.identification, data.role) })
+      const userInstance = new User(session.user.id, data.identification, data.role)
+      setState({ session, user: userInstance })
     })
 
     return () => subscription.unsubscribe()
