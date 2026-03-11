@@ -6,7 +6,7 @@ import { TooltipProvider } from "./components/ui/tooltip"
 import { Login } from "./app/login"
 import { Dashboard } from "./app/dashboard"
 import { Users } from "./routes/users"
-import "./App.css"
+import "./index.css"
 import { Session } from "./routes/session"
 import { AuthProvider } from "./routes/auth"
 
