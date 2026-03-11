@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router"
 import { supabase } from "./supabase"
 
 type Role = 'director' | 'student'
@@ -36,5 +37,16 @@ export class User {
 
   public can(permission: Permission): boolean {
     return ROLE_PERMISSIONS[this.role].includes(permission)
+  }
+
+  public get getIdentification() {
+    return this.identification
+  }
+
+  public async logout() {
+    const navigate = useNavigate()
+    const { error } = await supabase.auth.signOut({ scope: 'local' })
+    if (error) throw new Error(error.message)
+    navigate("/login")
   }
 }
