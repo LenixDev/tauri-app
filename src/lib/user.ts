@@ -1,7 +1,7 @@
 import { supabase } from "./supabase"
 import { Response } from "./types"
 
-type Role = 'director' | 'student'
+type Role = 'manager' | 'student'
 
 type Permission =
   | 'users:create'
@@ -9,7 +9,7 @@ type Permission =
   | 'users:delete'
 
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
-  director: ['users:create', 'users:read', 'users:delete'],
+  manager: ['users:create', 'users:read', 'users:delete'],
   student: [],
 } as const
 
