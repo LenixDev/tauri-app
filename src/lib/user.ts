@@ -15,23 +15,26 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
 
 export class User {
   private readonly id: string
-  private readonly identification: number
   private readonly role: Role
 
-  constructor(id: string, identification: number, role: Role) {
+  constructor(id: string, role: Role) {
     this.id = id
-    this.identification = identification
     this.role = role
+    DEV: console.log("instance created with:", id, role)
   }
 
   public async createUser(identification: number, password: string, confirmPassword: string): Response {
     if (!Number.isInteger(identification) || identification < 0) return [false, "Identification is required"]
     if (password.length === 0) return [false, "Password is required"]
     if (password !== confirmPassword) return [false, "Passwords do not match"]
-    
-    const { error } = await supabase.functions.invoke('create-user', {
-      body: { identification, password }
+
+    console.log("creation requested for:", identification)
+    const { data: { session } } = await supabase.auth.getSession()
+    console.log('session:', session)
+    const { error } = await supabase.functions.invoke('create-student', {
+      body: { student_id: identification, password },
     })
+    console.log("await passed for:", identification, "error:", error)
     
     if (error) return [false, error.message]
     return [true, `User #${identification} created successfully`]
@@ -39,10 +42,6 @@ export class User {
 
   public can(permission: Permission): boolean {
     return ROLE_PERMISSIONS[this.role].includes(permission)
-  }
-
-  public get getIdentification() {
-    return this.identification
   }
 
   public async signOut(): Response {

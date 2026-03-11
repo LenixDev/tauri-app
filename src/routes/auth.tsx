@@ -15,8 +15,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       const { data, error } = await supabase
-        .from('users')
-        .select('identification, role')
+        .from('profiles')
+        .select('role')
         .eq('id', session.user.id)
         .single()
 
@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return
       }
 
-      const userInstance = new User(session.user.id, data.identification, data.role)
+      const userInstance = new User(session.user.id, data.role)
       setState({ status: 'authenticated', session, user: userInstance })
     })
 
