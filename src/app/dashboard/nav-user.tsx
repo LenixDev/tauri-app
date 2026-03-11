@@ -23,6 +23,8 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react"
 import { UnfoldMoreIcon, CheckmarkBadgeIcon, NotificationIcon, LogoutIcon } from "@hugeicons/core-free-icons"
 import { useAuth } from "@/hooks/auth"
+import { useNavigate } from "react-router"
+import { toast } from "sonner"
 
 export function NavUser({
   user,
@@ -35,7 +37,16 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const { user: authUser } = useAuth()
-  
+  const navigate = useNavigate()
+  const signOut = async () => {
+    const [success, result] = await authUser.signOut()
+    if (!success) {
+      toast.error(result)
+      return
+    }
+    navigate("/login")
+    toast.success(result)
+  }
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -86,7 +97,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => authUser.logout()}>
+            <DropdownMenuItem onClick={signOut}>
               <HugeiconsIcon icon={LogoutIcon} strokeWidth={2} />
               Log out
             </DropdownMenuItem>

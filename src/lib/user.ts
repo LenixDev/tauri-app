@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router"
 import { supabase } from "./supabase"
+import { toast } from "sonner"
 
 type Role = 'director' | 'student'
 
@@ -43,10 +44,9 @@ export class User {
     return this.identification
   }
 
-  public async logout() {
-    const navigate = useNavigate()
+  public async signOut() {
     const { error } = await supabase.auth.signOut({ scope: 'local' })
-    if (error) throw new Error(error.message)
-    navigate("/login")
+    if (error) return [false, error.message]
+    return [true, "Logged out successfully"]
   }
 }
