@@ -18,7 +18,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Settings05Icon, ChartRingIcon, SentIcon, CommandIcon, ManagerFreeIcons } from "@hugeicons/core-free-icons"
 import { Link } from "react-router"
-import { useAuth, useUser } from "@/hooks/use-hook"
+import { useUser } from "@/hooks/use-hook"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useUser()
