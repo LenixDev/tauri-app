@@ -22,9 +22,9 @@ import {
 } from "@/components/ui/sidebar"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { UnfoldMoreIcon, CheckmarkBadgeIcon, NotificationIcon, LogoutIcon } from "@hugeicons/core-free-icons"
-import { useAuth } from "@/hooks/auth"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
+import { useAuth } from "@/hooks/use-hook"
 
 export function NavUser({
   user,

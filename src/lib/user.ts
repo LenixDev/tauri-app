@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router"
 import { supabase } from "./supabase"
 import { toast } from "sonner"
+import { Response } from "./types"
 
 type Role = 'director' | 'student'
 
@@ -25,13 +26,15 @@ export class User {
     this.role = role
   }
 
-  public async createUser(identification: number, password: string, confirmPassword: string) {
+  public async createUser(identification: number, password: string, confirmPassword: string): Response {
     if (!Number.isFinite(identification) || identification < 0) return [false, "Identification is required"]
-    if (password.length < 0) return [false, "Password is required"]
+    if (password.length === 0) return [false, "Password is required"]
     if (password !== confirmPassword) return [false, "Passwords do not match"]
+    
     const { error } = await supabase.functions.invoke('create-user', {
       body: { identification, password }
     })
+    
     if (error) return [false, error.message]
     return [true, `User #${identification} created successfully`]
   }

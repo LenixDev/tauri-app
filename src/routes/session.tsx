@@ -1,4 +1,4 @@
-import { useAuth } from "@/hooks/auth"
+import { useAuth } from "@/hooks/use-hook"
 import { Navigate, Outlet } from "react-router"
 
 export function Session() {

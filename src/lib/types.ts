@@ -5,3 +5,5 @@ export type AuthState = {
   session: Session | null | undefined
   user: User
 }
+
+export type Response = Promise<[boolean, string]>

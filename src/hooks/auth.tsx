@@ -1,9 +1,8 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
 import { AuthState } from "@/lib/types"
-
-const AuthContext = createContext<AuthState>({ session: undefined, user: undefined })
+import { AuthContext } from "./auth-context"
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<AuthState>({ session: undefined, user: undefined })
@@ -25,8 +24,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return
       }
 
-      const userInstance = new User(session.user.id, data.identification, data.role)
-      setState({ session, user: userInstance })
+      setState({ session, user: new User(session.user.id, data.identification, data.role) })
     })
 
     return () => subscription.unsubscribe()
@@ -34,5 +32,3 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>
 }
-
-export const useAuth = () => useContext(AuthContext)
