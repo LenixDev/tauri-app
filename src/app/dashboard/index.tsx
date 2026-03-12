@@ -12,7 +12,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { DASHBOARD_ROUTES } from "@/lib/routes"
+import { DASHBOARD_ROUTES } from "@/lib"
 import React from "react"
 import { NavLink, Outlet, useLocation } from "react-router"
 

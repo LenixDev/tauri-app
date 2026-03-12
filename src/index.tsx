@@ -9,7 +9,7 @@ import { Users } from "./app/dashboard/routes/users"
 import "./index.css"
 import { App } from "./app"
 import { AuthProvider } from "./providers/auth"
-import { DASHBOARD_ROUTES } from "@/lib/routes"
+import { DASHBOARD_ROUTES } from "@/lib"
 
 if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
 

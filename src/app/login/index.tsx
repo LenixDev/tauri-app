@@ -1,5 +1,6 @@
 import { GalleryVerticalEnd } from "lucide-react"
 import { LoginForm } from "@/app/login/form"
+import { INSTITUTE_LOGO, INSTITUTE_NAME } from "@/lib"
 
 export const Login = () => {
   return (
@@ -10,7 +11,7 @@ export const Login = () => {
             <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
               <GalleryVerticalEnd className="size-4" />
             </div>
-            Tayeb Med. Bousena
+            {INSTITUTE_NAME}
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">
@@ -21,7 +22,7 @@ export const Login = () => {
       </div>
       <div className="relative hidden bg-muted lg:block">
         <img
-          src="/placeholder.svg"
+          src={INSTITUTE_LOGO}
           alt="Image"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
