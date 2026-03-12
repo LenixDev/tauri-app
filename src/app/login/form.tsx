@@ -20,7 +20,7 @@ export const LoginForm = ({
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
-    const [success, result] = await signIn(parseInt(identifier), password)
+    const [success, result] = await signIn(identifier, password)
     if (!success) {
       toast.error(result)
       return

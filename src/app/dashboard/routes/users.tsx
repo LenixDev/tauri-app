@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useUser } from "@/hooks/use-user"
@@ -42,7 +42,7 @@ export const Users = () => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
 
-    const [success, result] = await user.createUser(parseInt(id), role, password, confirmPassword)
+    const [success, result] = await user.createUser(id, role, password, confirmPassword)
     if (!success) {
       toast.error(result)
       return
@@ -102,9 +102,9 @@ export const Users = () => {
               </Field>
             </Field>
             {/* TODO: add strong passwords requirement */}
-            {/* <FieldDescription>
-              Must be at least 8 characters long.
-            </FieldDescription> */}
+            <FieldDescription>
+              Must be at least {user.getPasswordLength} characters long.
+            </FieldDescription>
           </Field>
         </FieldGroup>
         <DialogFooter>

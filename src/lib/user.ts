@@ -16,6 +16,8 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
 export class User {
   private readonly email: string | undefined
   private readonly role: Role
+  private readonly IDENTIFIER_LENGTH = 7
+  private readonly PASSWORD_LENGTH = 8
 
   constructor(email: string | undefined, role: Role) {
     this.email = email
@@ -28,16 +30,20 @@ export class User {
     return parseInt(this.email.split('@')[0])
   }
 
-  public async createUser(identifier: number, role: Role, password: string, confirmPassword: string): Response {
-    if (!Number.isInteger(identifier) || identifier < 0) return [false, "Identification is required"]
-    if (password.length === 0) return [false, "Password is required"]
+  get getPasswordLength(): number {
+    return this.PASSWORD_LENGTH
+  }
+
+  public async createUser(identifier: string, role: Role, password: string, confirmPassword: string): Response {
+    if (identifier.length !== this.IDENTIFIER_LENGTH) return [false, "Identification number must be exactly of 7 characters"]
+    if (password.length < this.PASSWORD_LENGTH) return [false, "Password must be at least of 8 characters"]
     if (password !== confirmPassword) return [false, "Passwords do not match"]
 
     DEV: console.log("creation requested for:", identifier)
     const { data: { session } } = await supabase.auth.getSession()
     DEV: console.log('session:', session)
     const { error } = await supabase.functions.invoke('create-student', {
-      body: { identifier, role, password },
+      body: { identifier: parseInt(identifier), role, password },
     })
     DEV: console.log("await passed for:", identifier, "error:", error)
     
