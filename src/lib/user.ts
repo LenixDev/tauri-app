@@ -14,16 +14,17 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
 } as const
 
 export class User {
-  private readonly email: string
+  private readonly email: string | undefined
   private readonly role: Role
 
-  constructor(email: string, role: Role) {
+  constructor(email: string | undefined, role: Role) {
     this.email = email
     this.role = role
     DEV: console.log("instance created with:", role)
   }
 
   get identifier(): number {
+    if (!this.email) throw new Error("Email is undefined")
     return parseInt(this.email.split('@')[0])
   }
 

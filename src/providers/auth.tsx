@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return
       }
 
-      const userInstance = new User(session.user.id, data.role)
+      const userInstance = new User(session.user.email, data.role)
       setState({ status: 'authenticated', session, user: userInstance })
     })
 
