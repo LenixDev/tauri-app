@@ -35,7 +35,7 @@ Deno.serve(async (req) => {
     .single()
 
   if (profile?.role !== 'manager')
-    return new Response('Forbidden', { status: 403 })
+    return new Response('Forbidden', { status: 403, headers: corsHeaders })
 
   const adminClient = createClient(
     Deno.env.get('SUPABASE_URL')!,

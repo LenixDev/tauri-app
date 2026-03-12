@@ -24,13 +24,17 @@ import { Label } from "@/components/ui/label"
 import { useUser } from "@/hooks/use-hook"
 import React, { useEffect, useState } from "react"
 import { toast } from "sonner"
+import { Role } from "@/lib/types"
 
 export const Users = () => {
-  const [{
-    id, role, password, confirmPassword
-  }, setUser] = useState({
+  const [{ id, role, password, confirmPassword }, setUser] = useState<{
+    id: string
+    role: Role
+    password: string
+    confirmPassword: string
+  }>({
     id: "",
-    role: "",
+    role: "student",
     password: "",
     confirmPassword: "",
   })
@@ -65,7 +69,7 @@ export const Users = () => {
             />
           </Field>
           <Field>
-            <Select onValueChange={(value) => setUser(prev => ({ ...prev, role: value }))}>
+            <Select onValueChange={(value) => setUser(prev => ({ ...prev, role: value as Role }))}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select the role" />
               </SelectTrigger>
