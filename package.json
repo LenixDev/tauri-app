@@ -4,11 +4,15 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "type && vite",
+    "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "type": "supabase gen types typescript --project-id lzexfmaakktyheprfypq > src/types/database.ts"
+    "supatype": "supabase gen types typescript --project-id tantyyhfermajkhtzbzn > src/types/_database.ts",
+    "supapull": "supabase db pull",
+    "supadeploy": "pnpm supalink && supabase functions deploy",
+    "supalink": "supabase link --project-ref tantyyhfermajkhtzbzn",
+    "start": "pnpm supatype && tauri dev"
   },
   "dependencies": {
     "@fontsource-variable/figtree": "^5.2.10",
