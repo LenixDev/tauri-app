@@ -8,7 +8,7 @@ import { Dashboard } from "./app/dashboard"
 import { Users } from "./app/dashboard/routes/users"
 import "./index.css"
 import { Session } from "./routes/session"
-import { AuthProvider } from "./routes/auth"
+import { AuthProvider } from "./providers/auth"
 
 if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
 
