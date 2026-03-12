@@ -43,7 +43,7 @@ export const LoginForm = ({
           </p>
         </div>
         <Field>
-          <FieldLabel htmlFor="id">{t("login.identification")}</FieldLabel>
+          <FieldLabel htmlFor="id">{t("identification")}</FieldLabel>
           <Input
             value={identifier}
             onChange={e => setIdentifier(e.target.value)}
@@ -58,7 +58,7 @@ export const LoginForm = ({
         <Field>
           {/* TODO: ignore the focus on forgot password when pressing tab */}
           <div className="flex items-center justify-between">
-            <FieldLabel htmlFor="password">{t("login.password")}</FieldLabel>
+            <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
             <a
               /* TODO: implement the logic */
               href="#"

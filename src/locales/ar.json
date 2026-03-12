@@ -1,18 +1,26 @@
 {
   "languages": "اللغات",
+  "cancel": "ألغِ",
+  "create": "إنشاء",
+  "password": "كلمة المرور",
+  "identification": "رقم التعريفي",
   "login": {
     "hint": "أدخل بياناتك أدناه لتسجيل الدخول إلى حسابك",
-    "identification": "رقم الهوية",
-    "password": "كلمة المرور",
     "forgotPassword": "إعادة تعيين كلمة المرور",
     "login": "تسجيل الدخول",
     "title": "تسجيل الدخول إلى حسابك"
   },
   "signup": {
-    "identification_mismatch": "رقم الهوية يجب أن يتكون بالظبط من {{IDENTIFIER_LENGTH}} أحرف",
+    "identification_mismatch": "رقم التعريفي يجب أن يتكون بالظبط من {{IDENTIFIER_LENGTH}} أحرف",
     "password_mismatch": "كلمة المرور يجب أن تكون على الأقل {{PASSWORD_LENGTH}} أحرف",
     "passwords_unmatched": "كلمات المرور غير متطابقة",
-    "success": "تم إنشاء المستخدم #${{identifier}} بنجاح"
+    "success": "تم إنشاء المستخدم #${{identifier}} بنجاح",
+    "create_user": "إنشاء مستخدم جديد",
+    "enter_user_information": "أدخل معلومات المستخدم أدناه لإنشاء حسابه",
+    "role": "الدور",
+    "roles": "الدوار",
+    "confirm_password": "تأكيد كلمة المرور",
+    "password_rule": "يجب أن تكون على الأقل {{LENGTH}} أحرف."
   },
   "institute": {
     "name": "الطيب محمد بوسنة",

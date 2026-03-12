@@ -1,9 +1,11 @@
 {
   "languages": "Languages",
+  "cancel": "Cancel",
+  "create": "Create",
+  "password": "Password",
+  "identification": "Identification Number",
   "login": {
     "hint": "Enter your credentials below to login to your account",
-    "identification": "Identification Number",
-    "password": "Password",
     "forgotPassword": "Reset Password?",
     "login": "Login",
     "title": "Login to your account"
@@ -12,7 +14,13 @@
     "identification_mismatch": "Identification number must be exactly of {{IDENTIFIER_LENGTH}} characters",
     "password_mismatch": "Password must be at least of {{PASSWORD_LENGTH}} characters",
     "passwords_unmatched": "Passwords do not match",
-    "success": "User #${{identifier}} created successfully"
+    "success": "User #${{identifier}} created successfully",
+    "create_user": "Create A New User",
+    "enter_user_information": "Enter the user's information below to create his account",
+    "role": "Select The Role",
+    "roles": "Roles",
+    "confirm_password": "Confirm Password",
+    "password_rule": "Must be at least {{LENGTH}} characters long."
   },
   "institute": {
     "name": "Tayeb Mohamed Boucenna",

@@ -52,18 +52,18 @@ export const Users = () => {
   }
   return ( 
     <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={handleSubmit}>
-      <DialogTrigger asChild><Button variant="outline">Create A New User</Button></DialogTrigger>
+      <DialogTrigger asChild><Button variant="outline">{t("create_user")}</Button></DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle>Create A New User</DialogTitle>
+          <DialogTitle>{t("create_user")}</DialogTitle>
           <DialogDescription>
-            Enter the user's information below to create his account
+            {t("enter_user_information")}
           </DialogDescription>
         </DialogHeader>
         {/* TODO: verify the credentials are correct */}
         <FieldGroup>
           <Field>
-            <Label htmlFor="name">Identification Number</Label>
+            <Label htmlFor="name">{t("identification")}</Label>
             <Input id="name" name="name" placeholder="6901120" 
               value={id}
               onChange={(e) => setUser(prev => ({ ...prev, id: e.target.value }))}
@@ -72,11 +72,11 @@ export const Users = () => {
           <Field>
             <Select onValueChange={(value) => setUser(prev => ({ ...prev, role: value as Role }))}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select the role" />
+                <SelectValue placeholder={t("role")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Roles</SelectLabel>
+                  <SelectLabel>{t("role")}</SelectLabel>
                   <SelectItem value="manager">Manager</SelectItem>
                   <SelectItem value="student">Student</SelectItem>
                 </SelectGroup>
@@ -86,7 +86,7 @@ export const Users = () => {
           <Field>
             <Field className="grid grid-cols-2 gap-4">
               <Field>
-                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
                 <Input id="password" type="password" required 
                   value={password}
                   onChange={(e) => setUser(prev => ({ ...prev, password: e.target.value }))}
@@ -94,7 +94,7 @@ export const Users = () => {
               </Field>
               <Field>
                 <FieldLabel htmlFor="confirm-password">
-                  Confirm Password
+                  {t("confirm_password")}
                 </FieldLabel>
                 <Input id="confirm-password" type="password" required 
                   value={confirmPassword}
@@ -104,13 +104,13 @@ export const Users = () => {
             </Field>
             {/* TODO: add strong passwords requirement */}
             <FieldDescription>
-              Must be at least {user.getPasswordLength} characters long.
+              {t("password_rule", { LENGTH: user.getPasswordLength })}
             </FieldDescription>
           </Field>
         </FieldGroup>
         <DialogFooter>
-          <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
-          <Button type="submit" form="dialog">Create</Button>
+          <DialogClose asChild><Button variant="outline">{t("cancel")}</Button></DialogClose>
+          <Button type="submit" form="dialog">{t("create")}</Button>
         </DialogFooter>
       </DialogContent>
     </form></Dialog></div>
