@@ -2,7 +2,6 @@ import { AppSidebar } from "@/app/dashboard/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
@@ -36,7 +35,7 @@ export const Dashboard = () => {
                 {directories.map((directory, index) => {
                   const isLastRoute = directories.length === index + 1
                   const directoryLabel = DASHBOARD_ROUTES.find((route) => route.route === directory)?.label
-                  console.log(directoryLabel, directory)
+                  DEV: console.log(directoryLabel, directory)
                   return !isLastRoute ? (
                     <React.Fragment key={directory}>
                       <BreadcrumbItem className="hidden md:block">

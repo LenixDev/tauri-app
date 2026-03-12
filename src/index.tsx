@@ -9,12 +9,15 @@ import { Users } from "./app/dashboard/routes/users"
 import "./index.css"
 import { App } from "./app"
 import { AuthProvider } from "./providers/auth"
+import { DASHBOARD_ROUTES } from "@/lib/routes"
 
 if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
   document.documentElement.classList.toggle('dark', e.matches)
 })
+
+type RouteDir = typeof DASHBOARD_ROUTES[number]["route"]
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -25,8 +28,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           <Routes>
             <Route path="login" element={<Login />} />
             <Route element={<App />}>
-              <Route path="/" element={<Dashboard />}>
-                <Route path="users" element={<Users />} />
+              <Route path={"/" satisfies RouteDir} element={<Dashboard />}>
+                <Route path={"users" satisfies RouteDir} element={<Users />} />
               </Route>
             </Route>
           </Routes>
