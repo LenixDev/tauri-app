@@ -8,6 +8,12 @@
     "login": "تسجيل الدخول",
     "title": "تسجيل الدخول إلى حسابك"
   },
+  "signup": {
+    "identification_mismatch": "رقم الهوية يجب أن يتكون بالظبط من {{IDENTIFIER_LENGTH}} أحرف",
+    "password_mismatch": "كلمة المرور يجب أن تكون على الأقل {{PASSWORD_LENGTH}} أحرف",
+    "passwords_unmatched": "كلمات المرور غير متطابقة",
+    "success": "تم إنشاء المستخدم #${{identifier}} بنجاح"
+  },
   "institute": {
     "name": "الطيب محمد بوسنة",
     "plan": "معهد"

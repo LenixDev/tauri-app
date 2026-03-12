@@ -8,6 +8,12 @@
     "login": "Login",
     "title": "Login to your account"
   },
+  "signup": {
+    "identification_mismatch": "Identification number must be exactly of {{IDENTIFIER_LENGTH}} characters",
+    "password_mismatch": "Password must be at least of {{PASSWORD_LENGTH}} characters",
+    "passwords_unmatched": "Passwords do not match",
+    "success": "User #${{identifier}} created successfully"
+  },
   "institute": {
     "name": "Tayeb Mohamed Boucenna",
     "plan": "Institute"

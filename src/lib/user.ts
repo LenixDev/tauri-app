@@ -31,9 +31,9 @@ export class User {
   }
 
   public async createUser(identifier: string, role: Role, password: string, confirmPassword: string): Response {
-    if (identifier.length !== this.IDENTIFIER_LENGTH) return [false, "Identification number must be exactly of 7 characters"]
-    if (password.length < this.PASSWORD_LENGTH) return [false, "Password must be at least of 8 characters"]
-    if (password !== confirmPassword) return [false, "Passwords do not match"]
+    if (identifier.length !== this.IDENTIFIER_LENGTH) return [false, "signup.identification_mismatch" satisfies TranslationKey, { IDENTIFIER_LENGTH: this.IDENTIFIER_LENGTH }]
+    if (password.length < this.PASSWORD_LENGTH) return [false, "signup.password_mismatch" satisfies TranslationKey, { PASSWORD_LENGTH: this.PASSWORD_LENGTH }]
+    if (password !== confirmPassword) return [false, "signup.passwords_unmatched" satisfies TranslationKey]
 
     DEV: console.log("creation requested for:", identifier)
     const { data: { session } } = await supabase.auth.getSession()
@@ -50,7 +50,7 @@ export class User {
       }
       return [false, error.message]
     }
-    return [true, `User #${identifier} created successfully`]
+    return [true, "signup.success" satisfies TranslationKey, { identifier }]
   }
 
   public can(permission: Permission): boolean {

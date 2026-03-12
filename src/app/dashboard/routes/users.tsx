@@ -25,6 +25,7 @@ import { useUser } from "@/hooks/use-user"
 import React, { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { Role } from "@/types"
+import { t } from "i18next"
 
 export const Users = () => {
   const [{ id, role, password, confirmPassword }, setUser] = useState<{
@@ -42,12 +43,12 @@ export const Users = () => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
 
-    const [success, result] = await user.createUser(id, role, password, confirmPassword)
+    const [success, result, data] = await user.createUser(id, role, password, confirmPassword)
     if (!success) {
       toast.error(result)
       return
     }
-    toast.success(result)
+    toast.success(t(result, data))
   }
   return ( 
     <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={handleSubmit}>
