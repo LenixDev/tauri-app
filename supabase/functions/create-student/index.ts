@@ -30,7 +30,7 @@ Deno.serve(async (req) => {
     return new Response('Unauthorized', { status: 401, headers: corsHeaders })
 
   const { data: profile } = await supabaseClient
-    .from('profiles')
+    .from('users')
     .select('role')
     .single()
 
@@ -54,7 +54,7 @@ Deno.serve(async (req) => {
     return new Response(error.message, { status: 400, headers: corsHeaders })
 
   const { error: profileError } = await adminClient
-    .from('profiles')
+    .from('users')
     .insert({ id: data.user.id, role })
 
   if (profileError)
