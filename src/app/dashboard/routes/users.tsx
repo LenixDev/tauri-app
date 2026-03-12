@@ -52,12 +52,12 @@ export const Users = () => {
   }
   return ( 
     <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={handleSubmit}>
-      <DialogTrigger asChild><Button variant="outline">{t("create_user")}</Button></DialogTrigger>
+      <DialogTrigger asChild><Button variant="outline">{t("signup.create_user")}</Button></DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle>{t("create_user")}</DialogTitle>
+          <DialogTitle>{t("signup.create_user")}</DialogTitle>
           <DialogDescription>
-            {t("enter_user_information")}
+            {t("signup.enter_user_information")}
           </DialogDescription>
         </DialogHeader>
         {/* TODO: verify the credentials are correct */}
@@ -72,11 +72,11 @@ export const Users = () => {
           <Field>
             <Select onValueChange={(value) => setUser(prev => ({ ...prev, role: value as Role }))}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder={t("role")} />
+                <SelectValue placeholder={t("signup.role")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>{t("role")}</SelectLabel>
+                  <SelectLabel>{t("signup.roles")}</SelectLabel>
                   <SelectItem value="manager">Manager</SelectItem>
                   <SelectItem value="student">Student</SelectItem>
                 </SelectGroup>
@@ -94,7 +94,7 @@ export const Users = () => {
               </Field>
               <Field>
                 <FieldLabel htmlFor="confirm-password">
-                  {t("confirm_password")}
+                  {t("signup.confirm_password")}
                 </FieldLabel>
                 <Input id="confirm-password" type="password" required 
                   value={confirmPassword}
@@ -104,7 +104,7 @@ export const Users = () => {
             </Field>
             {/* TODO: add strong passwords requirement */}
             <FieldDescription>
-              {t("password_rule", { LENGTH: user.getPasswordLength })}
+              {t("signup.password_rule", { LENGTH: user.getPasswordLength })}
             </FieldDescription>
           </Field>
         </FieldGroup>

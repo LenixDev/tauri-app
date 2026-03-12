@@ -6,6 +6,7 @@ const arabic = await import("./ar.json").then(m => m.default)
 
 i18n.on("languageChanged", (lng) => {
   document.documentElement.dir = i18n.dir(lng)
+  document.documentElement.lang = lng
 })
 
 i18n.use(initReactI18next).init({
