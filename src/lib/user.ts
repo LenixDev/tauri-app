@@ -1,6 +1,6 @@
 import { supabase } from "./supabase"
-import { Response } from "./types"
-import { Role } from "./types"
+import { Response } from "../types"
+import { Role } from "../types"
 
 type Permission =
   | 'users:create'

@@ -24,7 +24,7 @@ import { Label } from "@/components/ui/label"
 import { useUser } from "@/hooks/use-hook"
 import React, { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { Role } from "@/lib/types"
+import { Role } from "@/types"
 
 export const Users = () => {
   const [{ id, role, password, confirmPassword }, setUser] = useState<{
