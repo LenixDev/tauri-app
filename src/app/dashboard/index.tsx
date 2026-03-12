@@ -13,9 +13,13 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Outlet } from "react-router"
+import { DASHBOARD_ROUTES } from "@/lib/routes"
+import React from "react"
+import { NavLink, Outlet, useLocation } from "react-router"
 
 export const Dashboard = () => {
+  const { pathname } = useLocation()
+  const directories = ["/", ...pathname.split("/").filter(Boolean)]
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -29,15 +33,25 @@ export const Dashboard = () => {
             />
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Build Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
+                {directories.map((directory, index) => {
+                  const isLastRoute = directories.length === index + 1
+                  const directoryLabel = DASHBOARD_ROUTES.find((route) => route.route === directory)?.label
+                  console.log(directoryLabel, directory)
+                  return !isLastRoute ? (
+                    <React.Fragment key={directory}>
+                      <BreadcrumbItem className="hidden md:block">
+                        <NavLink to={directory}>
+                          {directoryLabel}
+                        </NavLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator className="hidden md:block" />
+                    </React.Fragment>
+                  ) : (
+                    <BreadcrumbItem key={directory}>
+                      <BreadcrumbPage>{directoryLabel}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )
+                })}
               </BreadcrumbList>
             </Breadcrumb>
           </div>
