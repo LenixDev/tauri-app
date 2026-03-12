@@ -1,6 +1,7 @@
 import { supabase } from "./supabase"
-import { Response } from "../types"
-import { Role } from "../types"
+import { Response } from "@/types"
+import { Role } from "@/types"
+import { FunctionsHttpError } from "@supabase/supabase-js"
 
 type Permission =
   | 'users:create'
@@ -35,7 +36,13 @@ export class User {
     })
     DEV: console.log("await passed for:", identifier, "error:", error)
     
-    if (error) return [false, error.message]
+    if (error) {
+      if (error instanceof FunctionsHttpError) {
+        const message = await error.context.text()
+        return [false, message]
+      }
+      return [false, error.message]
+    }
     return [true, `User #${identifier} created successfully`]
   }
 

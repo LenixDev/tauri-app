@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
 import { AuthState } from "@/types"
-import { AuthContext } from "../hooks/auth-context"
+import { AuthContext } from "@/hooks/auth-context"
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<AuthState>({ status: 'loading', session: undefined, user: undefined })

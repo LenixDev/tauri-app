@@ -1,5 +1,5 @@
 import type { Session } from "@supabase/supabase-js"
-import { User } from "../lib/user"
+import { User } from "@/lib/user"
 
 import type { Database } from './database'
 
