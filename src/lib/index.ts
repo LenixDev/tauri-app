@@ -1,11 +1,13 @@
+import i18n from "i18next"
+
 export const DASHBOARD_ROUTES = [
   {
     route: '/',
-    label: 'Dashboard'
+    label: i18n.t("dashboard")
   },
   {
     route: 'users',
-    label: 'Manage Users'
+    label: i18n.t("nav.projects.items.users")
   },
 ] as const
 

@@ -4,6 +4,7 @@
   "create": "Create",
   "password": "Password",
   "identification": "Identification Number",
+  "dashboard": "Dashboard",
   "login": {
     "hint": "Enter your credentials below to login to your account",
     "forgotPassword": "Reset Password?",
@@ -40,6 +41,9 @@
       "limits": "Limits"
     },
     "projects": {
+      "items": {
+        "users": "Manage Users"
+      },
       "title": "Projects",
       "view": "View Project",
       "share": "Share Project",
