@@ -13,8 +13,16 @@ i18n.use(initReactI18next).init({
     en: { translation: english satisfies typeof arabic },
     ar: { translation: arabic satisfies typeof english },
   },
-  lng: "en",
+  lng: "ar",
   fallbackLng: "en",
 })
+
+type DotNotation<T, Prefix extends string = ""> = {
+  [K in keyof T]: T[K] extends Record<string, unknown>
+    ? DotNotation<T[K], `${Prefix}${K & string}.`>
+    : `${Prefix}${K & string}`
+}[keyof T]
+
+export type TranslationKey = DotNotation<typeof english>
 
 export default i18n

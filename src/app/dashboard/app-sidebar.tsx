@@ -19,9 +19,11 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { Settings05Icon, ChartRingIcon, SentIcon, CommandIcon, ManagerFreeIcons } from "@hugeicons/core-free-icons"
 import { Link } from "react-router"
 import { useUser } from "@/hooks/use-user"
+import { useTranslation } from "react-i18next"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useUser()
+  const { t } = useTranslation()
   
   const data = {
     user: {
@@ -31,26 +33,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     },
     navMain: [
       {
-        title: "Settings",
+        title: t("nav.main.settings"),
         url: "",
         icon: (
           <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />
         ),
         items: [
           {
-            title: "General",
+            title: t("nav.main.general"),
             url: "",
           },
           {
-            title: "Team",
+            title: t("nav.main.team"),
             url: "",
           },
           {
-            title: "Billing",
+            title: t("nav.main.billing"),
             url: "",
           },
           {
-            title: "Limits",
+            title: t("nav.main.limits"),
             url: "",
           },
         ],
@@ -58,14 +60,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ],
     navSecondary: [
       {
-        title: "Support",
+        title: t("nav.secondary.support"),
         url: "",
         icon: (
           <HugeiconsIcon icon={ChartRingIcon} strokeWidth={2} />
         ),
       },
       {
-        title: "Feedback",
+        title: t("nav.secondary.feedback"),
         url: "",
         icon: (
           <HugeiconsIcon icon={SentIcon} strokeWidth={2} />
@@ -93,8 +95,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <HugeiconsIcon icon={CommandIcon} strokeWidth={2} className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate font-medium">{t("institute.name")}</span>
+                  <span className="truncate text-xs">{t("institute.plan")}</span>
                 </div>
               </Link>
             </SidebarMenuButton>

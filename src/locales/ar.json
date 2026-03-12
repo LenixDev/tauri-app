@@ -5,6 +5,44 @@
     "identification": "رقم الهوية",
     "password": "كلمة المرور",
     "forgotPassword": "إعادة تعيين كلمة المرور",
-    "login": "تسجيل الدخول"
+    "login": "تسجيل الدخول",
+    "title": "تسجيل الدخول إلى حسابك"
+  },
+  "institute": {
+    "name": "الطيب محمد بوسنة",
+    "plan": "معهد"
+  },
+  "alerts": {
+    "signin_success": "تم تسجيل الدخول بنجاح إلى #{{identifier}}",
+    "logout_success": "تم تسجيل الخروج بنجاح"
+  },
+  "nav": {
+    "main": {
+      "title": "المنصة",
+      "settings": "الإعدادات",
+      "general": "عام",
+      "team": "الفريق",
+      "billing": "الفواتير",
+      "limits": "الحدود"
+    },
+    "projects": {
+      "title": "المشاريع",
+      "view": "عرض المشروع",
+      "share": "مشاركة المشروع",
+      "delete": "حذف المشروع"
+    },
+    "secondary": {
+      "support": "الدعم",
+      "feedback": "التعليقات"
+    },
+    "user": {
+      "account": "الحساب",
+      "notifications": "الإشعارات",
+      "change_language": "تغيير اللغة",
+      "languages": "اللغات",
+      "english": "English",
+      "arabic": "العربية",
+      "logout": "تسجيل الخروج"
+    }
   }
 }

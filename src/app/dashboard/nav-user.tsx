@@ -54,8 +54,8 @@ export function NavUser({
       toast.error(result)
       return
     }
+    toast.success(t(result))
     navigate("/login")
-    toast.success(result)
   }
   const { t, i18n } = useTranslation()
 
@@ -101,30 +101,30 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <HugeiconsIcon icon={CheckmarkBadgeIcon} strokeWidth={2} />
-                Account
+                {t("nav.user.account")}
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <HugeiconsIcon icon={NotificationIcon} strokeWidth={2} />
-                Notifications
+                {t("nav.user.notifications")}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <Select onValueChange={(value) => i18n.changeLanguage(value)}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Change the language" />
+                <SelectValue placeholder={t("nav.user.change_language")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>{t("languages")}</SelectLabel>
-                  <SelectItem value="en" disabled={i18n.language === "en"}>English</SelectItem>
-                  <SelectItem value="ar" disabled={i18n.language === "ar"}>العربية</SelectItem>
+                  <SelectLabel>{t("nav.user.languages")}</SelectLabel>
+                  <SelectItem value="en" disabled={i18n.language === "en"}>{t("nav.user.english")}</SelectItem>
+                  <SelectItem value="ar" disabled={i18n.language === "ar"}>{t("nav.user.arabic")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={signOut}>
               <HugeiconsIcon icon={LogoutIcon} strokeWidth={2} />
-              Log out
+              {t("nav.user.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

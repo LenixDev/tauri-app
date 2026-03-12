@@ -5,6 +5,44 @@
     "identification": "Identification Number",
     "password": "Password",
     "forgotPassword": "Reset Password?",
-    "login": "Login"
+    "login": "Login",
+    "title": "Login to your account"
+  },
+  "institute": {
+    "name": "Tayeb Mohamed Boucenna",
+    "plan": "Institute"
+  },
+  "alerts": {
+    "signin_success": "Sign in successful with #{{identifier}}",
+    "logout_success": "Logout successful"
+  },
+  "nav": {
+    "main": {
+      "title": "Platform",
+      "settings": "Settings",
+      "general": "General",
+      "team": "Team",
+      "billing": "Billing",
+      "limits": "Limits"
+    },
+    "projects": {
+      "title": "Projects",
+      "view": "View Project",
+      "share": "Share Project",
+      "delete": "Delete Project"
+    },
+    "secondary": {
+      "support": "Support",
+      "feedback": "Feedback"
+    },
+    "user": {
+      "account": "Account",
+      "notifications": "Notifications",
+      "change_language": "Change The Language",
+      "languages": "Languages",
+      "english": "English",
+      "arabic": "العربية",
+      "logout": "Logout"
+    }
   }
 }

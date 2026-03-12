@@ -1,3 +1,4 @@
+import { TranslationKey } from "@/locales"
 import { supabase } from "./supabase"
 import { Permission, Response } from "@/types"
 import { Role } from "@/types"
@@ -59,6 +60,6 @@ export class User {
   public async signOut(): Response {
     const { error } = await supabase.auth.signOut({ scope: 'local' })
     if (error) return [false, error.message]
-    return [true, "Logged out successfully"]
+    return [true, "alerts.logout_success" satisfies TranslationKey]
   }
 }

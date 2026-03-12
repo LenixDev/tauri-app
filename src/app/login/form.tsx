@@ -27,7 +27,7 @@ export const LoginForm = ({
       toast.error(result)
       return
     }
-    toast.success(result)
+    toast.success(t(result, { identifier }))
     navigate('/')
   }
   return (
@@ -36,7 +36,7 @@ export const LoginForm = ({
     >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">login to your account</h1>
+          <h1 className="text-2xl font-bold">{t("login.title")}</h1>
           <p className="text-sm text-balance text-muted-foreground">
             {t("login.hint")}
             {/* TODO: add explaination where we can find the id */}
@@ -57,12 +57,12 @@ export const LoginForm = ({
         </Field>
         <Field>
           {/* TODO: ignore the focus on forgot password when pressing tab */}
-          <div className="flex items-center">
+          <div className="flex items-center justify-between">
             <FieldLabel htmlFor="password">{t("login.password")}</FieldLabel>
             <a
               /* TODO: implement the logic */
               href="#"
-              className="ml-auto text-sm underline-offset-4 hover:underline"
+              className="text-sm underline-offset-4 hover:underline"
             >
               {t("login.forgotPassword")}
             </a>
@@ -81,5 +81,6 @@ export const LoginForm = ({
         </Field>
       </FieldGroup>
     </form>
+    /* TODO: add translation btn */
   )
 }

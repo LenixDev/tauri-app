@@ -19,6 +19,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react"
 import { MoreHorizontalCircle01Icon, FolderIcon, Share03Icon, Delete02Icon } from "@hugeicons/core-free-icons"
 import { Link } from "react-router"
+import { t } from "i18next"
 
 export function NavProjects({
   projects,
@@ -33,7 +34,7 @@ export function NavProjects({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Projects</SidebarGroupLabel>
+      <SidebarGroupLabel>{t("nav.projects.title")}</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
@@ -60,16 +61,16 @@ export function NavProjects({
               >
                 <DropdownMenuItem>
                   <HugeiconsIcon icon={FolderIcon} strokeWidth={2} className="text-muted-foreground" />
-                  <span>View Project</span>
+                  <span>{t("nav.projects.view")}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <HugeiconsIcon icon={Share03Icon} strokeWidth={2} className="text-muted-foreground" />
-                  <span>Share Project</span>
+                  <span>{t("nav.projects.share")}</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <HugeiconsIcon icon={Delete02Icon} strokeWidth={2} className="text-muted-foreground" />
-                  <span>Delete Project</span>
+                  <span>{t("nav.projects.delete")}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
