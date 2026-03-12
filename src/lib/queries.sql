@@ -7,7 +7,7 @@
 
 -- functions
   create or replace function create_student(
-    student_id text,
+    identifier text,
     student_password text
   )
   returns void
@@ -21,7 +21,7 @@
 
     perform auth.create_user(
       json_build_object(
-        'email', student_id || '@institute.local',
+        'email', identifier || '@institute.local',
         'password', student_password,
         'email_confirm', true
       )

@@ -1,11 +1,11 @@
 import { supabase } from "./supabase"
 
-export const signIn = async(identification: number, password: string) => {
+export const signIn = async(identifier: number, password: string) => {
   const { error } = await supabase.auth.signInWithPassword({
-    email: `${identification}@institute.local`,
+    email: `${identifier}@institute.local`,
     password
   })
   if (error) return [false, error.message]
 
-  return [true, `Sign in successful with #${identification}`]
+  return [true, `Sign in successful with #${identifier}`]
 }

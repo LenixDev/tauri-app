@@ -9,27 +9,36 @@ DialogHeader,
 DialogTitle,
 DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useUser } from "@/hooks/use-hook"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 export const Users = () => {
   const [{
-    id, password, confirmPassword
+    id, role, password, confirmPassword
   }, setUser] = useState({
     id: "",
+    role: "",
     password: "",
     confirmPassword: "",
   })
   const user = useUser()
-  
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
 
-    const [success, result] = await user.createUser(parseInt(id), password, confirmPassword)
+    const [success, result] = await user.createUser(parseInt(id), role, password, confirmPassword)
     if (!success) {
       toast.error(result)
       return
@@ -54,6 +63,20 @@ export const Users = () => {
               value={id}
               onChange={(e) => setUser(prev => ({ ...prev, id: e.target.value }))}
             />
+          </Field>
+          <Field>
+            <Select onValueChange={(value) => setUser(prev => ({ ...prev, role: value }))}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select the role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Roles</SelectLabel>
+                  <SelectItem value="manager">Manager</SelectItem>
+                  <SelectItem value="student">Student</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </Field>
           <Field>
             <Field className="grid grid-cols-2 gap-4">

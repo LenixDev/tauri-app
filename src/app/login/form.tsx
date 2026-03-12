@@ -14,13 +14,13 @@ import { signIn } from "@/lib/auth"
 export const LoginForm = ({
   className,
 }: React.ComponentProps<"form">) => {
-  const [identification, setIdentification] = useState('')
+  const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
-    const [success, result] = await signIn(parseInt(identification), password)
+    const [success, result] = await signIn(parseInt(identifier), password)
     if (!success) {
       toast.error(result)
       return
@@ -43,8 +43,8 @@ export const LoginForm = ({
         <Field>
           <FieldLabel htmlFor="id">Identification Number</FieldLabel>
           <Input
-            value={identification}
-            onChange={e => setIdentification(e.target.value)}
+            value={identifier}
+            onChange={e => setIdentifier(e.target.value)}
             id="id"
             type="number"
             placeholder="6901120"

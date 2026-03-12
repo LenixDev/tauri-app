@@ -23,21 +23,21 @@ export class User {
     DEV: console.log("instance created with:", id, role)
   }
 
-  public async createUser(identification: number, password: string, confirmPassword: string): Response {
-    if (!Number.isInteger(identification) || identification < 0) return [false, "Identification is required"]
+  public async createUser(identifier: number, role: string, password: string, confirmPassword: string): Response {
+    if (!Number.isInteger(identifier) || identifier < 0) return [false, "Identification is required"]
     if (password.length === 0) return [false, "Password is required"]
     if (password !== confirmPassword) return [false, "Passwords do not match"]
 
-    console.log("creation requested for:", identification)
+    console.log("creation requested for:", identifier)
     const { data: { session } } = await supabase.auth.getSession()
     console.log('session:', session)
     const { error } = await supabase.functions.invoke('create-student', {
-      body: { student_id: identification, password },
+      body: { identifier, role, password },
     })
-    console.log("await passed for:", identification, "error:", error)
+    console.log("await passed for:", identifier, "error:", error)
     
     if (error) return [false, error.message]
-    return [true, `User #${identification} created successfully`]
+    return [true, `User #${identifier} created successfully`]
   }
 
   public can(permission: Permission): boolean {

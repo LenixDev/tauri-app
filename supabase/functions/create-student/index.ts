@@ -42,19 +42,23 @@ Deno.serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
   )
 
-  const { student_id, password } = await req.json()
+  const { identifier, role, password } = await req.json()
 
-  const { error } = await adminClient.auth.admin.createUser({
-    email: `${student_id}@institute.local`,
+  const { data, error } = await adminClient.auth.admin.createUser({
+    email: `${identifier}@institute.local`,
     password,
     email_confirm: true,
   })
 
-  if (profile?.role !== 'manager')
-    return new Response('Access denied', { status: 403, headers: corsHeaders })
-
   if (error)
     return new Response(error.message, { status: 400, headers: corsHeaders })
+
+  const { error: profileError } = await adminClient
+    .from('profiles')
+    .insert({ id: data.user.id, role })
+
+  if (profileError)
+    return new Response(profileError.message, { status: 400, headers: corsHeaders })
 
   return new Response('OK', { status: 200, headers: corsHeaders })
 })
