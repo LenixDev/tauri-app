@@ -20,11 +20,21 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { UnfoldMoreIcon, CheckmarkBadgeIcon, NotificationIcon, LogoutIcon } from "@hugeicons/core-free-icons"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
 import { useUser } from "@/hooks/use-user"
+import { useTranslation } from "react-i18next"
 
 export function NavUser({
   user,
@@ -47,6 +57,8 @@ export function NavUser({
     navigate("/login")
     toast.success(result)
   }
+  const { t, i18n } = useTranslation()
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -96,6 +108,19 @@ export function NavUser({
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <Select onValueChange={(value) => i18n.changeLanguage(value)}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Change the language" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>{t("languages")}</SelectLabel>
+                  <SelectItem value="en" disabled={i18n.language === "en"}>English</SelectItem>
+                  <SelectItem value="ar" disabled={i18n.language === "ar"}>العربية</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={signOut}>
               <HugeiconsIcon icon={LogoutIcon} strokeWidth={2} />

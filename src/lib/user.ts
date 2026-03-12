@@ -1,12 +1,7 @@
 import { supabase } from "./supabase"
-import { Response } from "@/types"
+import { Permission, Response } from "@/types"
 import { Role } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
-
-type Permission =
-  | 'users:create'
-  | 'users:read'
-  | 'users:delete'
 
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   manager: ['users:create', 'users:read', 'users:delete'],

@@ -10,6 +10,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
 import { signIn } from "@/lib/auth"
+import { useTranslation } from "react-i18next"
 
 export const LoginForm = ({
   className,
@@ -17,6 +18,7 @@ export const LoginForm = ({
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
@@ -34,14 +36,14 @@ export const LoginForm = ({
     >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">Login to your account</h1>
+          <h1 className="text-2xl font-bold">login to your account</h1>
           <p className="text-sm text-balance text-muted-foreground">
-            Enter your credentials below to login to your account
+            {t("login.hint")}
             {/* TODO: add explaination where we can find the id */}
           </p>
         </div>
         <Field>
-          <FieldLabel htmlFor="id">Identification Number</FieldLabel>
+          <FieldLabel htmlFor="id">{t("login.identification")}</FieldLabel>
           <Input
             value={identifier}
             onChange={e => setIdentifier(e.target.value)}
@@ -56,13 +58,13 @@ export const LoginForm = ({
         <Field>
           {/* TODO: ignore the focus on forgot password when pressing tab */}
           <div className="flex items-center">
-            <FieldLabel htmlFor="password">Password</FieldLabel>
+            <FieldLabel htmlFor="password">{t("login.password")}</FieldLabel>
             <a
               /* TODO: implement the logic */
               href="#"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
-              Forgot your password?
+              {t("login.forgotPassword")}
             </a>
           </div>
           <Input
@@ -75,7 +77,7 @@ export const LoginForm = ({
           />
         </Field>
         <Field>
-          <Button type="submit">Login</Button>
+          <Button type="submit">{t("login.login")}</Button>
         </Field>
       </FieldGroup>
     </form>
