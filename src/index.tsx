@@ -7,7 +7,7 @@ import { Login } from "./app/login"
 import { Dashboard } from "./app/dashboard"
 import { Users } from "./app/dashboard/routes/users"
 import "./index.css"
-import { Session } from "./routes/session"
+import { App } from "./app"
 import { AuthProvider } from "./providers/auth"
 
 if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
@@ -24,7 +24,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           <Toaster />
           <Routes>
             <Route path="login" element={<Login />} />
-            <Route element={<Session />}>
+            <Route element={<App />}>
               <Route path="/" element={<Dashboard />}>
                 <Route path="users" element={<Users />} />
               </Route>
