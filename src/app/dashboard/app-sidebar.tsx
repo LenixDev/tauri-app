@@ -18,7 +18,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Settings05Icon, ChartRingIcon, SentIcon, CommandIcon, ManagerFreeIcons } from "@hugeicons/core-free-icons"
 import { Link } from "react-router"
-import { useUser } from "@/hooks/use-hook"
+import { useUser } from "@/hooks/use-user"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useUser()
@@ -26,7 +26,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const data = {
     user: {
       name: "shadcn",
-      email: "TODO",
+      email: user.identifier.toString(),
       avatar: "/avatars/shadcn.jpg",
     },
     navMain: [

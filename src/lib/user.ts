@@ -14,13 +14,17 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
 } as const
 
 export class User {
-  private readonly id: string
+  private readonly email: string
   private readonly role: Role
 
-  constructor(id: string, role: Role) {
-    this.id = id
+  constructor(email: string, role: Role) {
+    this.email = email
     this.role = role
-    DEV: console.log("instance created with:", id, role)
+    DEV: console.log("instance created with:", role)
+  }
+
+  get identifier(): number {
+    return parseInt(this.email.split('@')[0])
   }
 
   public async createUser(identifier: number, role: Role, password: string, confirmPassword: string): Response {

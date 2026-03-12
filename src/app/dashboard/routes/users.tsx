@@ -21,7 +21,7 @@ import {
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useUser } from "@/hooks/use-hook"
+import { useUser } from "@/hooks/use-user"
 import React, { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { Role } from "@/types"

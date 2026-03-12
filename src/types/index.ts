@@ -1,7 +1,7 @@
 import type { Session } from "@supabase/supabase-js"
 import { User } from "@/lib/user"
 
-import type { Database } from './database'
+import type { Database } from './_database'
 
 export type Role = Database['public']['Tables']['profiles']['Row']['role']
 export const ROLES = ['manager', 'student'] as const satisfies Role[]

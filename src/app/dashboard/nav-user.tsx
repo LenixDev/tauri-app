@@ -24,7 +24,7 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { UnfoldMoreIcon, CheckmarkBadgeIcon, NotificationIcon, LogoutIcon } from "@hugeicons/core-free-icons"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
-import { useUser } from "@/hooks/use-hook"
+import { useUser } from "@/hooks/use-user"
 
 export function NavUser({
   user,
