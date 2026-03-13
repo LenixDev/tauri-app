@@ -36,6 +36,7 @@ import { toast } from "sonner"
 import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
 import { useSide } from "@/hooks/use-side"
+import { useDir } from "@/hooks/use-dir"
 
 export function NavUser({
   user,
@@ -62,7 +63,7 @@ export function NavUser({
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
+        <DropdownMenu dir={useDir()}>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
@@ -85,13 +86,13 @@ export function NavUser({
             align="end"
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0 font-normal">
+            <DropdownMenuLabel dir={useDir()} className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
+                <div className={`grid flex-1 text-${useSide()} text-sm leading-tight`}>
                   <span className="truncate font-medium">{user.name}</span>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
@@ -123,7 +124,7 @@ export function NavUser({
             </Select>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={signOut}>
-              <HugeiconsIcon icon={LogoutIcon} strokeWidth={2} />
+              <HugeiconsIcon icon={LogoutIcon} className={`${useDir() === 'rtl' && 'rotate-180'}`} strokeWidth={2} />
               {t("nav.user.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
