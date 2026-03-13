@@ -35,6 +35,7 @@ import { useNavigate } from "react-router"
 import { toast } from "sonner"
 import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
+import { useSide } from "@/hooks/use-side"
 
 export function NavUser({
   user,
@@ -58,7 +59,6 @@ export function NavUser({
     navigate("/login")
   }
   const { t, i18n } = useTranslation()
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -72,7 +72,7 @@ export function NavUser({
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
+              <div className={`grid flex-1 text-${useSide()} text-sm leading-tight`}>
                 <span className="truncate font-medium">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
