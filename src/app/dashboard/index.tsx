@@ -14,14 +14,16 @@ import {
 } from "@/components/ui/sidebar"
 import { DASHBOARD_ROUTES } from "@/lib"
 import React from "react"
+import { useTranslation } from "react-i18next"
 import { NavLink, Outlet, useLocation } from "react-router"
 
 export const Dashboard = () => {
   const { pathname } = useLocation()
   const directories = ["/", ...pathname.split("/").filter(Boolean)]
+  const side = useTranslation().i18n.dir() === "ltr" ? "left" : "right"
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar side={side} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
@@ -34,7 +36,7 @@ export const Dashboard = () => {
               <BreadcrumbList>
                 {directories.map((directory, index) => {
                   const isLastRoute = directories.length === index + 1
-                  const directoryLabel = DASHBOARD_ROUTES.find((route) => route.route === directory)?.label
+                  const directoryLabel = DASHBOARD_ROUTES.find((route) => route.route === directory)?.label()
                   DEV: console.log(directoryLabel, directory)
                   return !isLastRoute ? (
                     <React.Fragment key={directory}>

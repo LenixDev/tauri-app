@@ -25,7 +25,7 @@ import { useUser } from "@/hooks/use-user"
 import React, { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { Role } from "@/types"
-import { t } from "i18next"
+import { useTranslation } from "react-i18next"
 
 export const Users = () => {
   const [{ id, role, password, confirmPassword }, setUser] = useState<{
@@ -40,6 +40,8 @@ export const Users = () => {
     confirmPassword: "",
   })
   const user = useUser()
+  const { t } = useTranslation()
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
 

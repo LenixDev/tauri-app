@@ -17,7 +17,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons"
 import { Link } from "react-router"
-import { t } from "i18next"
+import { useTranslation } from "react-i18next"
 
 export function NavMain({
   items,
@@ -33,6 +33,7 @@ export function NavMain({
     }[]
   }[]
 }) {
+  const { t } = useTranslation()
   return (
     <SidebarGroup>
       <SidebarGroupLabel>{t("nav.main.title")}</SidebarGroupLabel>

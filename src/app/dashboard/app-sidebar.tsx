@@ -20,6 +20,7 @@ import { Settings05Icon, ChartRingIcon, SentIcon, CommandIcon, ManagerFreeIcons 
 import { Link } from "react-router"
 import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
+import { DASHBOARD_ROUTES } from "@/lib"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useUser()
@@ -76,8 +77,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ],
     projects: [
       {
-        name: "Manage Users",
-        url: "users",
+        name: DASHBOARD_ROUTES.find((route) => route.route === "users")?.label() || "ERR",
+        url: DASHBOARD_ROUTES.find((route) => route.route === "users")?.route || "ERR",
         icon: (
           <HugeiconsIcon icon={ManagerFreeIcons} strokeWidth={2} />
         ),
