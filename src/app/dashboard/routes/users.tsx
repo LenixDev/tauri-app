@@ -35,7 +35,7 @@ export const Users = () => {
     confirmPassword: string
   }>({
     id: "",
-    role: "student",
+    role: "student" satisfies Role,
     password: "",
     confirmPassword: "",
   })

@@ -8,10 +8,11 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "supatype": "supabase gen types typescript --project-id tantyyhfermajkhtzbzn > src/types/_database.ts",
+    "supatype": "supabase gen types typescript --project-id sphtvhctzbciykargfjt > src/types/_database.ts",
     "supapull": "supabase db pull",
-    "supadeploy": "pnpm supalink && supabase functions deploy",
-    "supalink": "supabase link --project-ref tantyyhfermajkhtzbzn",
+    "supadeploy": "supabase functions deploy",
+    "supalink": "supabase link --project-ref sphtvhctzbciykargfjt",
+    "supapush": "supabase db push",
     "start": "pnpm supatype && tauri dev"
   },
   "dependencies": {

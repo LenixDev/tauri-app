@@ -10,3 +10,14 @@ This template should help get you started developing with Tauri, React and Types
 ```zsh
 rustup self uninstall
 ```
+
+## Installation
+1. .env
+2. add project id to supatype & supalink in package.json
+3. run
+```zsh
+pnpm supalink
+pnpm supapush
+pnpm supadeploy
+pnpm supatype 
+```

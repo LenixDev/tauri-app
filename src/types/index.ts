@@ -5,7 +5,7 @@ import type { Database } from './_database'
 import type { DASHBOARD_ROUTES } from "@/lib"
 import type { Direction } from "radix-ui"
 
-export type Role = Database['public']['Tables']['profiles']['Row']['role']
+export type Role = Database['public']['Tables']['users']['Row']['role']
 export const ROLES = ['manager', 'student'] as const satisfies Role[]
 
 export const isRole = (value: string): value is Role =>
