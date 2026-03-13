@@ -62,7 +62,7 @@ export function NavMain({
                     </SidebarMenuAction>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <SidebarMenuSub className={useDir() === 'rtl' ? 'border-l-0 border-r' : ''}>
+                    <SidebarMenuSub className="rtl:border-l-0 border-r">
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
