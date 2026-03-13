@@ -21,11 +21,12 @@ import { Link } from "react-router"
 import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
 import { DASHBOARD_ROUTES } from "@/lib"
+import { useSide } from "@/hooks/use-side"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useUser()
   const { t } = useTranslation()
-  
+
   const data = {
     user: {
       name: "shadcn",
@@ -95,7 +96,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <HugeiconsIcon icon={CommandIcon} strokeWidth={2} className="size-4" />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
+                <div className={`grid flex-1 text-${useSide()} text-sm leading-tight`}>
                   <span className="truncate font-medium">{t("institute.name")}</span>
                   <span className="truncate text-xs">{t("institute.plan")}</span>
                 </div>

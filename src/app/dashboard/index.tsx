@@ -12,6 +12,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useRotate } from "@/hooks/use-rotate"
 import { useSide } from "@/hooks/use-side"
 import { DASHBOARD_ROUTES } from "@/lib"
 import React from "react"
@@ -26,7 +27,7 @@ export const Dashboard = () => {
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
+            <SidebarTrigger className={`-ml-1 ${useRotate()}`} />
             <Separator
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
@@ -44,7 +45,7 @@ export const Dashboard = () => {
                           {directoryLabel}
                         </NavLink>
                       </BreadcrumbItem>
-                      <BreadcrumbSeparator className="hidden md:block" />
+                      <BreadcrumbSeparator className={`hidden md:block ${useRotate()}`} />
                     </React.Fragment>
                   ) : (
                     <BreadcrumbItem key={directory}>
