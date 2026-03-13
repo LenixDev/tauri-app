@@ -68,13 +68,13 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className={`text-${useSide()} data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground`}
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
-              <div className={`grid flex-1 text-${useSide()} text-sm leading-tight`}>
+              <div className="grid flex-1 text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
@@ -125,7 +125,7 @@ export function NavUser({
             </Select>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={signOut}>
-              <HugeiconsIcon icon={LogoutIcon} className={useRotate()} strokeWidth={2} />
+              <HugeiconsIcon icon={LogoutIcon} className="rtl:rotate-180" strokeWidth={2} />
               {t("nav.user.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>

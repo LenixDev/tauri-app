@@ -27,7 +27,7 @@ export const Dashboard = () => {
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className={`-ml-1 ${useRotate()}`} />
+            <SidebarTrigger className="-ml-1 rtl:rotate-180" />
             <Separator
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
@@ -45,7 +45,7 @@ export const Dashboard = () => {
                           {directoryLabel}
                         </NavLink>
                       </BreadcrumbItem>
-                      <BreadcrumbSeparator className={`hidden md:block ${useRotate()}`} />
+                      <BreadcrumbSeparator className="hidden md:block rtl:rotate-180" />
                     </React.Fragment>
                   ) : (
                     <BreadcrumbItem key={directory}>

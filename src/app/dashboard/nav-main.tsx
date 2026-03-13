@@ -54,15 +54,15 @@ export function NavMain({
                   <CollapsibleTrigger asChild>
                     <SidebarMenuAction
                       className={
-                        `pr-0 rtl:left-1 rtl:right-auto data-[state=open]:${useDir() === 'rtl' ? '-' : ''}rotate-90`
+                        `rtl:left-1 rtl:right-auto data-[state=open]:${useDir() === 'rtl' ? '-' : ''}rotate-90`
                       }
                     >
-                      <HugeiconsIcon className={useRotate()} icon={ArrowRight01Icon} strokeWidth={2} />
+                      <HugeiconsIcon className="rtl:rotate-180" icon={ArrowRight01Icon} strokeWidth={2} />
                       <span className="sr-only">Toggle</span>
                     </SidebarMenuAction>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <SidebarMenuSub className="rtl:border-l-0 border-r">
+                    <SidebarMenuSub className="rtl:border-l-0 rtl:border-r">
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>

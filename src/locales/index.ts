@@ -14,7 +14,7 @@ i18n.use(initReactI18next).init({
     en: { translation: english satisfies typeof arabic },
     ar: { translation: arabic satisfies typeof english },
   },
-  lng: "ar",
+  lng: "en",
   fallbackLng: "en",
 })
 
