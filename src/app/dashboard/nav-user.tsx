@@ -37,6 +37,7 @@ import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
 import { useSide } from "@/hooks/use-side"
 import { useDir } from "@/hooks/use-dir"
+import { useRotate } from "@/hooks/use-rotate"
 
 export function NavUser({
   user,
@@ -124,7 +125,7 @@ export function NavUser({
             </Select>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={signOut}>
-              <HugeiconsIcon icon={LogoutIcon} className={`${useDir() === 'rtl' && 'rotate-180'}`} strokeWidth={2} />
+              <HugeiconsIcon icon={LogoutIcon} className={useRotate()} strokeWidth={2} />
               {t("nav.user.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
