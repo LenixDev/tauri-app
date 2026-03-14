@@ -35,14 +35,12 @@ import { useNavigate } from "react-router"
 import { toast } from "sonner"
 import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
-import { useSide } from "@/hooks/use-side"
 import { useDir } from "@/hooks/use-dir"
-import { useRotate } from "@/hooks/use-rotate"
 
 export function NavUser({
   user,
 }: {
-  user: {
+  readonly user: {
     name: string
     email: string
     avatar: string
@@ -111,7 +109,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <Select onValueChange={(value) => i18n.changeLanguage(value)}>
+            <Select onValueChange={async (value) => { await i18n.changeLanguage(value) }}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={t("nav.user.change_language")} />
               </SelectTrigger>
@@ -124,7 +122,7 @@ export function NavUser({
               </SelectContent>
             </Select>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signOut}>
+            <DropdownMenuItem onClick={void signOut}>
               <HugeiconsIcon icon={LogoutIcon} className="rtl:rotate-180" strokeWidth={2} />
               {t("nav.user.logout")}
             </DropdownMenuItem>

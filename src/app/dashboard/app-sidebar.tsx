@@ -21,18 +21,12 @@ import { Link } from "react-router"
 import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
 import { DASHBOARD_ROUTES } from "@/lib"
-import { useSide } from "@/hooks/use-side"
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   const user = useUser()
   const { t } = useTranslation()
 
   const data = {
-    user: {
-      name: "shadcn",
-      email: user.identifier.toString(),
-      avatar: "/avatars/shadcn.jpg",
-    },
     navMain: [
       {
         title: t("nav.main.settings"),
@@ -60,29 +54,34 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ],
       },
     ],
+    user: {
+      avatar: "/avatars/shadcn.jpg",
+      email: user.identifier.toString(),
+      name: "shadcn",
+    },
     navSecondary: [
       {
         title: t("nav.secondary.support"),
-        url: "",
         icon: (
           <HugeiconsIcon icon={ChartRingIcon} strokeWidth={2} />
         ),
+        url: "",
       },
       {
         title: t("nav.secondary.feedback"),
-        url: "",
         icon: (
           <HugeiconsIcon icon={SentIcon} strokeWidth={2} />
         ),
+        url: "",
       },
     ],
     projects: [
       {
-        name: DASHBOARD_ROUTES.find((route) => route.route === "users")?.label() || "ERR",
-        url: DASHBOARD_ROUTES.find((route) => route.route === "users")?.route || "ERR",
+        name: DASHBOARD_ROUTES.find((route) => route.route === "users")?.label() ?? "ERR",
         icon: (
           <HugeiconsIcon icon={ManagerFreeIcons} strokeWidth={2} />
         ),
+        url: DASHBOARD_ROUTES.find((route) => route.route === "users")?.route ?? "ERR",
       },
     ],
   }

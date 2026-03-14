@@ -22,9 +22,9 @@ import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useUser } from "@/hooks/use-user"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { toast } from "sonner"
-import { Role } from "@/types"
+import type { Role } from "@/types"
 import { useTranslation } from "react-i18next"
 
 export const Users = () => {
@@ -42,10 +42,12 @@ export const Users = () => {
   const user = useUser()
   const { t } = useTranslation()
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (event: React.SyntheticEvent) => {
+    event.preventDefault()
 
-    const [success, result, data] = await user.createUser(id, role, password, confirmPassword)
+    const [success, result, data] = await user.createUser({
+      identifier: id, confirmPassword, password, role
+    })
     if (!success) {
       toast.error(result)
       return
@@ -53,7 +55,7 @@ export const Users = () => {
     toast.success(t(result, data))
   }
   return ( 
-    <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={handleSubmit}>
+    <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={void handleSubmit}>
       <DialogTrigger asChild><Button variant="outline">{t("signup.create_user")}</Button></DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
@@ -68,11 +70,11 @@ export const Users = () => {
             <Label htmlFor="name">{t("identification")}</Label>
             <Input id="name" name="name" placeholder="6901120" 
               value={id}
-              onChange={(e) => setUser(prev => ({ ...prev, id: e.target.value }))}
+              onChange={(event) => { setUser(prev => ({ ...prev, id: event.target.value })) }}
             />
           </Field>
           <Field>
-            <Select onValueChange={(value) => setUser(prev => ({ ...prev, role: value as Role }))}>
+            <Select onValueChange={(value) => { setUser(prev => ({ ...prev, role: value as Role })) }}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={t("signup.role")} />
               </SelectTrigger>
@@ -91,7 +93,7 @@ export const Users = () => {
                 <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
                 <Input id="password" type="password" required 
                   value={password}
-                  onChange={(e) => setUser(prev => ({ ...prev, password: e.target.value }))}
+                  onChange={(event) => { setUser(prev => ({ ...prev, password: event.target.value })) }}
                 />
               </Field>
               <Field>
@@ -100,7 +102,7 @@ export const Users = () => {
                 </FieldLabel>
                 <Input id="confirm-password" type="password" required 
                   value={confirmPassword}
-                  onChange={(e) => setUser(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                  onChange={(event) => { setUser(prev => ({ ...prev, confirmPassword: event.target.value })) }}
                 />
               </Field>
             </Field>

@@ -2,7 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 export default [
-  { ignores: ['node_modules', 'vite.config.ts', '_database.ts', 'src/components'] },
+  { ignores: ['node_modules', 'vite.config.ts', 'src/types/_database.ts', 'src/components', 'supabase/functions/create-user/index.ts'] },
   ...tseslint.configs.strictTypeChecked.map(config => ({ ...config, files: ['**/*.{ts,tsx,mts}'] })),
   js.configs.recommended,
   {

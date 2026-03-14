@@ -14,13 +14,13 @@ import { useTranslation } from "react-i18next"
 
 export const LoginForm = ({
   className,
-}: React.ComponentProps<"form">) => {
+}: Readonly<React.ComponentProps<"form">>) => {
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const { t } = useTranslation()
 
-  const handleSubmit = async (event: React.SyntheticEvent) => {
+  const handleSubmit = async (event: Readonly<React.SyntheticEvent>) => {
     event.preventDefault()
     const [success, result] = await signIn(identifier, password)
     if (!success) {
@@ -32,7 +32,7 @@ export const LoginForm = ({
   }
   return (
     <form className={cn("flex flex-col gap-6", className)}
-      onSubmit={handleSubmit}
+      onSubmit={void handleSubmit}
     >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
@@ -46,7 +46,7 @@ export const LoginForm = ({
           <FieldLabel htmlFor="id">{t("identification")}</FieldLabel>
           <Input
             value={identifier}
-            onChange={e => setIdentifier(e.target.value)}
+            onChange={event => { setIdentifier(event.target.value) }}
             id="id"
             type="number"
             placeholder="6901120"
@@ -69,7 +69,7 @@ export const LoginForm = ({
           </div>
           <Input
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={event => { setPassword(event.target.value) }}
             id="password"
             type="password"
             required

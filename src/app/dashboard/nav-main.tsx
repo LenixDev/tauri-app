@@ -19,12 +19,11 @@ import { ArrowRight01Icon } from "@hugeicons/core-free-icons"
 import { Link } from "react-router"
 import { useTranslation } from "react-i18next"
 import { useDir } from "@/hooks/use-dir"
-import { useRotate } from "@/hooks/use-rotate"
 
-export function NavMain({
+export const NavMain = ({
   items,
 }: {
-  items: {
+  readonly items: {
     title: string
     url: string
     icon: React.ReactNode
@@ -34,7 +33,7 @@ export function NavMain({
       url: string
     }[]
   }[]
-}) {
+}) => {
   const { t } = useTranslation()
   return (
     <SidebarGroup>

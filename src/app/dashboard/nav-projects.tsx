@@ -21,15 +21,15 @@ import { MoreHorizontalCircle01Icon, FolderIcon, Share03Icon, Delete02Icon } fro
 import { Link } from "react-router"
 import { t } from "i18next"
 
-export function NavProjects({
+export const NavProjects = ({
   projects,
 }: {
-  projects: {
+  readonly projects: {
     name: string
     url: string
     icon: React.ReactNode
   }[]
-}) {
+}) => {
   const { isMobile } = useSidebar()
 
   return (

@@ -12,7 +12,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { useRotate } from "@/hooks/use-rotate"
 import { useSide } from "@/hooks/use-side"
 import { DASHBOARD_ROUTES } from "@/lib"
 import React from "react"
@@ -37,7 +36,6 @@ export const Dashboard = () => {
                 {directories.map((directory, index) => {
                   const isLastRoute = directories.length === index + 1
                   const directoryLabel = DASHBOARD_ROUTES.find((route) => route.route === directory)?.label()
-                  DEV: console.log(directoryLabel, directory)
                   return !isLastRoute ? (
                     <React.Fragment key={directory}>
                       <BreadcrumbItem className="hidden md:block">

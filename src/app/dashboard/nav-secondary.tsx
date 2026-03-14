@@ -9,16 +9,16 @@ import {
 } from "@/components/ui/sidebar"
 import { Link } from "react-router"
 
-export function NavSecondary({
+export const NavSecondary = ({
   items,
   ...props
 }: {
-  items: {
+  readonly items: {
     title: string
     url: string
     icon: React.ReactNode
   }[]
-} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) => {
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
