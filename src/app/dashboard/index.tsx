@@ -36,7 +36,11 @@ export const Dashboard = () => {
                 {directories.map((directory, index) => {
                   const isLastRoute = directories.length === index + 1
                   const directoryLabel = DASHBOARD_ROUTES.find((route) => route.route === directory)?.label()
-                  return !isLastRoute ? (
+                  return isLastRoute ? (
+                    <BreadcrumbItem key={directory}>
+                      <BreadcrumbPage>{directoryLabel}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  ) : (
                     <React.Fragment key={directory}>
                       <BreadcrumbItem className="hidden md:block">
                         <NavLink to={directory}>
@@ -45,10 +49,6 @@ export const Dashboard = () => {
                       </BreadcrumbItem>
                       <BreadcrumbSeparator className="hidden md:block rtl:rotate-180" />
                     </React.Fragment>
-                  ) : (
-                    <BreadcrumbItem key={directory}>
-                      <BreadcrumbPage>{directoryLabel}</BreadcrumbPage>
-                    </BreadcrumbItem>
                   )
                 })}
               </BreadcrumbList>

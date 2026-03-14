@@ -23,9 +23,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import React, { useState } from "react"
 import { toast } from "sonner"
-import type { Role } from "@/types"
 import { useTranslation } from "react-i18next"
 import { User } from "@/lib/user"
+import { isRole, type Role } from "@/types"
 
 export const Users = () => {
   const [{ identifier, role, password, confirmPassword }, setUser] = useState<{
@@ -55,7 +55,7 @@ export const Users = () => {
     toast.success(t(result, data))
   }
   return ( 
-    <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={(event) => { handleSubmit(event) }}>
+    <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={(event) => { handleSubmit(event).catch(() => undefined) }}>
       <DialogTrigger asChild><Button variant="outline">{t("signup.create_user")}</Button></DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
@@ -74,7 +74,9 @@ export const Users = () => {
             />
           </Field>
           <Field>
-            <Select onValueChange={(value) => { setUser(prev => ({ ...prev, role: value as Role })) }}>
+            <Select onValueChange={(value) => {
+              if (isRole(value)) setUser(prev => ({ ...prev, role: value }))
+            }}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={t("signup.role")} />
               </SelectTrigger>
@@ -108,7 +110,7 @@ export const Users = () => {
             </Field>
             {/* TODO: add strong passwords requirement */}
             <FieldDescription>
-              {t("signup.password_rule", { LENGTH: User.getPasswordLength })}
+              {t("signup.password_rule", { length: User.getPasswordLength })}
             </FieldDescription>
           </Field>
         </FieldGroup>

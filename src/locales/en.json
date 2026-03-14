@@ -12,8 +12,8 @@
     "title": "Login to your account"
   },
   "signup": {
-    "identification_mismatch": "Identification number must be exactly of {{IDENTIFIER_LENGTH}} characters",
-    "password_mismatch": "Password must be at least of {{PASSWORD_LENGTH}} characters",
+    "identification_mismatch": "Identification number must be exactly of {{identifierLength}} characters",
+    "password_mismatch": "Password must be at least of {{passwordLength}} characters",
     "passwords_unmatched": "Passwords do not match",
     "success": "User #${{identifier}} created successfully",
     "create_user": "Create A New User",
@@ -21,7 +21,7 @@
     "role": "Select The Role",
     "roles": "Roles",
     "confirm_password": "Confirm Password",
-    "password_rule": "Must be at least {{LENGTH}} characters long."
+    "password_rule": "Must be at least {{length}} characters long."
   },
   "institute": {
     "name": "Tayeb Mohamed Boucenna",

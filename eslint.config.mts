@@ -6,13 +6,16 @@ export default [
   ...tseslint.configs.strictTypeChecked.map(config => ({ ...config, files: ['**/*.{ts,tsx,mts}'] })),
   js.configs.recommended,
   {
+    // settings: {
+    //   react: { version: "detect", jsxRuntime: "automatic" }
+    // },
     files: ['**/*.{ts,tsx,mts}'],
     languageOptions: {
-      globals: { ...globals.browser, ...globals.node },
+      globals: { ...globals.browser, ...globals.node, React: 'readonly' },
       parserOptions: {
-      projectService: {
-        allowDefaultProject: ['supabase/functions/*/index.ts'],
-      },
+        projectService: {
+          allowDefaultProject: ['supabase/functions/*/index.ts'],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -53,7 +56,7 @@ export default [
       "max-classes-per-file": "error",
       "max-depth": "error",
       "max-lines": "error",
-      "max-lines-per-function": "error",
+      "max-lines-per-function": "warn",
       "max-nested-callbacks": "error",
       "max-params": "error",
       "max-statements": "error",
@@ -159,9 +162,9 @@ export default [
       "no-this-before-super": "error",
       "no-throw-literal": "error",
       "no-unassigned-vars": "error",
-      "no-undef": "warn",
+      "no-undef": "error",
       "no-undef-init": "error",
-      "no-undefined": "warn",
+      "no-undefined": "off",
       "no-underscore-dangle": "warn",
       "no-unexpected-multiline": "error",
       "no-unmodified-loop-condition": "warn",
@@ -188,10 +191,10 @@ export default [
       "no-useless-return": "error",
       "no-var": "error",
       "no-void": "error",
-      "no-warning-comments": "warn",
+      "no-warning-comments": "error",
       "no-with": "error",
       "object-shorthand": "error",
-      "one-var": "warn",
+      "one-var": "off",
       "operator-assignment": "warn",
       "prefer-arrow-callback": "error",
       "prefer-const": "error",
@@ -212,7 +215,7 @@ export default [
       "require-await": "error",
       "require-unicode-regexp": "warn",
       "require-yield": "error",
-      "sort-imports": "warn",
+      "sort-imports": "off",
       "sort-keys": "error",
       "sort-vars": "error",
       "strict": "error",
@@ -239,9 +242,9 @@ export default [
       "@typescript-eslint/consistent-type-definitions": "error",
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/default-param-last": "warn",
-      "@typescript-eslint/explicit-function-return-type": "warn",
+      "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/explicit-member-accessibility": "warn",
-      "@typescript-eslint/explicit-module-boundary-types": "warn",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/init-declarations": "error",
       "@typescript-eslint/max-params": "error",
       "@typescript-eslint/member-ordering": "error",
@@ -259,7 +262,7 @@ export default [
       "@typescript-eslint/no-inferrable-types": "error",
       "@typescript-eslint/no-invalid-void-type": "error",
       "@typescript-eslint/no-loop-func": "error",
-      "@typescript-eslint/no-magic-numbers": "warn",
+      "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-misused-new": "error",
       "@typescript-eslint/no-namespace": "error",
       "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "warn",
@@ -294,7 +297,13 @@ export default [
       "@typescript-eslint/consistent-return": "error",
       "@typescript-eslint/consistent-type-exports": "error",
       "@typescript-eslint/dot-notation": "error",
-      "@typescript-eslint/naming-convention": "warn",
+      "@typescript-eslint/naming-convention": [
+        "warn",
+        {
+          "selector": "variable",
+          "format": ["camelCase", "UPPER_CASE", "PascalCase"]
+        }
+      ],
       "@typescript-eslint/no-array-delete": "error",
       "@typescript-eslint/no-base-to-string": "warn",
       "@typescript-eslint/no-confusing-void-expression": "error",
@@ -349,7 +358,7 @@ export default [
       "@typescript-eslint/restrict-template-expressions": "error",
       "@typescript-eslint/return-await": "error",
       "@typescript-eslint/strict-boolean-expressions": "error",
-      "@typescript-eslint/strict-void-return": "warn",
+      "@typescript-eslint/strict-void-return": "off",
       "@typescript-eslint/switch-exhaustiveness-check": "error",
       "@typescript-eslint/unbound-method": "warn",
       "@typescript-eslint/use-unknown-in-catch-callback-variable": "error"

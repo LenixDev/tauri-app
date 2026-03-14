@@ -30,7 +30,7 @@ export const LoginForm = ({
       return
     }
     toast.success(t(result, { identifier }))
-    navigate('/')
+    await navigate('/')
   }
   return (
     <form className={cn("flex flex-col gap-6", className)}
@@ -54,7 +54,7 @@ export const LoginForm = ({
             placeholder="6901120"
             required
             className="bg-background"
-            /* strict within nim and max */
+            /* Strict within nim and max */
           />
         </Field>
         <Field>

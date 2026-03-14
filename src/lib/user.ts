@@ -14,7 +14,7 @@ export class User {
   private readonly email: string | undefined
   private readonly role: Role
 
-  constructor(email: string | undefined, role: Role) {
+  public constructor(email: string | undefined, role: Role) {
     this.email = email
     this.role = role
   }
@@ -25,8 +25,7 @@ export class User {
 
   public get identifier(): number {
     if (this.email === undefined) throw new Error("Email is undefined")
-    // eslint-disable-next-line no-magic-numbers
-    return parseInt(this.email.split('@')[0])
+    return parseInt(this.email.split('@')[0], 10)
   }
 
   public static async createUser({
@@ -37,19 +36,19 @@ export class User {
     if (identifier.length !== User.IDENTIFIER_LENGTH) return [
       false, 
       "signup.identification_mismatch" satisfies TranslationKey, 
-      { IDENTIFIER_LENGTH: User.IDENTIFIER_LENGTH }
+      { identifierLength: User.IDENTIFIER_LENGTH }
     ]
     if (password.length < User.PASSWORD_LENGTH) return [
       false, 
       "signup.password_mismatch" satisfies TranslationKey, 
-      { PASSWORD_LENGTH: User.PASSWORD_LENGTH }
+      { passwordLength: User.PASSWORD_LENGTH }
     ]
     if (password !== confirmPassword) return [
       false, "signup.passwords_unmatched" satisfies TranslationKey
     ]
 
     const result: { error: ErrorMessage | null } = await supabase.functions.invoke('create-student', { body: { 
-      identifier: parseInt(identifier), password, role
+      identifier: parseInt(identifier, 10), password, role
     } })
     const { error } = result
 

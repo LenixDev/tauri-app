@@ -9,7 +9,7 @@ i18n.on("languageChanged", (lng) => {
   document.documentElement.lang = lng
 })
 
-i18n.use(initReactI18next).init({
+await i18n.use(initReactI18next).init({
   fallbackLng: "en",
   lng: "en",
   resources: {

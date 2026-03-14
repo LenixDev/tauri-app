@@ -12,8 +12,8 @@
     "title": "تسجيل الدخول إلى حسابك"
   },
   "signup": {
-    "identification_mismatch": "رقم التعريفي يجب أن يتكون بالظبط من {{IDENTIFIER_LENGTH}} أحرف",
-    "password_mismatch": "كلمة المرور يجب أن تكون على الأقل {{PASSWORD_LENGTH}} أحرف",
+    "identification_mismatch": "رقم التعريفي يجب أن يتكون بالظبط من {{identifierLength}} أحرف",
+    "password_mismatch": "كلمة المرور يجب أن تكون على الأقل {{passwordLength}} أحرف",
     "passwords_unmatched": "كلمات المرور غير متطابقة",
     "success": "تم إنشاء المستخدم #${{identifier}} بنجاح",
     "create_user": "إنشاء مستخدم جديد",
@@ -21,7 +21,7 @@
     "role": "الدور",
     "roles": "الدوار",
     "confirm_password": "تأكيد كلمة المرور",
-    "password_rule": "يجب أن تكون على الأقل {{LENGTH}} أحرف."
+    "password_rule": "يجب أن تكون على الأقل {{length}} أحرف."
   },
   "institute": {
     "name": "الطيب محمد بوسنة",
