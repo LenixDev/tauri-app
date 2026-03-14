@@ -1,0 +1,1 @@
+export type Permission = Database["public"]["Enums"]["user_permissions"]

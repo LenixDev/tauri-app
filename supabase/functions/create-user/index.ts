@@ -5,6 +5,7 @@
 
 // Setup type definitions for built-in Supabase Runtime APIs
 import { createClient } from 'jsr:@supabase/supabase-js@2'
+import { Permission } from '../_shared/types'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -31,7 +32,9 @@ Deno.serve(async (req) => {
     .select('role')
     .eq('id', user.id)
     .single()
-
+  
+  const isRolePermissed = (permission: Permission) => {}
+    
   if (profile?.role !== 'manager') return new Response('Forbidden', { status: 403, headers: corsHeaders })
 
   const adminClient = createClient(
