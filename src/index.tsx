@@ -19,9 +19,13 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', eve
   document.documentElement.classList.toggle('dark', event.matches)
 })
 
-const root = document.getElementById("root")
-if (!root) throw new Error("Root element not found")
-ReactDOM.createRoot(root).render(
+const root = () => {
+  const element = document.getElementById("root")
+  if (!element) throw new Error("Root element not found")
+  return element
+}
+
+ReactDOM.createRoot(root()).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>

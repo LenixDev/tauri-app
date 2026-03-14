@@ -62,7 +62,7 @@ export class User {
     return [true, "alerts.logout_success" satisfies TranslationKey]
   }
 
-  private static async catchHttpError(error: Error): Promise<Response> {
+  private static async catchHttpError(error: Readonly<Error>): Promise<Response> {
     if (error instanceof FunctionsHttpError) {
       const errorInstance: { context: { text: () => Promise<string> }} = error
       const { text } = errorInstance.context
