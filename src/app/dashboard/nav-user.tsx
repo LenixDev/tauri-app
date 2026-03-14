@@ -55,7 +55,7 @@ export const NavUser = ({
   const signOut = async () => {
     const [success, result] = await User.signOut()
     if (!success) {
-      toast.error(result)
+      toast.error(t(result))
       return
     }
     toast.success(t(result))

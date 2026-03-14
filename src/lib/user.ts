@@ -39,7 +39,7 @@ export class User {
       { identifierLength: User.IDENTIFIER_LENGTH }
     ]
     if (password.length < User.PASSWORD_LENGTH) return [
-      false, 
+      false,
       "signup.password_mismatch", 
       { passwordLength: User.PASSWORD_LENGTH }
     ]

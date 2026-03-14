@@ -50,7 +50,7 @@ export const Users = () => {
       confirmPassword, identifier, password, role
     })
     if (!success) {
-      toast.error(result)
+      toast.error(t(result, data))
       return
     }
     setUser({
