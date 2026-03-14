@@ -21,11 +21,11 @@ import {
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useUser } from "@/hooks/use-user"
 import React, { useState } from "react"
 import { toast } from "sonner"
 import type { Role } from "@/types"
 import { useTranslation } from "react-i18next"
+import { User } from "@/lib/user"
 
 export const Users = () => {
   const [{ identifier, role, password, confirmPassword }, setUser] = useState<{
@@ -34,18 +34,18 @@ export const Users = () => {
     password: string
     confirmPassword: string
   }>({
-    identifier: "",
     confirmPassword: "",
+    identifier: "",
     password: "",
     role: "student" satisfies Role,
   })
-  const user = useUser()
   const { t } = useTranslation()
 
-  const handleSubmit = async (event: Readonly<React.SyntheticEvent>): Promise<void> => {
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+  const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault()
 
-    const [success, result, data] = await user.createUser({
+    const [success, result, data] = await User.createUser({
       confirmPassword, identifier, password, role
     })
     if (!success) {
@@ -108,7 +108,7 @@ export const Users = () => {
             </Field>
             {/* TODO: add strong passwords requirement */}
             <FieldDescription>
-              {t("signup.password_rule", { LENGTH: user.getPasswordLength })}
+              {t("signup.password_rule", { LENGTH: User.getPasswordLength })}
             </FieldDescription>
           </Field>
         </FieldGroup>

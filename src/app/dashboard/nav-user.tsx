@@ -33,24 +33,26 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { UnfoldMoreIcon, CheckmarkBadgeIcon, NotificationIcon, LogoutIcon } from "@hugeicons/core-free-icons"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
-import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
 import { useDir } from "@/hooks/use-dir"
+import { User } from "@/lib/user"
 
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const NavUser = ({
   user,
-}: Readonly<{
+}: {
   user: {
     name: string
     email: string
     avatar: string
   }
-}>) => {
+}) => {
   const { isMobile } = useSidebar()
-  const authUser = useUser()
   const navigate = useNavigate()
+  const { t, i18n } = useTranslation()
+  
   const signOut = async () => {
-    const [success, result] = await authUser.signOut()
+    const [success, result] = await User.signOut()
     if (!success) {
       toast.error(result)
       return
@@ -58,7 +60,6 @@ export const NavUser = ({
     toast.success(t(result))
     navigate("/login")
   }
-  const { t, i18n } = useTranslation()
   return (
     <SidebarMenu>
       <SidebarMenuItem>

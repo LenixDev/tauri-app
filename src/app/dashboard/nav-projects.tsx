@@ -21,15 +21,16 @@ import { MoreHorizontalCircle01Icon, FolderIcon, Share03Icon, Delete02Icon } fro
 import { Link } from "react-router"
 import { t } from "i18next"
 
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const NavProjects = ({
   projects,
-}: Readonly<{
-  projects: {
+}: {
+  readonly projects: {
     name: string
     url: string
     icon: React.ReactNode
   }[]
-}>) => {
+}) => {
   const { isMobile } = useSidebar()
 
   return (

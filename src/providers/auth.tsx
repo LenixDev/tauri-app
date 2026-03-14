@@ -4,7 +4,8 @@ import { User } from "@/lib/user"
 import type { AuthState, Role } from "@/types"
 import { AuthContext } from "@/contexts/auth"
 
-export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode }>) => {
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+export const AuthProvider = ({ children }: { readonly children: React.ReactNode }) => {
   const [state, setState] = useState<AuthState>({ session: undefined, status: 'loading', user: undefined })
 
   useEffect(() => {

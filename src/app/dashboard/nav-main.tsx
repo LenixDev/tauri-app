@@ -20,10 +20,11 @@ import { Link } from "react-router"
 import { useTranslation } from "react-i18next"
 import { useDir } from "@/hooks/use-dir"
 
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const NavMain = ({
   items,
-}: Readonly<{
-  items: {
+}: {
+  readonly items: {
     title: string
     url: string
     icon: React.ReactNode
@@ -33,7 +34,7 @@ export const NavMain = ({
       url: string
     }[]
   }[]
-}>) => {
+}) => {
   const { t } = useTranslation()
   return (
     <SidebarGroup>
@@ -62,7 +63,7 @@ export const NavMain = ({
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <SidebarMenuSub className="rtl:border-l-0 rtl:border-r">
-                      {item.items?.map((subItem) => (
+                      {item.items.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
                             <Link to={subItem.url}>

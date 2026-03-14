@@ -2,7 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 export default [
-  { ignores: ['node_modules', 'vite.config.ts', 'src/types/_database.ts', 'src/components', 'supabase/functions/create-user/index.ts'] },
+  { ignores: ['node_modules', 'eslint.config.mts', 'src/types/_database.ts', 'src/components'] },
   ...tseslint.configs.strictTypeChecked.map(config => ({ ...config, files: ['**/*.{ts,tsx,mts}'] })),
   js.configs.recommended,
   {
@@ -10,7 +10,9 @@ export default [
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
       parserOptions: {
-        projectService: true,
+      projectService: {
+        allowDefaultProject: ['supabase/functions/*/index.ts'],
+      },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -43,7 +45,7 @@ export default [
       "guard-for-in": "warn",
       "id-denylist": "warn",
       "id-length": [
-        "error", { "exceptions": ["_"] }
+        "error", { "exceptions": ["_", "t"] }
       ],
       "id-match": "error",
       "init-declarations": "error",
@@ -116,7 +118,7 @@ export default [
       "no-loss-of-precision": "error",
       "no-magic-numbers": [
         "error",
-        { "detectObjects": true, "enforceConst": true, "ignoreReadonlyClassProperties": true }
+        { "detectObjects": true, "enforceConst": true, "ignore": [1], "ignoreReadonlyClassProperties": true }
       ],
       "no-misleading-character-class": "warn",
       "no-multi-assign": "error",

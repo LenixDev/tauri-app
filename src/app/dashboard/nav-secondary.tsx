@@ -9,16 +9,17 @@ import {
 } from "@/components/ui/sidebar"
 import { Link } from "react-router"
 
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const NavSecondary = ({
   items,
   ...props
-}: Readonly<{
-  items: {
+}: {
+  readonly items: {
     title: string
     url: string
     icon: React.ReactNode
   }[]
-}> & React.ComponentPropsWithoutRef<typeof SidebarGroup>) => (
+} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) => (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
