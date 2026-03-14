@@ -25,7 +25,8 @@ import React, { useState } from "react"
 import { toast } from "sonner"
 import { useTranslation } from "react-i18next"
 import { User } from "@/lib/user"
-import { isRole, type Role } from "@/types"
+import { isRole } from "@/lib"
+import type { Role } from "@/types"
 
 export const Users = () => {
   const [{ identifier, role, password, confirmPassword }, setUser] = useState<{
@@ -52,6 +53,12 @@ export const Users = () => {
       toast.error(result)
       return
     }
+    setUser({
+      identifier: "",
+      role: "student",
+      password: "",
+      confirmPassword: "",
+    })
     toast.success(t(result, data))
   }
   return (

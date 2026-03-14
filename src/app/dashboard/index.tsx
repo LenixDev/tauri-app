@@ -13,9 +13,9 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { useSide } from "@/hooks/use-side"
-import { DASHBOARD_ROUTES } from "@/lib"
 import React from "react"
 import { NavLink, Outlet, useLocation } from "react-router"
+import { DASHBOARD_ROUTES } from "@/lib/routes"
 
 export const Dashboard = () => {
   const { pathname } = useLocation()

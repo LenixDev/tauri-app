@@ -25,7 +25,6 @@ export const AuthProvider = ({ children }: { readonly children: React.ReactNode 
         setState({ session: null, status: 'unauthenticated', user: null })
         return
       }
-      // TODO: cast the data.role type
       const userInstance = new User(session.user.email, data.role)
       setState({ session, status: 'authenticated', user: userInstance })
     })

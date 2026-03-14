@@ -213,7 +213,7 @@ export default [
       "require-unicode-regexp": "warn",
       "require-yield": "error",
       "sort-imports": "off",
-      "sort-keys": "error",
+      "sort-keys": "off",
       "sort-vars": "error",
       "strict": "error",
       "symbol-description": "error",

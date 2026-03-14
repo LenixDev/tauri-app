@@ -20,7 +20,7 @@ import { Settings05Icon, ChartRingIcon, SentIcon, CommandIcon, ManagerFreeIcons 
 import { Link } from "react-router"
 import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
-import { DASHBOARD_ROUTES } from "@/lib"
+import { DASHBOARD_ROUTES } from "@/lib/routes"
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
