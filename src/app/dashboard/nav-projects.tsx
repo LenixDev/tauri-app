@@ -23,13 +23,13 @@ import { t } from "i18next"
 
 export const NavProjects = ({
   projects,
-}: {
-  readonly projects: {
+}: Readonly<{
+  projects: {
     name: string
     url: string
     icon: React.ReactNode
   }[]
-}) => {
+}>) => {
   const { isMobile } = useSidebar()
 
   return (

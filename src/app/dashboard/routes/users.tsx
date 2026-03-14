@@ -28,25 +28,25 @@ import type { Role } from "@/types"
 import { useTranslation } from "react-i18next"
 
 export const Users = () => {
-  const [{ id, role, password, confirmPassword }, setUser] = useState<{
-    id: string
+  const [{ identifier, role, password, confirmPassword }, setUser] = useState<{
+    identifier: string
     role: Role
     password: string
     confirmPassword: string
   }>({
-    id: "",
-    role: "student" satisfies Role,
-    password: "",
+    identifier: "",
     confirmPassword: "",
+    password: "",
+    role: "student" satisfies Role,
   })
   const user = useUser()
   const { t } = useTranslation()
 
-  const handleSubmit = async (event: React.SyntheticEvent) => {
+  const handleSubmit = async (event: Readonly<React.SyntheticEvent>): Promise<void> => {
     event.preventDefault()
 
     const [success, result, data] = await user.createUser({
-      identifier: id, confirmPassword, password, role
+      confirmPassword, identifier, password, role
     })
     if (!success) {
       toast.error(result)
@@ -55,7 +55,7 @@ export const Users = () => {
     toast.success(t(result, data))
   }
   return ( 
-    <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={void handleSubmit}>
+    <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={handleSubmit}>
       <DialogTrigger asChild><Button variant="outline">{t("signup.create_user")}</Button></DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
@@ -67,10 +67,10 @@ export const Users = () => {
         {/* TODO: verify the credentials are correct */}
         <FieldGroup>
           <Field>
-            <Label htmlFor="name">{t("identification")}</Label>
-            <Input id="name" name="name" placeholder="6901120" 
-              value={id}
-              onChange={(event) => { setUser(prev => ({ ...prev, id: event.target.value })) }}
+            <Label htmlFor="identifier">{t("identification")}</Label>
+            <Input id="identifier" name="identifier" placeholder="6901120" 
+              value={identifier}
+              onChange={(event) => { setUser(prev => ({ ...prev, identifier: event.target.value })) }}
             />
           </Field>
           <Field>

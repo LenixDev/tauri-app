@@ -20,7 +20,7 @@ export const LoginForm = ({
   const navigate = useNavigate()
   const { t } = useTranslation()
 
-  const handleSubmit = async (event: Readonly<React.SyntheticEvent>) => {
+  const handleSubmit = async (event: Readonly<React.SyntheticEvent>): Promise<void> => {
     event.preventDefault()
     const [success, result] = await signIn(identifier, password)
     if (!success) {
@@ -32,7 +32,7 @@ export const LoginForm = ({
   }
   return (
     <form className={cn("flex flex-col gap-6", className)}
-      onSubmit={void handleSubmit}
+      onSubmit={handleSubmit}
     >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">

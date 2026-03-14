@@ -26,7 +26,9 @@ export default [
       "consistent-return": "warn",
       "consistent-this": "warn",
       "constructor-super": "warn",
-      "curly": ["error", "multi"],
+      "curly": [
+        "error", "multi"
+      ],
       "default-case": "error",
       "default-case-last": "error",
       "default-param-last": "error",
@@ -325,7 +327,9 @@ export default [
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
       "@typescript-eslint/prefer-readonly": "error",
-      "@typescript-eslint/prefer-readonly-parameter-types": "error",
+      "@typescript-eslint/prefer-readonly-parameter-types": ["error", {
+        "ignoreInferredTypes": true
+      }],
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "warn",
       "@typescript-eslint/prefer-return-this-type": "error",

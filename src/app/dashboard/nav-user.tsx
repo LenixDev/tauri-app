@@ -37,15 +37,15 @@ import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
 import { useDir } from "@/hooks/use-dir"
 
-export function NavUser({
+export const NavUser = ({
   user,
-}: {
-  readonly user: {
+}: Readonly<{
+  user: {
     name: string
     email: string
     avatar: string
   }
-}) {
+}>) => {
   const { isMobile } = useSidebar()
   const authUser = useUser()
   const navigate = useNavigate()
@@ -122,7 +122,7 @@ export function NavUser({
               </SelectContent>
             </Select>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={void signOut}>
+            <DropdownMenuItem onClick={signOut}>
               <HugeiconsIcon icon={LogoutIcon} className="rtl:rotate-180" strokeWidth={2} />
               {t("nav.user.logout")}
             </DropdownMenuItem>

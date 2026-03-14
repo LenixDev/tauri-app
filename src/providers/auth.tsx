@@ -4,7 +4,7 @@ import { User } from "@/lib/user"
 import type { AuthState } from "@/types"
 import { AuthContext } from "@/contexts/auth"
 
-export const AuthProvider = ({ children }: { readonly children: React.ReactNode }) => {
+export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const [state, setState] = useState<AuthState>({ session: undefined, status: 'loading', user: undefined })
 
   useEffect(() => {

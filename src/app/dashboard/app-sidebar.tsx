@@ -22,15 +22,13 @@ import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
 import { DASHBOARD_ROUTES } from "@/lib"
 
-export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
+export const AppSidebar = ({ ...props }: Readonly<React.ComponentProps<typeof Sidebar>>) => {
   const user = useUser()
   const { t } = useTranslation()
 
   const data = {
     navMain: [
       {
-        title: t("nav.main.settings"),
-        url: "",
         icon: (
           <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />
         ),
@@ -52,6 +50,33 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
             url: "",
           },
         ],
+        title: t("nav.main.settings"),
+        url: "",
+      },
+    ],
+    navSecondary: [
+      {
+        icon: (
+          <HugeiconsIcon icon={ChartRingIcon} strokeWidth={2} />
+        ),
+        title: t("nav.secondary.support"),
+        url: "",
+      },
+      {
+        icon: (
+          <HugeiconsIcon icon={SentIcon} strokeWidth={2} />
+        ),
+        title: t("nav.secondary.feedback"),
+        url: "",
+      },
+    ],
+    projects: [
+      {
+        icon: (
+          <HugeiconsIcon icon={ManagerFreeIcons} strokeWidth={2} />
+        ),
+        name: DASHBOARD_ROUTES.find((route) => route.route === "users")?.label() ?? "ERR",
+        url: DASHBOARD_ROUTES.find((route) => route.route === "users")?.route ?? "ERR",
       },
     ],
     user: {
@@ -59,31 +84,6 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
       email: user.identifier.toString(),
       name: "shadcn",
     },
-    navSecondary: [
-      {
-        title: t("nav.secondary.support"),
-        icon: (
-          <HugeiconsIcon icon={ChartRingIcon} strokeWidth={2} />
-        ),
-        url: "",
-      },
-      {
-        title: t("nav.secondary.feedback"),
-        icon: (
-          <HugeiconsIcon icon={SentIcon} strokeWidth={2} />
-        ),
-        url: "",
-      },
-    ],
-    projects: [
-      {
-        name: DASHBOARD_ROUTES.find((route) => route.route === "users")?.label() ?? "ERR",
-        icon: (
-          <HugeiconsIcon icon={ManagerFreeIcons} strokeWidth={2} />
-        ),
-        url: DASHBOARD_ROUTES.find((route) => route.route === "users")?.route ?? "ERR",
-      },
-    ],
   }
   return (
     <Sidebar variant="inset" {...props}>

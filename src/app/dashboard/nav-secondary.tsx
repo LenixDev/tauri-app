@@ -12,14 +12,13 @@ import { Link } from "react-router"
 export const NavSecondary = ({
   items,
   ...props
-}: {
-  readonly items: {
+}: Readonly<{
+  items: {
     title: string
     url: string
     icon: React.ReactNode
   }[]
-} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) => {
-  return (
+}> & React.ComponentPropsWithoutRef<typeof SidebarGroup>) => (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
@@ -37,4 +36,3 @@ export const NavSecondary = ({
       </SidebarGroupContent>
     </SidebarGroup>
   )
-}

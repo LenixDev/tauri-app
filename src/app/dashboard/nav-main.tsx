@@ -22,8 +22,8 @@ import { useDir } from "@/hooks/use-dir"
 
 export const NavMain = ({
   items,
-}: {
-  readonly items: {
+}: Readonly<{
+  items: {
     title: string
     url: string
     icon: React.ReactNode
@@ -33,7 +33,7 @@ export const NavMain = ({
       url: string
     }[]
   }[]
-}) => {
+}>) => {
   const { t } = useTranslation()
   return (
     <SidebarGroup>
