@@ -42,7 +42,9 @@ export default [
       "grouped-accessor-pairs": "error",
       "guard-for-in": "warn",
       "id-denylist": "warn",
-      "id-length": "error",
+      "id-length": [
+        "error", { "exceptions": ["_"] }
+      ],
       "id-match": "error",
       "init-declarations": "error",
       "logical-assignment-operators": "error",
