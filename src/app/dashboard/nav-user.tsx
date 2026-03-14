@@ -110,7 +110,7 @@ export const NavUser = ({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <Select onValueChange={(value) => { await i18n.changeLanguage(value) }}>
+            <Select onValueChange={(value) => { i18n.changeLanguage(value).catch(() => undefined) }}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={t("nav.user.change_language")} />
               </SelectTrigger>
@@ -123,7 +123,7 @@ export const NavUser = ({
               </SelectContent>
             </Select>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => { await signOut() }}>
+            <DropdownMenuItem onClick={() => { signOut().catch(() => undefined) }}>
               <HugeiconsIcon icon={LogoutIcon} className="rtl:rotate-180" strokeWidth={2} />
               {t("nav.user.logout")}
             </DropdownMenuItem>

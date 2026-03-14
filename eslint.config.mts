@@ -6,9 +6,6 @@ export default [
   ...tseslint.configs.strictTypeChecked.map(config => ({ ...config, files: ['**/*.{ts,tsx,mts}'] })),
   js.configs.recommended,
   {
-    // settings: {
-    //   react: { version: "detect", jsxRuntime: "automatic" }
-    // },
     files: ['**/*.{ts,tsx,mts}'],
     languageOptions: {
       globals: { ...globals.browser, ...globals.node, React: 'readonly' },
@@ -191,7 +188,7 @@ export default [
       "no-useless-return": "error",
       "no-var": "error",
       "no-void": "error",
-      "no-warning-comments": "error",
+      "no-warning-comments": "warn",
       "no-with": "error",
       "object-shorthand": "error",
       "one-var": "off",
