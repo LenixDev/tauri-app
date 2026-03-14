@@ -4,8 +4,6 @@
 // This enables autocomplete, go to definition, etc.
 
 // Setup type definitions for built-in Supabase Runtime APIs
-console.log("Hello from Functions!")
-
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
 const corsHeaders = {
@@ -18,7 +16,6 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders })
   
   const authHeader = req.headers.get('Authorization')
-  console.log('auth header:', authHeader)
 
   const supabaseClient = createClient(
     Deno.env.get('SUPABASE_URL')!,
@@ -27,8 +24,7 @@ Deno.serve(async (req) => {
   )
 
   const { data: { user } } = await supabaseClient.auth.getUser()
-  if (!user)
-    return new Response('Unauthorized', { status: 401, headers: corsHeaders })
+  if (!user) return new Response('Unauthorized', { status: 401, headers: corsHeaders })
 
   const { data: profile } = await supabaseClient
     .from('users')
@@ -36,8 +32,7 @@ Deno.serve(async (req) => {
     .eq('id', user.id)
     .single()
 
-  if (profile?.role !== 'manager')
-    return new Response('Forbidden', { status: 403, headers: corsHeaders })
+  if (profile?.role !== 'manager') return new Response('Forbidden', { status: 403, headers: corsHeaders })
 
   const adminClient = createClient(
     Deno.env.get('SUPABASE_URL')!,
@@ -52,15 +47,13 @@ Deno.serve(async (req) => {
     email_confirm: true,
   })
 
-  if (error)
-    return new Response(error.message, { status: 400, headers: corsHeaders })
+  if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
   const { error: profileError } = await adminClient
     .from('users')
     .insert({ id: data.user.id, role })
 
-  if (profileError)
-    return new Response(profileError.message, { status: 400, headers: corsHeaders })
+  if (profileError) return new Response(profileError.message, { status: 400, headers: corsHeaders })
 
   return new Response('OK', { status: 200, headers: corsHeaders })
 })

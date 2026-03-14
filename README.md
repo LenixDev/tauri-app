@@ -21,3 +21,5 @@ pnpm supapush
 pnpm supadeploy
 pnpm supatype 
 ```
+
+# TODO: error boundaries, loading state, use next themes
