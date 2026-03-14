@@ -36,6 +36,7 @@ export const NavMain = ({
   }[]
 }) => {
   const { t } = useTranslation()
+  const dir = useDir()
   return (
     <SidebarGroup>
       <SidebarGroupLabel>{t("nav.main.title")}</SidebarGroupLabel>
@@ -54,7 +55,7 @@ export const NavMain = ({
                   <CollapsibleTrigger asChild>
                     <SidebarMenuAction
                       className={
-                        `rtl:left-1 rtl:right-auto data-[state=open]:${useDir() === 'rtl' ? '-' : ''}rotate-90`
+                        `rtl:left-1 rtl:right-auto data-[state=open]:${dir === 'rtl' ? '-' : ''}rotate-90`
                       }
                     >
                       <HugeiconsIcon className="rtl:rotate-180" icon={ArrowRight01Icon} strokeWidth={2} />

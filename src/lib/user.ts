@@ -1,6 +1,6 @@
 import type { TranslationKey } from "@/locales"
 import { supabase } from "./supabase"
-import type { Role, Permission, Response, ErrorMessage } from "@/types"
+import type { Role, Permission, Response } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
 
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
@@ -47,7 +47,7 @@ export class User {
       false, "signup.passwords_unmatched" satisfies TranslationKey
     ]
 
-    const result: { error: ErrorMessage | null } = await supabase.functions.invoke('create-student', { body: { 
+    const result: { error: Error | null } = await supabase.functions.invoke('create-student', { body: { 
       identifier: parseInt(identifier, 10), password, role
     } })
     const { error } = result
@@ -62,7 +62,7 @@ export class User {
     return [true, "alerts.logout_success" satisfies TranslationKey]
   }
 
-  private static async catchHttpError(error: ErrorMessage): Promise<Response> {
+  private static async catchHttpError(error: Error): Promise<Response> {
     if (error instanceof FunctionsHttpError) {
       const errorInstance: { context: { text: () => Promise<string> }} = error
       const { text } = errorInstance.context

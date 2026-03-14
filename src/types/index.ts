@@ -26,7 +26,3 @@ export type Permission =
   | 'users:create'
   | 'users:read'
   | 'users:delete'
-
-export interface ErrorMessage {
-  readonly message: string
-}
