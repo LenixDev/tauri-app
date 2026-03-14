@@ -4,7 +4,7 @@ import type { Role, Permission, Response } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
 
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
-  manager: ['users:create', 'users:read', 'users:delete'],
+  manager: ['create:user'],
   student: [],
 } as const
 
