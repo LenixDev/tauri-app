@@ -1,4 +1,4 @@
 import { createContext } from "react"
-import { AuthState } from "@/types"
+import type { AuthState } from "@/types"
 
-export const AuthContext = createContext<AuthState>({ status: 'loading', session: undefined, user: undefined })
+export const AuthContext = createContext<AuthState>({ session: undefined, status: 'loading', user: undefined })

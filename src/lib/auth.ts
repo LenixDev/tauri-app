@@ -1,6 +1,6 @@
-import { TranslationKey } from "@/locales"
+import type { TranslationKey } from "@/locales"
 import { supabase } from "./supabase"
-import { Response } from "@/types"
+import type { Response } from "@/types"
 
 export const signIn = async(identifier: string, password: string): Response => {
   const { error } = await supabase.auth.signInWithPassword({

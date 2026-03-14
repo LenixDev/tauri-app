@@ -1,7 +1,6 @@
-import { TranslationKey } from "@/locales"
+import type { TranslationKey } from "@/locales"
 import { supabase } from "./supabase"
-import { Permission, Response } from "@/types"
-import { Role } from "@/types"
+import type { Role, Permission, Response } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
 
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
@@ -18,7 +17,6 @@ export class User {
   constructor(email: string | undefined, role: Role) {
     this.email = email
     this.role = role
-    DEV: console.log("instance created with:", role)
   }
 
   get identifier(): number {
@@ -30,22 +28,22 @@ export class User {
     return this.PASSWORD_LENGTH
   }
 
-  public async createUser(identifier: string, role: Role, password: string, confirmPassword: string): Response {
+  public async createUser({
+    identifier, role, password, confirmPassword
+  }: Readonly<{
+    identifier: string, role: Role, password: string, confirmPassword: string
+  }>): Response {
     if (identifier.length !== this.IDENTIFIER_LENGTH) return [false, "signup.identification_mismatch" satisfies TranslationKey, { IDENTIFIER_LENGTH: this.IDENTIFIER_LENGTH }]
     if (password.length < this.PASSWORD_LENGTH) return [false, "signup.password_mismatch" satisfies TranslationKey, { PASSWORD_LENGTH: this.PASSWORD_LENGTH }]
     if (password !== confirmPassword) return [false, "signup.passwords_unmatched" satisfies TranslationKey]
 
-    DEV: console.log("creation requested for:", identifier)
-    const { data: { session } } = await supabase.auth.getSession()
-    DEV: console.log('session:', session)
     const { error } = await supabase.functions.invoke('create-student', {
-      body: { identifier: parseInt(identifier), role, password },
+      body: { identifier: parseInt(identifier), password, role },
     })
-    DEV: console.log("await passed for:", identifier, "error:", error)
     
     if (error) {
       if (error instanceof FunctionsHttpError) {
-        const message = await error.context.text()
+        const message: string = await error.context.text()
         return [false, message]
       }
       return [false, error.message]

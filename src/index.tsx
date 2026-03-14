@@ -11,12 +11,12 @@ import { App } from "@/app"
 import { AuthProvider } from "@/providers/auth"
 import "@/locales"
 import { DirectionProvider } from "./components/ui/direction"
-import { RouteDir } from "./types"
+import type { RouteDir } from "./types"
 
 if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
 
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-  document.documentElement.classList.toggle('dark', e.matches)
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+  document.documentElement.classList.toggle('dark', event.matches)
 })
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

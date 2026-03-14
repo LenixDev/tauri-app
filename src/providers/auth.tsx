@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
-import { AuthState } from "@/types"
+import type { AuthState } from "@/types"
 import { AuthContext } from "@/contexts/auth"
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useState<AuthState>({ status: 'loading', session: undefined, user: undefined })
+export const AuthProvider = ({ children }: { readonly children: React.ReactNode }) => {
+  const [state, setState] = useState<AuthState>({ session: undefined, status: 'loading', user: undefined })
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_, session) => {
       if (!session) {
-        setState({ status: 'unauthenticated', session: null, user: null })
+        setState({ session: null, status: 'unauthenticated', user: null })
         return
       }
 
@@ -21,15 +21,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .single()
 
       if (error) {
-        setState({ status: 'unauthenticated', session: null, user: null })
+        setState({ session: null, status: 'unauthenticated', user: null })
         return
       }
-
+      // TODO: cast the data.role type
       const userInstance = new User(session.user.email, data.role)
-      setState({ status: 'authenticated', session, user: userInstance })
+      setState({ session, status: 'authenticated', user: userInstance })
     })
 
-    return () => subscription.unsubscribe()
+    return (): void => { subscription.unsubscribe() }
   }, [])
 
   return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>

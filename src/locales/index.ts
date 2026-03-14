@@ -1,8 +1,8 @@
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 
-const english = await import("./en.json").then(m => m.default)
-const arabic = await import("./ar.json").then(m => m.default)
+const english = await import("./en.json").then(file => file.default)
+const arabic = await import("./ar.json").then(file => file.default)
 
 i18n.on("languageChanged", (lng) => {
   document.documentElement.dir = i18n.dir(lng)
@@ -10,12 +10,12 @@ i18n.on("languageChanged", (lng) => {
 })
 
 i18n.use(initReactI18next).init({
-  resources: {
-    en: { translation: english satisfies typeof arabic },
-    ar: { translation: arabic satisfies typeof english },
-  },
-  lng: "en",
   fallbackLng: "en",
+  lng: "en",
+  resources: {
+    ar: { translation: arabic satisfies typeof english },
+    en: { translation: english satisfies typeof arabic },
+  },
 })
 
 type DotNotation<T, Prefix extends string = ""> = {
