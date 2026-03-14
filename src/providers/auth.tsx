@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
-import type { AuthState } from "@/types"
+import type { AuthState, Role } from "@/types"
 import { AuthContext } from "@/contexts/auth"
 
 export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode }>) => {
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
         .from('users')
         .select('role')
         .eq('id', session.user.id)
-        .single()
+        .single<{ role: Role }>()
 
       if (error) {
         setState({ session: null, status: 'unauthenticated', user: null })

@@ -112,7 +112,10 @@ export default [
       "no-lonely-if": "error",
       "no-loop-func": "warn",
       "no-loss-of-precision": "error",
-      "no-magic-numbers": "error",
+      "no-magic-numbers": [
+        "error",
+        { "detectObjects": true, "enforceConst": true, "ignoreReadonlyClassProperties": true }
+      ],
       "no-misleading-character-class": "warn",
       "no-multi-assign": "error",
       "no-multi-str": "error",

@@ -29,7 +29,7 @@
   },
   "alerts": {
     "signin_success": "Sign in successful with #{{identifier}}",
-    "logout_success": "Logout successful"
+    "logout_success": "Logout successful from {{identifier}}"
   },
   "nav": {
     "main": {
