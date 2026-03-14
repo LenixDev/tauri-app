@@ -11,17 +11,19 @@ import "@/locales"
 import { DirectionProvider } from "./components/ui/direction"
 import { ROUTES } from "./lib/routes"
 
-if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
-
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-  document.documentElement.classList.toggle('dark', event.matches)
-})
+const Dashboard = ROUTES["/"].element
 
 const root = () => {
   const element = document.getElementById("root")
   if (!element) throw new Error("Root element not found")
   return element
 }
+
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+  document.documentElement.classList.toggle('dark', event.matches)
+})
 
 ReactDOM.createRoot(root()).render(
   <React.StrictMode>
@@ -33,8 +35,8 @@ ReactDOM.createRoot(root()).render(
             <Routes>
               <Route path="login" element={<Login />} />
               <Route element={<App />}>
-                <Route path={ROUTES.dashboard.route} element={ROUTES.dashboard.element()}>
-                  <Route path={ROUTES.users.route} element={ROUTES.users.element()} />
+                <Route path={ROUTES["/"].route} element={<Dashboard />}>
+                  <Route path={ROUTES.users.route} element={<ROUTES.users.element />} />
                 </Route>
               </Route>
             </Routes>

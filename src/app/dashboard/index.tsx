@@ -20,9 +20,10 @@ import { ROUTES } from "@/lib/routes"
 export const Dashboard = () => {
   const { pathname } = useLocation()
   const directories = ["/", ...pathname.split("/").filter(Boolean)]
+  const side = useSide()
   return (
     <SidebarProvider>
-      <AppSidebar side={useSide()} />
+      <AppSidebar side={side} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">

@@ -8,7 +8,7 @@ export const ROUTES: Record<string, {
   route: string
   element: () => JSX.Element
 }> = {
-  dashboard: {
+  "/": {
     label: () => i18n.t("dashboard"),
     route: '/',
     element: Dashboard,
