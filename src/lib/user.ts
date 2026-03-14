@@ -32,34 +32,32 @@ export class User {
     identifier, role, password, confirmPassword
   }: Readonly<{
     identifier: string, role: Role, password: string, confirmPassword: string
-  }>): Response {
+  }>): Response<TranslationKey | string, number | string | undefined> {
     if (identifier.length !== User.IDENTIFIER_LENGTH) return [
       false, 
-      "signup.identification_mismatch" satisfies TranslationKey, 
+      "signup.identification_mismatch", 
       { identifierLength: User.IDENTIFIER_LENGTH }
     ]
     if (password.length < User.PASSWORD_LENGTH) return [
       false, 
-      "signup.password_mismatch" satisfies TranslationKey, 
+      "signup.password_mismatch", 
       { passwordLength: User.PASSWORD_LENGTH }
     ]
-    if (password !== confirmPassword) return [
-      false, "signup.passwords_unmatched" satisfies TranslationKey
-    ]
+    if (password !== confirmPassword) return [false, "signup.passwords_unmatched"]
 
-    const result: { error: Error | null } = await supabase.functions.invoke('create-student', { body: { 
+    const result: { error: Error | null } = await supabase.functions.invoke('create-user', { body: { 
       identifier: parseInt(identifier, 10), password, role
     } })
     const { error } = result
 
     if (error) return User.catchHttpError(error)
-    return [true, "signup.success" satisfies TranslationKey, { identifier }]
+    return [true, "signup.success", { identifier }]
   }
 
-  public static async signOut(): Response {
+  public static async signOut(): Response<TranslationKey | string> {
     const { error } = await supabase.auth.signOut({ scope: 'local' })
     if (error) return [false, error.message]
-    return [true, "alerts.logout_success" satisfies TranslationKey]
+    return [true, "alerts.logout_success"]
   }
 
   private static async catchHttpError(error: Readonly<Error>): Promise<Response> {

@@ -54,7 +54,8 @@ export const Users = () => {
     }
     toast.success(t(result, data))
   }
-  return ( 
+  return (
+    /* TODO: improve */
     <div className="h-full flex items-center justify-center"><Dialog><form id="dialog" onSubmit={(event) => { handleSubmit(event).catch(() => undefined) }}>
       <DialogTrigger asChild><Button variant="outline">{t("signup.create_user")}</Button></DialogTrigger>
       <DialogContent className="sm:max-w-sm">

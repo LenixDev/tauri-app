@@ -16,7 +16,7 @@ export type AuthState =
   | { status: 'unauthenticated'; session: null; user: null }
   | { status: 'authenticated'; session: Session; user: User }
 
-export type Response = Promise<[boolean, string, Record<string, unknown>?]>
+export type Response<T = string, U = undefined> = Promise<[boolean, T, { [key: string]: U }?]>
 
 export type RouteDir = typeof DASHBOARD_ROUTES[number]["route"]
 
