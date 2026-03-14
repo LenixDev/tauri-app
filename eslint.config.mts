@@ -118,7 +118,7 @@ export default [
       "no-loss-of-precision": "error",
       "no-magic-numbers": [
         "error",
-        { "detectObjects": true, "enforceConst": true, "ignore": [1], "ignoreReadonlyClassProperties": true }
+        { "detectObjects": true, "enforceConst": true, "ignore": [0, 1], "ignoreReadonlyClassProperties": true }
       ],
       "no-misleading-character-class": "warn",
       "no-multi-assign": "error",

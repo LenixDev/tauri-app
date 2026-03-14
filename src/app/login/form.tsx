@@ -34,7 +34,7 @@ export const LoginForm = ({
   }
   return (
     <form className={cn("flex flex-col gap-6", className)}
-      onSubmit={handleSubmit}
+      onSubmit={(event) => { handleSubmit(event).catch(() => undefined) }}
     >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">

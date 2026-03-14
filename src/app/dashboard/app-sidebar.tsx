@@ -22,7 +22,8 @@ import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
 import { DASHBOARD_ROUTES } from "@/lib"
 
-export const AppSidebar = ({ ...props }: Readonly<React.ComponentProps<typeof Sidebar>>) => {
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   const user = useUser()
   const { t } = useTranslation()
 

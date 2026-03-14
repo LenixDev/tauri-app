@@ -49,7 +49,7 @@ export const NavMain = ({
                   <span>{item.title}</span>
                 </Link>
               </SidebarMenuButton>
-              {item.items?.length ? (
+              {(item.items?.length ?? 0) > 0 ? (
                 <>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuAction
@@ -63,7 +63,7 @@ export const NavMain = ({
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <SidebarMenuSub className="rtl:border-l-0 rtl:border-r">
-                      {item.items.map((subItem) => (
+                      {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
                             <Link to={subItem.url}>
