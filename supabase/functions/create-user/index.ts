@@ -5,7 +5,7 @@
 
 // Setup type definitions for built-in Supabase Runtime APIs
 import { createClient } from 'jsr:@supabase/supabase-js@2'
-import { Permission } from '../_shared/types'
+import { Permission, Role } from '../_shared/types'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -16,8 +16,6 @@ Deno.serve(async (req) => {
   if (req.method === 'OPTIONS')
     return new Response(null, { headers: corsHeaders })
   
-  const authHeader = req.headers.get('Authorization')
-
   const supabaseClient = createClient(
     Deno.env.get('SUPABASE_URL')!,
     Deno.env.get('SUPABASE_ANON_KEY')!,
@@ -31,18 +29,29 @@ Deno.serve(async (req) => {
     .from('users')
     .select('role')
     .eq('id', user.id)
-    .single()
+    .single<{ role: Role }>()
   
-  const isRolePermissed = (permission: Permission) => {}
-    
-  if (profile?.role !== 'manager') return new Response('Forbidden', { status: 403, headers: corsHeaders })
+  const isUserRolePermissed = async (role: Readonly<Role | undefined>, permission: Readonly<Permission>) => {
+    if (!role) return false
+
+    const { data: rolePermissions } = await supabaseClient
+      .from('role_permissions')
+      .select('permissions')
+      .eq('role', role)
+      .single<{ permissions: Permission[] }>()
+    return rolePermissions?.permissions.includes(permission)
+  }
+
+  if (!await isUserRolePermissed(profile?.role, 'create:user')) return new Response('Forbidden', { status: 403, headers: corsHeaders })
 
   const adminClient = createClient(
     Deno.env.get('SUPABASE_URL')!,
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
   )
 
-  const { identifier, role, password } = await req.json()
+  const { identifier, role, password }: {
+    identifier: string, role: Role, password: string
+  } = await req.json()
 
   const { data, error } = await adminClient.auth.admin.createUser({
     email: `${identifier}@institute.local`,

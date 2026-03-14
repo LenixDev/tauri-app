@@ -54,7 +54,7 @@ export class User {
     return [true, "signup.success", { identifier }]
   }
 
-  public static async signOut(): Response<TranslationKey | string> {
+  public static async signOut(): Response {
     const { error } = await supabase.auth.signOut({ scope: 'local' })
     if (error) return [false, error.message]
     return [true, "alerts.logout_success"]
