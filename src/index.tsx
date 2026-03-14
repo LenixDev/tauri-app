@@ -4,14 +4,12 @@ import { BrowserRouter, Routes, Route } from "react-router"
 import { Toaster } from "sonner"
 import { TooltipProvider } from "./components/ui/tooltip"
 import { Login } from "@/app/login"
-import { Dashboard } from "@/app/dashboard"
-import { Users } from "@/app/dashboard/routes/users"
 import "@/index.css"
 import { App } from "@/app"
 import { AuthProvider } from "@/providers/auth"
 import "@/locales"
 import { DirectionProvider } from "./components/ui/direction"
-import type { RouteDir } from "./types"
+import { ROUTES } from "./lib/routes"
 
 if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
 
@@ -35,8 +33,8 @@ ReactDOM.createRoot(root()).render(
             <Routes>
               <Route path="login" element={<Login />} />
               <Route element={<App />}>
-                <Route path={"/" satisfies RouteDir} element={<Dashboard />}>
-                  <Route path={"users" satisfies RouteDir} element={<Users />} />
+                <Route path={ROUTES.dashboard.route} element={ROUTES.dashboard.element()}>
+                  <Route path={ROUTES.users.route} element={ROUTES.users.element()} />
                 </Route>
               </Route>
             </Routes>

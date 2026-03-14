@@ -15,7 +15,7 @@ import {
 import { useSide } from "@/hooks/use-side"
 import React from "react"
 import { NavLink, Outlet, useLocation } from "react-router"
-import { DASHBOARD_ROUTES } from "@/lib/routes"
+import { ROUTES } from "@/lib/routes"
 
 export const Dashboard = () => {
   const { pathname } = useLocation()
@@ -35,7 +35,7 @@ export const Dashboard = () => {
               <BreadcrumbList>
                 {directories.map((directory, index) => {
                   const isLastRoute = directories.length === index + 1
-                  const directoryLabel = DASHBOARD_ROUTES.find((route) => route.route === directory)?.label()
+                  const directoryLabel = ROUTES[directory].label()
                   return isLastRoute ? (
                     <BreadcrumbItem key={directory}>
                       <BreadcrumbPage>{directoryLabel}</BreadcrumbPage>

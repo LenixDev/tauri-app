@@ -20,7 +20,7 @@ import { Settings05Icon, ChartRingIcon, SentIcon, CommandIcon, ManagerFreeIcons 
 import { Link } from "react-router"
 import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
-import { DASHBOARD_ROUTES } from "@/lib/routes"
+import { ROUTES } from "@/lib/routes"
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
@@ -76,8 +76,8 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
         icon: (
           <HugeiconsIcon icon={ManagerFreeIcons} strokeWidth={2} />
         ),
-        name: DASHBOARD_ROUTES.find((route) => route.route === "users")?.label() ?? "ERR",
-        url: DASHBOARD_ROUTES.find((route) => route.route === "users")?.route ?? "ERR",
+        name: ROUTES.users.label(),
+        url: ROUTES.users.route,
       },
     ],
     user: {
