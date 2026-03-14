@@ -50,6 +50,7 @@ export const NavUser = ({
   const { isMobile } = useSidebar()
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
+  const dir = useDir()
   
   const signOut = async () => {
     const [success, result] = await User.signOut()
@@ -63,7 +64,7 @@ export const NavUser = ({
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu dir={useDir()}>
+        <DropdownMenu dir={dir}>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
@@ -86,7 +87,7 @@ export const NavUser = ({
             align="end"
             sideOffset={4}
           >
-            <DropdownMenuLabel dir={useDir()} className="p-0 font-normal">
+            <DropdownMenuLabel dir={dir} className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />

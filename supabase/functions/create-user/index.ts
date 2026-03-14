@@ -33,6 +33,7 @@ Deno.serve(async (req) => {
   const { data: profile } = await supabaseClient
     .from('users')
     .select('role')
+    .eq('id', user.id)
     .single()
 
   if (profile?.role !== 'manager')
