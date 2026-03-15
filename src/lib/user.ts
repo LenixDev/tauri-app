@@ -8,6 +8,8 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   student: [],
 } as const
 
+type UsersId = string[]
+
 export class User {
   private static readonly IDENTIFIER_LENGTH = 7
   private static readonly PASSWORD_LENGTH = 8
@@ -70,10 +72,11 @@ export class User {
     return [false, error.message]
   }
 
-  public static async getUsers(): Response {
-    const { data, error } = await supabase.functions.invoke('get-users', { body: {} })
+  public static async getUsers(): Response<UsersId | string> {
+    const { data, error } = await supabase.functions.invoke<{ data: UsersId}>('get-users', { body: {} })
     if (error) return [false, error.message]
-    return data
+    if (!data) return [false, "ERR"]
+    return [true, data.data]
   }
 
   public static async deleteUser(email: Email): Response {

@@ -4,26 +4,33 @@
 
 // Setup type definitions for built-in Supabase Runtime APIs
 import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
-import { Role } from './types.ts';
+import { Permission, Role } from './types.ts';
 
-export const corsHeaders = {
+type SharedInitResult = 
+  | [false, Response]
+  | [true, { 
+      adminClient: SupabaseClient
+      corsHeaders: typeof corsHeaders 
+    }]
+
+const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-export const createSupabaseClient = (req: Request) =>
+const createSupabaseClient = (req: Request) =>
   createClient(
     Deno.env.get('SUPABASE_URL')!,
     Deno.env.get('SUPABASE_ANON_KEY')!,
     { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
   )
 
-export const getUser = async (supabaseClient: SupabaseClient) => {
+const getUser = async (supabaseClient: SupabaseClient) => {
   const { data: { user } } = await supabaseClient.auth.getUser()
   return user
 }
 
-export const getProfile = async (supabaseClient: SupabaseClient, id: string) => {
+const getProfile = async (supabaseClient: SupabaseClient, id: string) => {
   const { data: profile } = await supabaseClient
     .from('users')
     .select('role')
@@ -32,11 +39,39 @@ export const getProfile = async (supabaseClient: SupabaseClient, id: string) => 
   return profile
 }
 
-export const createAdminClient = () =>
+const createAdminClient = () =>
   createClient(
     Deno.env.get('SUPABASE_URL')!,
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
   )
+
+export const sharedInit = async (req: Request, permission: Permission): Promise<SharedInitResult> => {
+  if (req.method === 'OPTIONS') return [false, new Response(null, { headers: corsHeaders })]
+
+  const supabaseClient = createSupabaseClient(req)
+
+  const user = await getUser(supabaseClient)
+  if (!user) return [false, new Response('Unauthorized', { status: 401, headers: corsHeaders })]
+
+  const profile = await getProfile(supabaseClient, user.id)
+
+  const isRolePermissed = async (role: Readonly<Role | undefined>, permission: Readonly<Permission>) => {
+    if (!role) return false
+
+    const { data: rolePermissions } = await supabaseClient
+      .from('role_permissions')
+      .select('permissions')
+      .eq('role', role)
+      .single<{ permissions: Permission[] }>()
+    return rolePermissions?.permissions.includes(permission) ?? false
+  }
+
+  if (!await isRolePermissed(profile?.role, permission)) return [false, new Response('Forbidden', { status: 403, headers: corsHeaders })]
+
+  const adminClient = createAdminClient()
+
+  return [true, { adminClient, corsHeaders }]
+}
 
 /* To invoke locally:
 
