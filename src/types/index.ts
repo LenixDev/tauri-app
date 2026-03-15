@@ -21,7 +21,8 @@ export type Response<
 >
 
 export type IDirectionProvider = React.ComponentProps<typeof Direction.DirectionProvider>
-export type Email = string | `${number}@institutte.local`
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+export type Email = `${number}@institutte.local` | string
 export interface UserData {
   email: string | undefined
   role: "manager" | "student"

@@ -31,7 +31,7 @@ export class User {
     identifier, role, password, confirmPassword
   }: Readonly<{
     identifier: string, role: Role, password: string, confirmPassword: string
-  }>): Promise<Response<string, TranslationKey, number | string | undefined> | Response<undefined, string>> {
+  }>): Promise<Response<string, TranslationKey, number | string | undefined> | Response<undefined>> {
     if (identifier.length !== User.IDENTIFIER_LENGTH) return [
       false,
       "signup.identification_mismatch", 
@@ -68,7 +68,7 @@ export class User {
     if (!data) return [false, "signout.fetch_failed"]
 
     const identifiers = data.map(user => {
-      if (user.email !== 'string') throw new Error("User email is undefined")
+      if (typeof user.email !== 'string') throw new Error("User email is undefined")
       return {
         identifier: User.identifierFromEmail(user.email),
         role: user.role
