@@ -1,16 +1,18 @@
 "use client"
 
-import {
+import type {
   ColumnDef,
+  SortingState,
+  ColumnFiltersState,
+  VisibilityState
+} from "@tanstack/react-table";
+import {
   flexRender,
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
-  ColumnFiltersState,
-  getFilteredRowModel,
-  VisibilityState,
+  getFilteredRowModel
 } from "@tanstack/react-table"
 import {
   Table,
@@ -27,17 +29,17 @@ import { Input } from "../ui/input"
 import { DropdownMenuTrigger, DropdownMenuContent, DropdownMenuCheckboxItem, DropdownMenu } from "../ui/dropdown-menu"
 import { Settings } from "lucide-react"
 import { useUsers } from "@/hooks/use-users"
-import { UserInfo } from "@/types"
+import type { UserInfo } from "@/types"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export const DataTable = <TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: Readonly<DataTableProps<TData, TValue>>) => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     []
@@ -89,21 +91,21 @@ export function DataTable<TData, TValue>({
                 (column) => column.getCanHide()
               )
               .map((column) => {
-                if (column.id !== 'identifier') {
+                if (column.id !== 'identifier') 
                   return (
                     <DropdownMenuCheckboxItem
                       key={column.id}
                       className="capitalize"
                       checked={column.getIsVisible()}
                       onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
+                        { column.toggleVisibility(!!value); }
                       }
                     >
                       {column.id}
                     </DropdownMenuCheckboxItem>
                   )
                 }
-              })}
+              )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -112,8 +114,7 @@ export function DataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
+                {headerGroup.headers.map((header) => (
                     <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
@@ -122,13 +123,12 @@ export function DataTable<TData, TValue>({
                             header.getContext()
                           )}
                     </TableHead>
-                  )
-                })}
+                  ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -160,7 +160,7 @@ export function DataTable<TData, TValue>({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => table.previousPage()}
+            onClick={() => { table.previousPage(); }}
             disabled={!table.getCanPreviousPage()}
           >
             Previous
@@ -168,7 +168,7 @@ export function DataTable<TData, TValue>({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => table.nextPage()}
+            onClick={() => { table.nextPage(); }}
             disabled={!table.getCanNextPage()}
           >
             Next
