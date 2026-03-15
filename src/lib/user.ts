@@ -31,7 +31,7 @@ export class User {
     identifier, role, password, confirmPassword
   }: Readonly<{
     identifier: string, role: Role, password: string, confirmPassword: string
-  }>): Response<TranslationKey | string, number | string | undefined> {
+  }>): Response<string, TranslationKey | string, number | string | undefined> {
     if (identifier.length !== User.IDENTIFIER_LENGTH) return [
       false, 
       "signup.identification_mismatch", 
@@ -59,16 +59,17 @@ export class User {
     return [true, "alerts.logout_success"]
   }
 
-  public static async getUsers(): Response<UserIdentifier[] | string> {
+  public static async getUsers(): Response<UserIdentifier[], string> {
     const { data, error } = await supabase.functions.invoke('get-users', {
       body: {}
     }) as { data: UserEmail[] | null, error: Error | null }
     if (error) return User.catchHttpError(error)
 
     if (!data) return [false, "signout.fetch_failed"]
-    return [true, data.map(user => ({
+    const identifiers = data.map(user => ({
       identifier: User.identifierFromEmail(user.email)
-    }))]
+    }))
+    return [true, identifiers]
   }
 
   // public static deleteUser(email: Email): Response {  }
@@ -77,7 +78,7 @@ export class User {
     return parseInt(email.split('@')[0], 10)
   }
 
-  private static async catchHttpError(error: Readonly<Error>): Promise<Response> {
+  private static async catchHttpError(error: Readonly<Error>): Response<never> {
     if (error instanceof FunctionsHttpError) {
       const errorInstance: { context: { text: () => Promise<string> }} = error
       const message = await errorInstance.context.text()
