@@ -20,7 +20,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { columns } from "./columns"
 import { Button } from "../ui/button"
 import { useState } from "react"
 import { Input } from "../ui/input"
@@ -33,6 +32,13 @@ import {
 import { Settings } from "lucide-react"
 import { useUsers } from "@/hooks/use-users"
 import type { UserInfo } from "@/types"
+import { useTranslation } from "react-i18next"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import {
+  DropdownMenuItem,
+  DropdownMenuLabel
+} from "@/components/ui/dropdown-menu"
+import { Checkbox } from "../ui/checkbox"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -48,6 +54,7 @@ export const DataTable = <TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
+  const { t } = useTranslation()
 
   const table = useReactTable({
     data,
@@ -70,9 +77,9 @@ export const DataTable = <TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Filter identifier..."
+          placeholder={t("users.search")}
           value={
             /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
             (table.getColumn("identifier")?.getFilterValue() as string) || ""
@@ -84,9 +91,9 @@ export const DataTable = <TData, TValue>({
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline">
               <Settings className="mr-2 h-4 w-4" />
-              View
+              {t("users.view")}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -152,7 +159,7 @@ export const DataTable = <TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("users.no_results")}
                 </TableCell>
               </TableRow>
             )}
@@ -161,8 +168,8 @@ export const DataTable = <TData, TValue>({
       </div>
       <div className="flex items-center justify-between py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          {table.getFilteredSelectedRowModel().rows.length} {t("users.of")}{" "}
+          {table.getFilteredRowModel().rows.length} {t("users.rows_selected")}
         </div>
         <div className="flex items-center justify-end space-x-2 py-4">
           <Button
@@ -173,7 +180,7 @@ export const DataTable = <TData, TValue>({
             }}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            {t("users.previous")}
           </Button>
           <Button
             variant="outline"
@@ -183,7 +190,7 @@ export const DataTable = <TData, TValue>({
             }}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            {t("users.next")}
           </Button>
         </div>
       </div>
@@ -193,9 +200,97 @@ export const DataTable = <TData, TValue>({
 
 export default function DemoPage() {
   const data: UserInfo[] = useUsers()
+  const { t } = useTranslation()
   return (
     <div className="max-w-4/5 container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={[
+        {
+          id: "select",
+          header: ({ table }) => (
+            <Checkbox
+              checked={
+                table.getIsAllPageRowsSelected() ||
+                (table.getIsSomePageRowsSelected() && "indeterminate")
+              }
+              onCheckedChange={(value) => {
+                table.toggleAllPageRowsSelected(value === true)
+              }}
+              aria-label="Select all"
+            />
+          ),
+          cell: ({ row }) => (
+            <Checkbox
+              checked={row.getIsSelected()}
+              onCheckedChange={(value) => {
+                row.toggleSelected(value === true)
+              }}
+              aria-label="Select row"
+            />
+          ),
+          enableSorting: false,
+          enableHiding: false,
+        },
+        {
+          accessorKey: "identifier",
+          filterFn: (row, columnId, filterValue: string) =>
+            row.getValue<number>(columnId).toString().includes(filterValue),
+          header: ({ column }) => (
+            <Button
+              variant="ghost"
+              onClick={() => {
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }}
+            >
+              {t("users.identifier")}
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+          ),
+        },
+        {
+          accessorKey: t("users.role"),
+          header: ({ column }) => (
+            <Button
+              variant="ghost"
+              onClick={() => {
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }}
+            >
+              {t("users.role")}
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+          ),
+        },
+        {
+          id: t("users.actions"),
+          header: () => <div>{t("users.actions")}</div>,
+          cell: ({ row }) => {
+            const payment = row.original
+
+            return (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="h-8 w-8 p-0">
+                    <span className="sr-only">Open menu</span>
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>{t("users.actions")}</DropdownMenuLabel>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      navigator.clipboard
+                        .writeText(payment.identifier.toString())
+                        .catch(() => undefined)
+                    }}
+                  >
+                    {t("users.copy_id")}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )
+          },
+        },
+      ]} data={data} />
     </div>
   )
 }

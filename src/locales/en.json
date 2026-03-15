@@ -23,12 +23,6 @@
     "confirm_password": "Confirm Password",
     "password_rule": "Must be at least {{length}} characters long."
   },
-  "signout": {
-    "title": "Delete A User",
-    "delete": "Delete User",
-    "description": "Select below and delete an existing user",
-    "fetch_failed": "Could not fetch users"
-  },
   "institute": {
     "name": "Tayeb Mohamed Boucenna",
     "plan": "Institute"
@@ -68,5 +62,18 @@
       "arabic": "العربية",
       "logout": "Logout"
     }
+  },
+  "users": {
+    "search": "Search identifiers...",
+    "view": "View",
+    "no_results": "No results.",
+    "previous": "Previous",
+    "next": "Next",
+    "identifier": "Identifier",
+    "role": "Role",
+    "actions": "Actions",
+    "copy_id": "Copy User ID",
+    "of": "of",
+    "rows_selected": "row(s) selected."
   }
 }
