@@ -1,14 +1,12 @@
 import type { TranslationKey } from "@/locales"
 import { supabase } from "./supabase"
-import type { Role, Permission, Response, Email } from "@/types"
+import type { Role, Permission, Response, UserEmail } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
 
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   manager: ['create:user'],
   student: [],
 } as const
-
-type UsersId = string[]
 
 export class User {
   private static readonly IDENTIFIER_LENGTH = 7
@@ -62,20 +60,17 @@ export class User {
     return [true, "alerts.logout_success"]
   }
 
-  public static async getUsers(): Response<UsersId | string> {
+  public static async getUsers(): Response<UserEmail[] | string> {
     const { data, error } = await supabase.functions.invoke('get-users', {
       body: {}
-    }) as { data: UsersId | null, error: Error | null }
+    }) as { data: UserEmail[] | null, error: Error | null }
     if (error) return User.catchHttpError(error)
 
     if (!data) return [false, "signout.fetch_failed"]
     return [true, data]
   }
 
-  public static deleteUser(email: Email): Awaited<Response> {
-    console.log(email)
-    return [true, email]
-  }
+  // public static deleteUser(email: Email): Response {  }
 
   private static async catchHttpError(error: Readonly<Error>): Promise<Response> {
     if (error instanceof FunctionsHttpError) {

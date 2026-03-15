@@ -7,6 +7,7 @@ Deno.serve(async (req) => {
 
   const { data: { users }, error } = await adminClient.auth.admin.listUsers()
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
+  const emails: Array<{ email: string | undefined }> = users.map((user) => ({ email: user.email }))
 
-  return new Response(JSON.stringify(users), { status: 200, headers: corsHeaders })
+  return Response.json(emails, { status: 200, headers: corsHeaders })
 })
