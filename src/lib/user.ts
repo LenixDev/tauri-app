@@ -31,9 +31,9 @@ export class User {
     identifier, role, password, confirmPassword
   }: Readonly<{
     identifier: string, role: Role, password: string, confirmPassword: string
-  }>): Response<string, TranslationKey | string, number | string | undefined> {
+  }>): Promise<Response<string, TranslationKey, number | string | undefined> | Response<undefined, string>> {
     if (identifier.length !== User.IDENTIFIER_LENGTH) return [
-      false, 
+      false,
       "signup.identification_mismatch", 
       { identifierLength: User.IDENTIFIER_LENGTH }
     ]

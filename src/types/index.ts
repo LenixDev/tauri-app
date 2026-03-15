@@ -21,7 +21,7 @@ export type Response<
 >
 
 export type IDirectionProvider = React.ComponentProps<typeof Direction.DirectionProvider>
-export type Email = `${number}@institutte.local` | string
+export type Email = string | `${number}@institutte.local`
 export interface UserData {
   email: string | undefined
   role: "manager" | "student"

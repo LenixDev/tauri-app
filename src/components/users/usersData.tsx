@@ -72,9 +72,7 @@ export const DataTable = <TData, TValue>({
           placeholder="Filter identifier..."
           /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
           value={(table.getColumn("identifier")?.getFilterValue() as string) || ""}
-          onChange={(event) =>
-            table.getColumn("identifier")?.setFilterValue(event.target.value)
-          }
+          onChange={(event) => table.getColumn("identifier")?.setFilterValue(event.target.value) }
           className="max-w-sm"
         />
         <DropdownMenu>
@@ -95,9 +93,7 @@ export const DataTable = <TData, TValue>({
                   key={column.id}
                   className="capitalize"
                   checked={column.getIsVisible()}
-                  onCheckedChange={(value) =>
-                    { column.toggleVisibility(!!value); }
-                  }
+                  onCheckedChange={(value) => { column.toggleVisibility(value) } }
                 >
                   {column.id}
                 </DropdownMenuCheckboxItem>
@@ -178,7 +174,6 @@ export const DataTable = <TData, TValue>({
 
 export default function DemoPage() {
   const data: UserInfo[] = useUsers()
-  console.log(data)
   return (
     <div className="max-w-4/5 container mx-auto py-10">
       <DataTable columns={columns} data={data} />
