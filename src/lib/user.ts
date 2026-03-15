@@ -1,6 +1,6 @@
 import type { TranslationKey } from "@/locales"
 import { supabase } from "./supabase"
-import type { Role, Permission, Response, UserEmail, Email, UserIdentifier } from "@/types"
+import type { Role, Permission, Response, Email, UserData, UserInfo } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
 
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
@@ -59,16 +59,21 @@ export class User {
     return [true, "alerts.logout_success"]
   }
 
-  public static async getUsers(): Response<UserIdentifier[], string> {
+  public static async getUsers(): Response<UserInfo[], string> {
     const { data, error } = await supabase.functions.invoke('get-users', {
       body: {}
-    }) as { data: UserEmail[] | null, error: Error | null }
+    }) as { data: UserData[] | null, error: Error | null }
     if (error) return User.catchHttpError(error)
 
     if (!data) return [false, "signout.fetch_failed"]
-    const identifiers = data.map(user => ({
-      identifier: User.identifierFromEmail(user.email)
-    }))
+
+    const identifiers = data.map(user => {
+      if (!user.email) throw new Error("User email is undefined")
+      return {
+        identifier: User.identifierFromEmail(user.email),
+        role: user.role
+      }
+    })
     return [true, identifiers]
   }
 
