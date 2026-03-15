@@ -5,6 +5,7 @@ import { DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescript
 import { FieldGroup } from "./ui/field"
 import React from "react"
 import { SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem, Select } from "./ui/select"
+import { User } from "@/lib/user"
 
 export function DeleteUser() {
   const { i18n: { dir: dirFn, language }, t } = useTranslation()
@@ -25,9 +26,15 @@ export function DeleteUser() {
   //   { label: t.spinach, value: "spinach" },
   // ]
 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    const [success, users] = await User.getUsers()
+    console.log(success, users)
+  }
+
   return (
     <Dialog>
-      <form>
+      <form onSubmit={handleSubmit}>
         <DialogTrigger asChild>
           <Button variant="outline">{t("signout.delete")}</Button>
         </DialogTrigger>
