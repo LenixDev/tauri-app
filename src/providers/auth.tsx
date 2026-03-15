@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: { readonly children: React.ReactNode 
         .eq('id', session.user.id)
         .single<{ role: Role }>()
 
-      const email: Email | undefined = session.user.email
+      const { user: { email } }: { user: { email?: Email | undefined } } = session
       if (error || typeof email !== 'string') {
         setState({ session: null, status: 'unauthenticated', user: null })
         return
