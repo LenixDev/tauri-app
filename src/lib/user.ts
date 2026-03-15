@@ -78,7 +78,7 @@ export class User {
     return parseInt(email.split('@')[0], 10)
   }
 
-  private static async catchHttpError(error: Readonly<Error>): Response<never> {
+  private static async catchHttpError<T>(error: Readonly<Error>): Response<T, string> {
     if (error instanceof FunctionsHttpError) {
       const errorInstance: { context: { text: () => Promise<string> }} = error
       const message = await errorInstance.context.text()
