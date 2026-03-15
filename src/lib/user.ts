@@ -1,6 +1,6 @@
 import type { TranslationKey } from "@/locales"
 import { supabase } from "./supabase"
-import type { Role, Permission, Response } from "@/types"
+import type { Role, Permission, Response, Email } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
 
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
@@ -68,6 +68,16 @@ export class User {
       return [false, message]
     }
     return [false, error.message]
+  }
+
+  public static async getUsers(): Response {
+    const { data, error } = await supabase.functions.invoke('get-users', { body: {} })
+    if (error) return [false, error.message]
+    return data
+  }
+
+  public static async deleteUser(email: Email): Response {
+
   }
 
   public can(permission: Permission): boolean {

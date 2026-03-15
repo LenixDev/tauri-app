@@ -1,36 +1,25 @@
-/* eslint-disable */
 // Follow this setup guide to integrate the Deno language server with your editor:
 // https://deno.land/manual/getting_started/setup_your_environment
 // This enables autocomplete, go to definition, etc.
 
 // Setup type definitions for built-in Supabase Runtime APIs
-import { createClient } from 'jsr:@supabase/supabase-js@2'
 import { Permission, Role } from '../_shared/types'
+import { corsHeaders as Headers, createAdminClient, createSupabaseClient, getProfile, getUser } from '../_shared'
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+const corsHeaders = Headers
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS')
     return new Response(null, { headers: corsHeaders })
   
-  const supabaseClient = createClient(
-    Deno.env.get('SUPABASE_URL')!,
-    Deno.env.get('SUPABASE_ANON_KEY')!,
-    { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
-  )
+  const supabaseClient = createSupabaseClient(req)
 
-  const { data: { user } } = await supabaseClient.auth.getUser()
+  const user = await getUser(supabaseClient)
   if (!user) return new Response('Unauthorized', { status: 401, headers: corsHeaders })
 
-  const { data: profile } = await supabaseClient
-    .from('users')
-    .select('role')
-    .eq('id', user.id)
-    .single<{ role: Role }>()
-  
+  const profile = await getProfile(supabaseClient, user.id)
+  const adminClient = createAdminClient()
+
   const isUserRolePermissed = async (role: Readonly<Role | undefined>, permission: Readonly<Permission>) => {
     if (!role) return false
 
@@ -43,11 +32,6 @@ Deno.serve(async (req) => {
   }
 
   if (!await isUserRolePermissed(profile?.role, 'create:user')) return new Response('Forbidden', { status: 403, headers: corsHeaders })
-
-  const adminClient = createClient(
-    Deno.env.get('SUPABASE_URL')!,
-    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-  )
 
   const { identifier, role, password }: {
     identifier: string, role: Role, password: string

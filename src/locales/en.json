@@ -23,6 +23,11 @@
     "confirm_password": "Confirm Password",
     "password_rule": "Must be at least {{length}} characters long."
   },
+  "signout": {
+    "title": "Delete A User",
+    "delete": "Delete User",
+    "description": "Select below and delete an existing user"
+  },
   "institute": {
     "name": "Tayeb Mohamed Boucenna",
     "plan": "Institute"
