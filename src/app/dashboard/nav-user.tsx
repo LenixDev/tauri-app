@@ -1,10 +1,6 @@
 "use client"
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,7 +26,12 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { UnfoldMoreIcon, CheckmarkBadgeIcon, NotificationIcon, LogoutIcon } from "@hugeicons/core-free-icons"
+import {
+  UnfoldMoreIcon,
+  CheckmarkBadgeIcon,
+  NotificationIcon,
+  LogoutIcon,
+} from "@hugeicons/core-free-icons"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
 import { useTranslation } from "react-i18next"
@@ -51,7 +52,7 @@ export const NavUser = ({
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
   const dir = useDir()
-  
+
   const signOut = async () => {
     const [success, result] = await User.signOut()
     if (!success) {
@@ -78,7 +79,11 @@ export const NavUser = ({
                 <span className="truncate font-medium">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
-              <HugeiconsIcon icon={UnfoldMoreIcon} strokeWidth={2} className="ml-auto size-4" />
+              <HugeiconsIcon
+                icon={UnfoldMoreIcon}
+                strokeWidth={2}
+                className="ml-auto size-4"
+              />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -111,21 +116,37 @@ export const NavUser = ({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <Select onValueChange={(value) => { i18n.changeLanguage(value).catch(() => undefined) }}>
+            <Select
+              onValueChange={(value) => {
+                i18n.changeLanguage(value).catch(() => undefined)
+              }}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={t("nav.user.change_language")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>{t("nav.user.languages")}</SelectLabel>
-                  <SelectItem value="en" disabled={i18n.language === "en"}>{t("nav.user.english")}</SelectItem>
-                  <SelectItem value="ar" disabled={i18n.language === "ar"}>{t("nav.user.arabic")}</SelectItem>
+                  <SelectItem value="en" disabled={i18n.language === "en"}>
+                    {t("nav.user.english")}
+                  </SelectItem>
+                  <SelectItem value="ar" disabled={i18n.language === "ar"}>
+                    {t("nav.user.arabic")}
+                  </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => { signOut().catch(() => undefined) }}>
-              <HugeiconsIcon icon={LogoutIcon} className="rtl:rotate-180" strokeWidth={2} />
+            <DropdownMenuItem
+              onClick={() => {
+                signOut().catch(() => undefined)
+              }}
+            >
+              <HugeiconsIcon
+                icon={LogoutIcon}
+                className="rtl:rotate-180"
+                strokeWidth={2}
+              />
               {t("nav.user.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>

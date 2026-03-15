@@ -45,9 +45,7 @@ export const Dashboard = () => {
                   ) : (
                     <React.Fragment key={directory}>
                       <BreadcrumbItem className="hidden md:block">
-                        <NavLink to={directory}>
-                          {directoryLabel}
-                        </NavLink>
+                        <NavLink to={directory}>{directoryLabel}</NavLink>
                       </BreadcrumbItem>
                       <BreadcrumbSeparator className="hidden md:block rtl:rotate-180" />
                     </React.Fragment>
@@ -57,7 +55,7 @@ export const Dashboard = () => {
             </Breadcrumb>
           </div>
         </header>
-        <Outlet/>
+        <Outlet />
       </SidebarInset>
     </SidebarProvider>
   )

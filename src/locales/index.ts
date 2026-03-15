@@ -1,8 +1,8 @@
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 
-const english = await import("./en.json").then(file => file.default)
-const arabic = await import("./ar.json").then(file => file.default)
+const english = await import("./en.json").then((file) => file.default)
+const arabic = await import("./ar.json").then((file) => file.default)
 
 i18n.on("languageChanged", (lng) => {
   document.documentElement.dir = i18n.dir(lng)

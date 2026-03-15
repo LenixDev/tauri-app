@@ -16,23 +16,29 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Settings05Icon, ChartRingIcon, SentIcon, CommandIcon, ManagerFreeIcons } from "@hugeicons/core-free-icons"
+import {
+  Settings05Icon,
+  ChartRingIcon,
+  SentIcon,
+  CommandIcon,
+  ManagerFreeIcons,
+} from "@hugeicons/core-free-icons"
 import { Link } from "react-router"
 import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
 import { ROUTES } from "@/lib/routes"
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
+export const AppSidebar = ({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) => {
   const user = useUser()
   const { t } = useTranslation()
 
   const data = {
     navMain: [
       {
-        icon: (
-          <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />
-        ),
+        icon: <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />,
         items: [
           {
             title: t("nav.main.general"),
@@ -57,25 +63,19 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
     ],
     navSecondary: [
       {
-        icon: (
-          <HugeiconsIcon icon={ChartRingIcon} strokeWidth={2} />
-        ),
+        icon: <HugeiconsIcon icon={ChartRingIcon} strokeWidth={2} />,
         title: t("nav.secondary.support"),
         url: "",
       },
       {
-        icon: (
-          <HugeiconsIcon icon={SentIcon} strokeWidth={2} />
-        ),
+        icon: <HugeiconsIcon icon={SentIcon} strokeWidth={2} />,
         title: t("nav.secondary.feedback"),
         url: "",
       },
     ],
     projects: [
       {
-        icon: (
-          <HugeiconsIcon icon={ManagerFreeIcons} strokeWidth={2} />
-        ),
+        icon: <HugeiconsIcon icon={ManagerFreeIcons} strokeWidth={2} />,
         name: ROUTES.users.label(),
         url: ROUTES.users.route,
       },
@@ -94,11 +94,19 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
             <SidebarMenuButton size="lg" asChild>
               <Link to="/">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <HugeiconsIcon icon={CommandIcon} strokeWidth={2} className="size-4" />
+                  <HugeiconsIcon
+                    icon={CommandIcon}
+                    strokeWidth={2}
+                    className="size-4"
+                  />
                 </div>
                 <div className="grid flex-1 rtl:text-right text-sm leading-tight">
-                  <span className="truncate font-medium">{t("institute.name")}</span>
-                  <span className="truncate text-xs">{t("institute.plan")}</span>
+                  <span className="truncate font-medium">
+                    {t("institute.name")}
+                  </span>
+                  <span className="truncate text-xs">
+                    {t("institute.plan")}
+                  </span>
                 </div>
               </Link>
             </SidebarMenuButton>

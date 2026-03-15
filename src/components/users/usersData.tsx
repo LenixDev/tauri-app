@@ -10,7 +10,7 @@ import {
   useReactTable,
   getPaginationRowModel,
   getSortedRowModel,
-  getFilteredRowModel
+  getFilteredRowModel,
 } from "@tanstack/react-table"
 import {
   Table,
@@ -24,7 +24,12 @@ import { columns } from "./columns"
 import { Button } from "../ui/button"
 import { useState } from "react"
 import { Input } from "../ui/input"
-import { DropdownMenuTrigger, DropdownMenuContent, DropdownMenuCheckboxItem, DropdownMenu } from "../ui/dropdown-menu"
+import {
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenu,
+} from "../ui/dropdown-menu"
 import { Settings } from "lucide-react"
 import { useUsers } from "@/hooks/use-users"
 import type { UserInfo } from "@/types"
@@ -40,9 +45,7 @@ export const DataTable = <TData, TValue>({
   data,
 }: Readonly<DataTableProps<TData, TValue>>) => {
   const [sorting, setSorting] = useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    []
-  )
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
 
@@ -71,8 +74,12 @@ export const DataTable = <TData, TValue>({
         <Input
           placeholder="Filter identifier..."
           /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
-          value={(table.getColumn("identifier")?.getFilterValue() as string) || ""}
-          onChange={(event) => table.getColumn("identifier")?.setFilterValue(event.target.value) }
+          value={
+            (table.getColumn("identifier")?.getFilterValue() as string) || ""
+          }
+          onChange={(event) =>
+            table.getColumn("identifier")?.setFilterValue(event.target.value)
+          }
           className="max-w-sm"
         />
         <DropdownMenu>
@@ -85,20 +92,22 @@ export const DataTable = <TData, TValue>({
           <DropdownMenuContent align="end">
             {table
               .getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
-              .map((column): React.ReactNode => column.id !== 'identifier' && (
-                <DropdownMenuCheckboxItem
-                  key={column.id}
-                  className="capitalize"
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) => { column.toggleVisibility(value) } }
-                >
-                  {column.id}
-                </DropdownMenuCheckboxItem>
-              )
-            )}
+              .filter((column) => column.getCanHide())
+              .map(
+                (column): React.ReactNode =>
+                  column.id !== "identifier" && (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) => {
+                        column.toggleVisibility(value)
+                      }}
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  ),
+              )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -108,15 +117,15 @@ export const DataTable = <TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  ))}
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
@@ -129,14 +138,20 @@ export const DataTable = <TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -153,7 +168,9 @@ export const DataTable = <TData, TValue>({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => { table.previousPage(); }}
+            onClick={() => {
+              table.previousPage()
+            }}
             disabled={!table.getCanPreviousPage()}
           >
             Previous
@@ -161,7 +178,9 @@ export const DataTable = <TData, TValue>({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => { table.nextPage(); }}
+            onClick={() => {
+              table.nextPage()
+            }}
             disabled={!table.getCanNextPage()}
           >
             Next

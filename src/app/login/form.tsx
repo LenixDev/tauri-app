@@ -1,10 +1,6 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { useNavigate } from "react-router"
@@ -13,11 +9,9 @@ import { signIn } from "@/lib/auth"
 import { useTranslation } from "react-i18next"
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-export const LoginForm = ({
-  className,
-}: React.ComponentProps<"form">) => {
-  const [identifier, setIdentifier] = useState('')
-  const [password, setPassword] = useState('')
+export const LoginForm = ({ className }: React.ComponentProps<"form">) => {
+  const [identifier, setIdentifier] = useState("")
+  const [password, setPassword] = useState("")
   const navigate = useNavigate()
   const { t } = useTranslation()
 
@@ -30,11 +24,14 @@ export const LoginForm = ({
       return
     }
     toast.success(t(result, { identifier }))
-    await navigate('/')
+    await navigate("/")
   }
   return (
-    <form className={cn("flex flex-col gap-6", className)}
-      onSubmit={(event) => { handleSubmit(event).catch(() => undefined) }}
+    <form
+      className={cn("flex flex-col gap-6", className)}
+      onSubmit={(event) => {
+        handleSubmit(event).catch(() => undefined)
+      }}
     >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
@@ -48,7 +45,9 @@ export const LoginForm = ({
           <FieldLabel htmlFor="id">{t("identification")}</FieldLabel>
           <Input
             value={identifier}
-            onChange={event => { setIdentifier(event.target.value) }}
+            onChange={(event) => {
+              setIdentifier(event.target.value)
+            }}
             id="id"
             type="number"
             placeholder="6901120"
@@ -71,7 +70,9 @@ export const LoginForm = ({
           </div>
           <Input
             value={password}
-            onChange={event => { setPassword(event.target.value) }}
+            onChange={(event) => {
+              setPassword(event.target.value)
+            }}
             id="password"
             type="password"
             required

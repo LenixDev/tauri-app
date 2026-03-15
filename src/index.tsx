@@ -19,11 +19,14 @@ const root = () => {
   return element
 }
 
-if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
+if (window.matchMedia("(prefers-color-scheme: dark)").matches)
+  document.documentElement.classList.add("dark")
 
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-  document.documentElement.classList.toggle('dark', event.matches)
-})
+window
+  .matchMedia("(prefers-color-scheme: dark)")
+  .addEventListener("change", (event) => {
+    document.documentElement.classList.toggle("dark", event.matches)
+  })
 
 ReactDOM.createRoot(root()).render(
   <React.StrictMode>
@@ -36,7 +39,10 @@ ReactDOM.createRoot(root()).render(
               <Route path="login" element={<Login />} />
               <Route element={<App />}>
                 <Route path={ROUTES["/"].route} element={<Dashboard />}>
-                  <Route path={ROUTES.users.route} element={<ROUTES.users.element />} />
+                  <Route
+                    path={ROUTES.users.route}
+                    element={<ROUTES.users.element />}
+                  />
                 </Route>
               </Route>
             </Routes>
@@ -44,5 +50,5 @@ ReactDOM.createRoot(root()).render(
         </DirectionProvider>
       </AuthProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 )

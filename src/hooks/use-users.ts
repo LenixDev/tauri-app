@@ -8,19 +8,31 @@ export const useUsers = () => {
 
   useEffect(() => {
     const handler = () => {
-      User.getUsers().then(([success, data]) => {
-        if (success && Array.isArray(data)) setUsers(data)
-      }).catch(() => undefined)
+      User.getUsers()
+        .then(([success, data]) => {
+          if (success && Array.isArray(data)) setUsers(data)
+        })
+        .catch(() => undefined)
     }
     handler()
 
     const channel = supabase
-      .channel('db-changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'users' }, handler)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'role_permissions' }, handler)
+      .channel("db-changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "users" },
+        handler,
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "role_permissions" },
+        handler,
+      )
       .subscribe()
 
-    return () => { supabase.removeChannel(channel).catch(() => undefined) }
+    return () => {
+      supabase.removeChannel(channel).catch(() => undefined)
+    }
   }, [])
 
   return users

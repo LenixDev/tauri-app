@@ -20,20 +20,20 @@ export const NavSecondary = ({
     icon: React.ReactNode
   }[]
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) => (
-    <SidebarGroup {...props}>
-      <SidebarGroupContent>
-        <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild size="sm">
-                <Link to={item.url}>
-                  {item.icon}
-                  <span>{item.title}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
-        </SidebarMenu>
-      </SidebarGroupContent>
-    </SidebarGroup>
-  )
+  <SidebarGroup {...props}>
+    <SidebarGroupContent>
+      <SidebarMenu>
+        {items.map((item) => (
+          <SidebarMenuItem key={item.title}>
+            <SidebarMenuButton asChild size="sm">
+              <Link to={item.url}>
+                {item.icon}
+                <span>{item.title}</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        ))}
+      </SidebarMenu>
+    </SidebarGroupContent>
+  </SidebarGroup>
+)

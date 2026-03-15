@@ -2,7 +2,6 @@ import { Direction } from "radix-ui"
 import { useTranslation } from "react-i18next"
 import { IDirectionProvider } from "@/types"
 
-
 function DirectionProvider({
   dir = useTranslation().i18n.dir(),
   direction,
