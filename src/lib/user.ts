@@ -62,6 +62,20 @@ export class User {
     return [true, "alerts.logout_success"]
   }
 
+  public static async getUsers(): Response<UsersId | string> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const result = await supabase.functions.invoke('get-users', { body: {} }) as { data: UsersId | null, error: Error | null }
+    const { data, error } = result
+    if (error) return User.catchHttpError(error)
+
+    if (!data) return [false, "ERR"]
+    return [true, data]
+  }
+
+  // public static async deleteUser(email: Email): Response {
+
+  // }
+
   private static async catchHttpError(error: Readonly<Error>): Promise<Response> {
     if (error instanceof FunctionsHttpError) {
       const errorInstance: { context: { text: () => Promise<string> }} = error
@@ -70,17 +84,6 @@ export class User {
       return [false, message]
     }
     return [false, error.message]
-  }
-
-  public static async getUsers(): Response<UsersId | string> {
-    const { data, error } = await supabase.functions.invoke<{ data: UsersId}>('get-users', { body: {} })
-    if (error) return [false, error.message]
-    if (!data) return [false, "ERR"]
-    return [true, data.data]
-  }
-
-  public static async deleteUser(email: Email): Response {
-
   }
 
   public can(permission: Permission): boolean {
