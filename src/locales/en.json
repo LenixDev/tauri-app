@@ -26,7 +26,8 @@
   "signout": {
     "title": "Delete A User",
     "delete": "Delete User",
-    "description": "Select below and delete an existing user"
+    "description": "Select below and delete an existing user",
+    "fetch_failed": "Could not fetch users"
   },
   "institute": {
     "name": "Tayeb Mohamed Boucenna",

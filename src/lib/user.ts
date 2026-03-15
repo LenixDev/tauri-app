@@ -63,14 +63,12 @@ export class User {
   }
 
   public static async getUsers(): Response<UsersId | string> {
-    const result = await supabase.functions.invoke('get-users', { body: {} }) as {
-      data: UsersId, error: null
-    } | {
-      data: null, error: Error
-    }
-    const { data, error } = result
+    const { data, error } = await supabase.functions.invoke('get-users', {
+      body: {}
+    }) as { data: UsersId | null, error: Error | null }
     if (error) return User.catchHttpError(error)
 
+    if (!data) return [false, "signout.fetch_failed"]
     return [true, data]
   }
 
@@ -82,8 +80,7 @@ export class User {
   private static async catchHttpError(error: Readonly<Error>): Promise<Response> {
     if (error instanceof FunctionsHttpError) {
       const errorInstance: { context: { text: () => Promise<string> }} = error
-      const { text } = errorInstance.context
-      const message = await text()
+      const message = await errorInstance.context.text()
       return [false, message]
     }
     return [false, error.message]
