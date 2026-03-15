@@ -14,7 +14,7 @@
     "supadeploy": "supabase functions deploy",
     "supalink": "supabase link --project-ref sphtvhctzbciykargfjt",
     "supapush": "supabase db push",
-    "start": "pnpm supatypes && pnpm lint && tauri dev",
+    "start": "pnpm supatypes && pnpm lint && pnpm format && tauri dev",
     "lint": "npx eslint . --quiet",
     "format": "prettier --write src"
   },

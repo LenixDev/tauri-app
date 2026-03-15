@@ -42,6 +42,8 @@ export const columns: ColumnDef<UserInfo>[] = [
   },
   {
     accessorKey: "identifier",
+    filterFn: (row, columnId, filterValue: string) =>
+      row.getValue<number>(columnId).toString().includes(filterValue),
     header: ({ column }) => (
       <Button
         variant="ghost"

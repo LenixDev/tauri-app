@@ -73,8 +73,8 @@ export const DataTable = <TData, TValue>({
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter identifier..."
-          /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
           value={
+            /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
             (table.getColumn("identifier")?.getFilterValue() as string) || ""
           }
           onChange={(event) =>
