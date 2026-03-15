@@ -63,11 +63,14 @@ export class User {
   }
 
   public static async getUsers(): Response<UsersId | string> {
-    const result = await supabase.functions.invoke('get-users', { body: {} }) as { data: UsersId | null, error: Error | null }
+    const result = await supabase.functions.invoke('get-users', { body: {} }) as {
+      data: UsersId, error: null
+    } | {
+      data: null, error: Error
+    }
     const { data, error } = result
     if (error) return User.catchHttpError(error)
 
-    if (!data) return [false, "ERR"]
     return [true, data]
   }
 
