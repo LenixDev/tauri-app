@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
-import { UserInfo } from "@/types"
+import type { UserInfo } from "@/types"
 import { useState, useEffect } from "react"
 
 export const useUsers = () => {

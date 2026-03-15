@@ -59,7 +59,7 @@ export class User {
     return [true, "alerts.logout_success"]
   }
 
-  public static async getUsers(): Response<UserInfo[], string> {
+  public static async getUsers(): Response<UserInfo[]> {
     const { data, error } = await supabase.functions.invoke('get-users', {
       body: {}
     }) as { data: UserData[] | null, error: Error | null }
@@ -68,7 +68,7 @@ export class User {
     if (!data) return [false, "signout.fetch_failed"]
 
     const identifiers = data.map(user => {
-      if (!user.email) throw new Error("User email is undefined")
+      if (user.email !== 'string') throw new Error("User email is undefined")
       return {
         identifier: User.identifierFromEmail(user.email),
         role: user.role
@@ -83,7 +83,7 @@ export class User {
     return parseInt(email.split('@')[0], 10)
   }
 
-  private static async catchHttpError<T>(error: Readonly<Error>): Response<T, string> {
+  private static async catchHttpError<T>(error: Readonly<Error>): Response<T> {
     if (error instanceof FunctionsHttpError) {
       const errorInstance: { context: { text: () => Promise<string> }} = error
       const message = await errorInstance.context.text()
