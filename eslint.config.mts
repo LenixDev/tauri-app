@@ -1,6 +1,7 @@
 import js from '@eslint/js'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
+import prettier from 'eslint-config-prettier'
 export default [
   { ignores: ['node_modules', 'eslint.config.mts', 'src/components/ui', '**/_database.ts', 'supabase'] },
   ...tseslint.configs.strictTypeChecked.map(config => ({ ...config, files: ['**/*.{ts,tsx,mts}'] })),
@@ -361,4 +362,5 @@ export default [
       "@typescript-eslint/use-unknown-in-catch-callback-variable": "error"
     },
   },
+  prettier,
 ]
