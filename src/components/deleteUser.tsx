@@ -3,33 +3,28 @@ import { useTranslation } from "react-i18next"
 import { Button } from "./ui/button"
 import { DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Dialog } from "./ui/dialog"
 import { FieldGroup } from "./ui/field"
-import React from "react"
 import { SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem, Select } from "./ui/select"
 import { User } from "@/lib/user"
+import { useState } from "react"
 
 export function DeleteUser() {
   const { i18n: { dir: dirFn, language }, t } = useTranslation()
   const dir = dirFn()
-  const [selectedFruit, setSelectedFruit] = React.useState<string>("")
+  const [selectedFruit, setSelectedFruit] = useState<string>("")
 
-  const fruits = [
-    { label: t("apple"), value: "apple" },
-    { label: t("banana"), value: "banana" },
-    { label: t("blueberry"), value: "blueberry" },
-    { label: t("grapes"), value: "grapes" },
-    { label: t("pineapple"), value: "pineapple" },
-  ]
-
-  // const vegetables = [
-  //   { label: t.carrot, value: "carrot" },
-  //   { label: t.broccoli, value: "broccoli" },
-  //   { label: t.spinach, value: "spinach" },
-  // ]
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
+  const usersSet: { label: number, value: number }[] = []
+  
+  const handlePeak = async (bool: boolean) => {
+    if (!bool) return
     const [success, users] = await User.getUsers()
-    console.log(success, users)
+    if (!success) return
+    Object.entries(users).map(user => {
+      usersSet.push({ label: user[1].identifier, value: user[1].identifier })
+    })
+  }
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
   }
 
   return (
@@ -48,16 +43,16 @@ export function DeleteUser() {
             <DialogDescription>{t("signout.description")}</DialogDescription>
           </DialogHeader>
           <FieldGroup>
-            <Select value={selectedFruit} onValueChange={setSelectedFruit}>
+            <Select onOpenChange={async (open) => await handlePeak(open)} value={selectedFruit} onValueChange={setSelectedFruit}>
               <SelectTrigger className="w-32" dir={dir}>
                 <SelectValue placeholder={t("selectFruit")} />
               </SelectTrigger>
               <SelectContent dir={dir} data-lang={dir === "rtl" ? language : undefined}>
                 <SelectGroup>
-                  <SelectLabel>{t("fruits")}</SelectLabel>
-                  {fruits.map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.label}
+                  <SelectLabel>{t("identifications numbers")}</SelectLabel>
+                  {usersSet.map((user) => (
+                    <SelectItem key={user.value} value={user.value.toString()}>
+                      {user.label}
                     </SelectItem>
                   ))}
                 </SelectGroup>
