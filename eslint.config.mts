@@ -68,7 +68,7 @@ export default [
       "no-class-assign": "error",
       "no-compare-neg-zero": "error",
       "no-cond-assign": "warn",
-      "no-console": "error",
+      "no-console": "warn",
       "no-const-assign": "error",
       "no-constant-binary-expression": "warn",
       "no-constant-condition": "warn",

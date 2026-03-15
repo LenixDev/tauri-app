@@ -12,13 +12,13 @@ export function DeleteUser() {
   const dir = dirFn()
   const [selectedFruit, setSelectedFruit] = React.useState<string>("")
 
-  // const fruits = [
-  //   { label: t.apple, value: "apple" },
-  //   { label: t.banana, value: "banana" },
-  //   { label: t.blueberry, value: "blueberry" },
-  //   { label: t.grapes, value: "grapes" },
-  //   { label: t.pineapple, value: "pineapple" },
-  // ]
+  const fruits = [
+    { label: t("apple"), value: "apple" },
+    { label: t("banana"), value: "banana" },
+    { label: t("blueberry"), value: "blueberry" },
+    { label: t("grapes"), value: "grapes" },
+    { label: t("pineapple"), value: "pineapple" },
+  ]
 
   // const vegetables = [
   //   { label: t.carrot, value: "carrot" },
@@ -34,7 +34,7 @@ export function DeleteUser() {
 
   return (
     <Dialog>
-      <form onSubmit={handleSubmit}>
+      <form id="delete-user" onSubmit={handleSubmit}>
         <DialogTrigger asChild>
           <Button variant="outline">{t("signout.delete")}</Button>
         </DialogTrigger>
@@ -55,11 +55,11 @@ export function DeleteUser() {
               <SelectContent dir={dir} data-lang={dir === "rtl" ? language : undefined}>
                 <SelectGroup>
                   <SelectLabel>{t("fruits")}</SelectLabel>
-                  {/* {fruits.map((item) => (
+                  {fruits.map((item) => (
                     <SelectItem key={item.value} value={item.value}>
                       {item.label}
                     </SelectItem>
-                  ))} */}
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -68,7 +68,7 @@ export function DeleteUser() {
             <DialogClose asChild>
               <Button variant="outline">{t("cancel")}</Button>
             </DialogClose>
-            <Button type="submit">{t("signout.delete")}</Button>
+            <Button form="delete-user" type="submit">{t("signout.delete")}</Button>
           </DialogFooter>
         </DialogContent>
       </form>

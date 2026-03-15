@@ -63,7 +63,6 @@ export class User {
   }
 
   public static async getUsers(): Response<UsersId | string> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const result = await supabase.functions.invoke('get-users', { body: {} }) as { data: UsersId | null, error: Error | null }
     const { data, error } = result
     if (error) return User.catchHttpError(error)
@@ -72,9 +71,10 @@ export class User {
     return [true, data]
   }
 
-  // public static async deleteUser(email: Email): Response {
-
-  // }
+  public static deleteUser(email: Email): Awaited<Response> {
+    console.log(email)
+    return [true, email]
+  }
 
   private static async catchHttpError(error: Readonly<Error>): Promise<Response> {
     if (error instanceof FunctionsHttpError) {
