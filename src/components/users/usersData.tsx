@@ -34,6 +34,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const DataTable = <TData, TValue>({
   columns,
   data,
@@ -69,7 +70,8 @@ export const DataTable = <TData, TValue>({
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter identifier..."
-          value={(table.getColumn("identifier")?.getFilterValue() as string) ?? ""}
+          /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
+          value={(table.getColumn("identifier")?.getFilterValue() as string) || ""}
           onChange={(event) =>
             table.getColumn("identifier")?.setFilterValue(event.target.value)
           }
@@ -88,22 +90,19 @@ export const DataTable = <TData, TValue>({
               .filter(
                 (column) => column.getCanHide()
               )
-              .map((column) => {
-                if (column.id !== 'identifier') 
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        { column.toggleVisibility(!!value); }
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  )
-                }
-              )}
+              .map((column): React.ReactNode => column.id !== 'identifier' && (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  className="capitalize"
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) =>
+                    { column.toggleVisibility(!!value); }
+                  }
+                >
+                  {column.id}
+                </DropdownMenuCheckboxItem>
+              )
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

@@ -23,14 +23,14 @@ export const columns: ColumnDef<UserInfo>[] = [
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
-        onCheckedChange={(value) => { table.toggleAllPageRowsSelected(!!value); }}
+        onCheckedChange={(value) => { table.toggleAllPageRowsSelected(value === true); }}
         aria-label="Select all"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value) => { row.toggleSelected(!!value); }}
+        onCheckedChange={(value) => { row.toggleSelected(value === true); }}
         aria-label="Select row"
       />
     ),
@@ -78,7 +78,7 @@ export const columns: ColumnDef<UserInfo>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.identifier.toString())}
+              onClick={() => { navigator.clipboard.writeText(payment.identifier.toString()).catch(() => undefined) }}
             >
               Copy User ID
             </DropdownMenuItem>
