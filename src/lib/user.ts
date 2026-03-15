@@ -1,6 +1,6 @@
 import type { TranslationKey } from "@/locales"
 import { supabase } from "./supabase"
-import type { Role, Permission, Response, UserEmail } from "@/types"
+import type { Role, Permission, Response, UserEmail, Email, UserIdentifier } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
 
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
@@ -11,10 +11,10 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
 export class User {
   private static readonly IDENTIFIER_LENGTH = 7
   private static readonly PASSWORD_LENGTH = 8
-  private readonly email: string | undefined
+  private readonly email: Email
   private readonly role: Role
 
-  public constructor(email: string | undefined, role: Role) {
+  public constructor(email: Email, role: Role) {
     this.email = email
     this.role = role
   }
@@ -24,8 +24,7 @@ export class User {
   }
 
   public get identifier(): number {
-    if (this.email === undefined) throw new Error("Email is undefined")
-    return parseInt(this.email.split('@')[0], 10)
+    return User.identifierFromEmail(this.email)
   }
 
   public static async createUser({
@@ -60,17 +59,23 @@ export class User {
     return [true, "alerts.logout_success"]
   }
 
-  public static async getUsers(): Response<UserEmail[] | string> {
+  public static async getUsers(): Response<UserIdentifier[] | string> {
     const { data, error } = await supabase.functions.invoke('get-users', {
       body: {}
     }) as { data: UserEmail[] | null, error: Error | null }
     if (error) return User.catchHttpError(error)
 
     if (!data) return [false, "signout.fetch_failed"]
-    return [true, data]
+    return [true, data.map(user => ({
+      identifier: User.identifierFromEmail(user.email)
+    }))]
   }
 
   // public static deleteUser(email: Email): Response {  }
+
+  private static identifierFromEmail(email: Email): number {
+    return parseInt(email.split('@')[0], 10)
+  }
 
   private static async catchHttpError(error: Readonly<Error>): Promise<Response> {
     if (error instanceof FunctionsHttpError) {

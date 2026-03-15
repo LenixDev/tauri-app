@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
-import type { AuthState, Role } from "@/types"
+import type { AuthState, Email, Role } from "@/types"
 import { AuthContext } from "@/contexts/auth"
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
@@ -25,7 +25,12 @@ export const AuthProvider = ({ children }: { readonly children: React.ReactNode 
         setState({ session: null, status: 'unauthenticated', user: null })
         return
       }
-      const userInstance = new User(session.user.email, data.role)
+      const email: Email | undefined = session.user?.email
+      if (!email) {
+        setState({ session: null, status: 'unauthenticated', user: null })
+        return
+      }
+      const userInstance = new User(email, data.role)
       setState({ session, status: 'authenticated', user: userInstance })
     })
 

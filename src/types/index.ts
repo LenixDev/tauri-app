@@ -15,7 +15,10 @@ export type AuthState =
 export type Response<T = string, U = undefined> = Promise<[boolean, T, Record<string, U>?]>
 
 export type IDirectionProvider = React.ComponentProps<typeof Direction.DirectionProvider>
-export type Email = `${number}@institutte.local`
+export type Email = `${number}@institutte.local` | string
 export interface UserEmail {
   email: Email
+}
+export interface UserIdentifier {
+  identifier: number
 }
