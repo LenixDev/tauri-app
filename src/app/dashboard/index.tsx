@@ -12,15 +12,16 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { useSide } from "@/hooks/use-side"
 import React from "react"
 import { NavLink, Outlet, useLocation } from "react-router"
 import { ROUTES } from "@/lib/routes"
+import { useTranslation } from "react-i18next"
 
 export const Dashboard = () => {
   const { pathname } = useLocation()
+  const { i18n } = useTranslation()
   const directories = ["/", ...pathname.split("/").filter(Boolean)]
-  const side = useSide()
+  const side = i18n.dir() === "rtl" ? "right" : "left"
   return (
     <SidebarProvider>
       <AppSidebar side={side} />
