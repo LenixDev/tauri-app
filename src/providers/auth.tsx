@@ -11,7 +11,6 @@ export const AuthProvider = ({
   readonly children: React.ReactNode
 }) => {
   const [state, setState] = useState<AuthState>({
-    session: undefined,
     status: "loading",
     user: undefined,
   })
@@ -21,7 +20,7 @@ export const AuthProvider = ({
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_, session) => {
       if (!session) {
-        setState({ session: null, status: "unauthenticated", user: null })
+        setState({ status: "unauthenticated", user: null })
         return
       }
 
@@ -35,11 +34,11 @@ export const AuthProvider = ({
         user: { email },
       }: { user: { email?: Email | undefined } } = session
       if (error || typeof email !== "string") {
-        setState({ session: null, status: "unauthenticated", user: null })
+        setState({ status: "unauthenticated", user: null })
         return
       }
       const userInstance = new User(email, data.role)
-      setState({ session, status: "authenticated", user: userInstance })
+      setState({ status: "authenticated", user: userInstance })
     })
 
     return (): void => {

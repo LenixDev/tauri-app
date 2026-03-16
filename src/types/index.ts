@@ -7,9 +7,9 @@ export type Role = Database["public"]["Tables"]["users"]["Row"]["role"]
 export type Permission = Database["public"]["Enums"]["user_permissions"]
 
 export type AuthState =
-  | { status: "loading"; session: undefined; user: undefined }
-  | { status: "unauthenticated"; session: null; user: null }
-  | { status: "authenticated"; session: Session; user: User }
+  | { status: "loading"; user: undefined }
+  | { status: "unauthenticated"; user: null }
+  | { status: "authenticated"; user: User }
 
 export type Response<T = unknown, F = string, U = undefined> = Promise<
   [true, T, Record<string, U>?] | [false, F, Record<string, U>?]
