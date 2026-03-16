@@ -18,7 +18,7 @@ export type IDirectionProvider = React.ComponentProps<
   typeof Direction.DirectionProvider
 >
 export interface UserAccount {
-  identifier: number
+  identifier: string
   role: "manager" | "student"
 }
 
