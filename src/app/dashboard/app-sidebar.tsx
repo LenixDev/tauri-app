@@ -82,7 +82,7 @@ export const AppSidebar = ({
     ],
     user: {
       avatar: "/avatars/shadcn.jpg",
-      email: user.identifier.toString(),
+      email: user.getIdentifier,
       name: "shadcn",
     },
   }

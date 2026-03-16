@@ -63,7 +63,9 @@ export class User {
       "create-user",
       {
         body: {
-          identifier, password, role,
+          identifier,
+          password,
+          role,
         } as CreateUser,
       },
     )
@@ -80,9 +82,9 @@ export class User {
   }
 
   public static async getUsers(): Response<UserAccount[]> {
-    const { data, error } = await supabase.functions.invoke("get-users", {
+    const { data, error } = (await supabase.functions.invoke("get-users", {
       body: {},
-    }) as { data: UserAccount[] | null; error: Error | null }
+    })) as { data: UserAccount[] | null; error: Error | null }
     if (error) return User.catchHttpError(error)
 
     if (!data) return [false, "signout.fetch_failed"]
