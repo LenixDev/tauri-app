@@ -7,7 +7,7 @@ import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
 import type { Events, Permission, Role, RealtimeRegisteration } from './types.ts';
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://localhost:1420',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
@@ -68,7 +68,7 @@ export class UserConnection {
 
   /** 
    * Register the admin to the database's changes
-   * @return 
+   * @return
   */
   private realtimeSubscription: RealtimeRegisteration = async () => {
     const result = await this.admin.channel("db-changes").send({
@@ -81,7 +81,7 @@ export class UserConnection {
   }
 
   /**
-    Connect the admin to the database __PROPERLY__
+    Connect the user to the database __PERMISSEVELY__
     @return Admin's functions and the HTTP's headers
   */
   public async connect(): Promise<
