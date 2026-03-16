@@ -61,7 +61,6 @@ export const CreateUser = () => {
       toast.error(t(result, data))
       return
     }
-    if (!result)
     setUser({
       identifier: "",
       role: "student",

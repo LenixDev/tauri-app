@@ -44,9 +44,7 @@ export class User {
     role: Role
     password: string
     confirmPassword: string
-  }>): Promise<
-    | Response<TranslationKey, TranslationKey | string, number | string | undefined>
-  > {
+  }>): Promise<Response<TranslationKey, string, number | string | undefined>> {
     if (identifier.length !== User.IDENTIFIER_LENGTH)
       return [
         false,
@@ -109,7 +107,9 @@ export class User {
     return parseInt(email.split("@")[0], 10)
   }
 
-  private static async catchHttpError(error: Readonly<Error>): Promise<[false, string]> {
+  private static async catchHttpError(
+    error: Readonly<Error>,
+  ): Promise<[false, string]> {
     if (error instanceof FunctionsHttpError) {
       const errorInstance: { context: { text: () => Promise<string> } } = error
       const message = await errorInstance.context.text()

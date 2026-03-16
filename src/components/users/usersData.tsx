@@ -78,8 +78,8 @@ export const DataTable = <TData, TValue>({
   })
 
   return (
-    <div>
-      <div className="flex items-center justify-between py-4">
+    <div className="space-y-2">
+      <div className="flex items-center justify-between gap-2">
         <Input
           placeholder={t("users.search")}
           value={
@@ -120,7 +120,7 @@ export const DataTable = <TData, TValue>({
                 )}
             </DropdownMenuContent>
           </DropdownMenu>
-          <CreateUser/>
+          <CreateUser />
         </div>
       </div>
       <div className="overflow-hidden rounded-md border">
