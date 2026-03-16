@@ -17,6 +17,7 @@ Deno.serve(async (req) => {
 
   /* Security: only send wanted data */
   const usersData = users.flatMap((user) => {
+    // just to remove the falsy value returned from the method `find`
     const profile = profiles.find((p) => p.id === user.id)
     if (!profile) return []
     return [{ email: user.email, role: profile.role }]
