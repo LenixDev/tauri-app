@@ -41,6 +41,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "../ui/checkbox"
 import { CreateUser } from "../createUser"
+import { User } from "@/lib/user"
+import { toast } from "sonner"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -205,7 +207,18 @@ export const DataTable = <TData, TValue>({
 
 export default function DemoPage() {
   const data: UserAccount[] = useUsers()
+  const [disabled, setDisabled] = useState(false)
   const { t } = useTranslation()
+  const handleDelete = async (identifier: string) => {
+    setDisabled(true)
+    const [success, result] = await User.deleteUser(identifier)
+    if (success) {
+      toast.success(t(result))
+      return
+    }
+    toast.error(t(result))
+    setDisabled(false)
+  }
   return (
     <div className="max-w-4/5 container mx-auto py-10">
       <DataTable
@@ -271,7 +284,7 @@ export default function DemoPage() {
             id: "actions",
             header: () => <div>{t("actions")}</div>,
             cell: ({ row }) => {
-              const users = row.original
+              const user = row.original
 
               return (
                 <DropdownMenu>
@@ -286,14 +299,14 @@ export default function DemoPage() {
                     <DropdownMenuItem
                       onClick={() => {
                         navigator.clipboard
-                          .writeText(users.identifier.toString())
+                          .writeText(user.identifier.toString())
                           .catch(() => undefined)
                       }}
                     >
                       {t("users.copy_id")}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive" onClick={() => {}}>
+                    <DropdownMenuItem disabled={disabled} variant="destructive" onClick={() => { handleDelete(user.identifier) }}>
                       {t("users.delete")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
