@@ -22,6 +22,7 @@ export class UserConnection {
   private readonly req: Request
   private readonly permission: Permission
   private readonly supabaseClient: SupabaseClient
+  
   constructor(req: Request, permission: Permission) {
     this.req = req
     this.permission = permission
@@ -70,7 +71,8 @@ export class UserConnection {
     return rolePermissions?.permissions.includes(this.permission) ?? false
   }
 
-  public async connection(): Promise<SharedInitResult> {
+  /** Connect the admin to the database __PROPERLY__ */
+  public async connect(): Promise<SharedInitResult> {
     if (this.req.method === 'OPTIONS') {
       return [false, new Response(null, { headers: corsHeaders })]
     }

@@ -27,3 +27,5 @@ export interface UserData {
 export interface UserInfo extends Omit<UserData, "email"> {
   identifier: number
 }
+
+export type Events = "users-management"

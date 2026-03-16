@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
-import type { UserInfo } from "@/types"
+import type { Events, UserInfo } from "@/types"
 import { useState, useEffect } from "react"
 
 export const useUsers = () => {
@@ -15,19 +15,9 @@ export const useUsers = () => {
         .catch(() => undefined)
     }
     handler()
-
     const channel = supabase
       .channel("db-changes")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "users" },
-        handler,
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "role_permissions" },
-        handler,
-      )
+      .on("broadcast", { event: "users-management" satisfies Events }, handler)
       .subscribe()
 
     return () => {
