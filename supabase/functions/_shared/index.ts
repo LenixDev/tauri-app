@@ -7,7 +7,7 @@ import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
 import type { Events, Permission, Role, RealtimeRegisteration } from './types.ts';
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': 'https://localhost:1420',
+  'Access-Control-Allow-Origin': 'http://localhost:1420',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 

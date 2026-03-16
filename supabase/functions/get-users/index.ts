@@ -12,7 +12,7 @@ Deno.serve(async (req) => {
   /* Get the users's `role` and `id` from `public.users` */
   const { data: profiles, error: postgresError } = await adminClient
     .from('users')
-    .select('id, role').overrideTypes<UserAccount[]>()
+    .select('id, role, identifier').overrideTypes<UserAccount[]>()
   if (postgresError) return new Response(postgresError.message, { status: 400, headers: corsHeaders })
 
   /* Security: only send wanted data */

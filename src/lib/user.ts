@@ -89,7 +89,8 @@ export class User {
     if (error) return User.catchHttpError(error)
 
     if (!data) return [false, "signout.fetch_failed"]
-
+    
+    console.log(data)
     return [true, data]
   }
 

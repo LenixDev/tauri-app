@@ -205,7 +205,6 @@ export const DataTable = <TData, TValue>({
 
 export default function DemoPage() {
   const data: UserAccount[] = useUsers()
-  console.log(data)
   const { t } = useTranslation()
   return (
     <div className="max-w-4/5 container mx-auto py-10">
