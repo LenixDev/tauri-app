@@ -9,5 +9,9 @@ Deno.serve(async (req) => {
   const { error } = await adminClient.auth.admin.deleteUser(id, true)
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
+  
+  const [ok, result] = await response.registerToRealtime()
+  if (!ok) return result
+
   return new Response("OK", { status: 200, headers: corsHeaders })
 })

@@ -1,5 +1,5 @@
 import { UserConnection } from '../_shared/index.ts'
-import type { Events, Role } from '../_shared/types.ts'
+import type { Role } from '../_shared/types.ts'
 
 Deno.serve(async (req) => {
   const [success, response] = await new UserConnection(req, 'create:user').connect()
@@ -23,12 +23,8 @@ Deno.serve(async (req) => {
     .insert({ id: data.user.id, role })
   if (profileError) return new Response(profileError.message, { status: 400, headers: corsHeaders })
 
-  const result = await adminClient.channel("db-changes").send({
-    type: "broadcast",
-    event: "users-management" satisfies Events,
-    payload: {},
-  })
-  if (result !== 'ok') return new Response(result, { status: 500, headers: corsHeaders })
+  const [ok, result] = await response.registerToRealtime()
+  if (!ok) return result
 
   return new Response('OK', { status: 200, headers: corsHeaders })
 })

@@ -4,14 +4,7 @@
 
 // Setup type definitions for built-in Supabase Runtime APIs
 import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
-import { Permission, Role } from './types.ts';
-
-type SharedInitResult = 
-  | [false, Response]
-  | [true, {
-      adminClient: SupabaseClient
-      corsHeaders: typeof corsHeaders 
-    }]
+import type { Events, Permission, Role, RealtimeRegisteration } from './types.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -22,11 +15,13 @@ export class UserConnection {
   private readonly req: Request
   private readonly permission: Permission
   private readonly supabaseClient: SupabaseClient
+  private readonly admin: SupabaseClient
   
   constructor(req: Request, permission: Permission) {
     this.req = req
     this.permission = permission
     this.supabaseClient = this.createSupabaseClient()
+    this.admin = this.createAdminClient()
   }
 
   private createSupabaseClient() {
@@ -71,12 +66,32 @@ export class UserConnection {
     return rolePermissions?.permissions.includes(this.permission) ?? false
   }
 
+  /** 
+   * Register the admin to the database's changes
+   * @return 
+  */
+  private realtimeSubscription: RealtimeRegisteration = async () => {
+    const result = await this.admin.channel("db-changes").send({
+      type: "broadcast",
+      event: "users-management" satisfies Events,
+      payload: {},
+    })
+    if (result !== 'ok') return [false, new Response(result, { status: 500, headers: corsHeaders })]
+    return [true]
+  }
+
   /**
     Connect the admin to the database __PROPERLY__
     @return Admin's functions and the HTTP's headers
   */
- 
-  public async connect(): Promise<SharedInitResult> {
+  public async connect(): Promise<
+    [false, Response]
+    | [true, {
+      adminClient: SupabaseClient
+      corsHeaders: typeof corsHeaders
+      registerToRealtime: RealtimeRegisteration
+    }]
+  > {
     if (this.req.method === 'OPTIONS') {
       return [false, new Response("Wrong Method", { headers: corsHeaders })]
     }
@@ -90,9 +105,11 @@ export class UserConnection {
       return [false, new Response('Forbidden', { status: 403, headers: corsHeaders })]
     }
 
-    const adminClient = this.createAdminClient()
-
-    return [true, { adminClient, corsHeaders }]
+    return [true, {
+      adminClient: this.admin,
+      corsHeaders,
+      registerToRealtime: this.realtimeSubscription
+    }]
   }
 }
 
