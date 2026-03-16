@@ -29,11 +29,10 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenu,
 } from "../ui/dropdown-menu"
-import { Settings } from "lucide-react"
 import { useUsers } from "@/hooks/use-users"
 import type { UserInfo } from "@/types"
 import { useTranslation } from "react-i18next"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal, Settings } from "lucide-react"
 import {
   DropdownMenuItem,
   DropdownMenuLabel
