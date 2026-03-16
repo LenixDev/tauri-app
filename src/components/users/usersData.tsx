@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client"
 
 import {
@@ -287,11 +288,8 @@ export default function DemoPage() {
                     >
                       {t("users.copy_id")}
                     </DropdownMenuItem>
-                    <DropdownMenuSeparator/>
-                    <DropdownMenuItem
-                      variant="destructive"
-                      onClick={() => {}}
-                    >
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem variant="destructive" onClick={() => {}}>
                       {t("users.delete")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>

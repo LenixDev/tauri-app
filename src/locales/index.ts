@@ -9,6 +9,23 @@ i18n.on("languageChanged", (lng) => {
   document.documentElement.lang = lng
 })
 
+interface Translation {
+  [key: string]: string | Translation
+}
+
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+const detect = (obj: Readonly<Translation>) => {
+  const seen = new Set<string>()
+  Object.values(obj).forEach((value): void => {
+    if (typeof value !== "string") {
+      detect(value)
+      return
+    }
+    if (seen.has(value)) console.warn(`Duplicated translation value: ${value}`)
+    else seen.add(value)
+  })
+}
+
 await i18n.use(initReactI18next).init({
   fallbackLng: "en",
   lng: "en",
@@ -16,6 +33,10 @@ await i18n.use(initReactI18next).init({
     ar: { translation: arabic satisfies typeof english },
     en: { translation: english satisfies typeof arabic },
   },
+}, () => {
+  detect(english)
+  detect(arabic)
+  console.info("Detection of locales finished")
 })
 
 type DotNotation<T, Prefix extends string = ""> = {
