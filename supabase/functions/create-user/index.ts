@@ -24,5 +24,12 @@ Deno.serve(async (req) => {
 
   if (profileError) return new Response(profileError.message, { status: 400, headers: corsHeaders })
 
+  const result = await adminClient.channel("db-changes").send({
+    type: "broadcast",
+    event: "users-management",
+    payload: {},
+  })
+  if (result !== 'ok') return new Response(result, { status: 500, headers: corsHeaders })
+
   return new Response('OK', { status: 200, headers: corsHeaders })
 })
