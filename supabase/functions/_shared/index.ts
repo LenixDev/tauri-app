@@ -71,7 +71,11 @@ export class UserConnection {
     return rolePermissions?.permissions.includes(this.permission) ?? false
   }
 
-  /** Connect the admin to the database __PROPERLY__ */
+  /**
+    Connect the admin to the database __PROPERLY__
+    @return Admin's functions and the HTTP's headers
+  */
+ 
   public async connect(): Promise<SharedInitResult> {
     if (this.req.method === 'OPTIONS') {
       return [false, new Response(null, { headers: corsHeaders })]
