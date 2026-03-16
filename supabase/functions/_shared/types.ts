@@ -9,7 +9,10 @@ export interface CreateUser {
   role: Role
   password: string
 }
-export interface UsersData {
-  id: string
+export interface UserAccount {
+  identifier: string
   role: Role
+}
+export interface DeleteUser {
+  email: string
 }

@@ -14,7 +14,7 @@ Deno.serve(async (req) => {
     email_confirm: true,
   })
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
-
+ 
   const { error: profileError } = await adminClient
     .from('users')
     .insert({ identifier, role })

@@ -28,3 +28,6 @@ export interface CreateUser {
   role: Role
   password: string
 }
+export interface DeleteUser {
+  email: string
+}
