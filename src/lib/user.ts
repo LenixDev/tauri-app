@@ -7,6 +7,7 @@ import type {
   Email,
   UserData,
   UserInfo,
+  CreateUser,
 } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
 
@@ -64,10 +65,8 @@ export class User {
       "create-user",
       {
         body: {
-          identifier: parseInt(identifier, 10),
-          password,
-          role,
-        },
+          identifier, password, role,
+        } as CreateUser,
       },
     )
     const { error } = result

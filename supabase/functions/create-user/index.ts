@@ -1,16 +1,14 @@
 import { UserConnection } from '../_shared/index.ts'
-import type { Role } from '../_shared/types.ts'
+import type { CreateUser } from '../_shared/types.ts'
 
 Deno.serve(async (req) => {
   const [success, response] = await new UserConnection(req, 'create:user').connect()
   if (!success) return response
   const { adminClient, corsHeaders } = response
 
-  const { identifier, role, password }: {
-    identifier: string, role: Role, password: string
-  } = await req.json()
+  const { identifier, role, password }: CreateUser = await req.json()
 
-  const { data, error } = await adminClient.auth.admin.createUser({
+  const { error } = await adminClient.auth.admin.createUser({
     email: `${identifier}@institute.local`,
     password,
     email_confirm: true,
@@ -19,7 +17,7 @@ Deno.serve(async (req) => {
 
   const { error: profileError } = await adminClient
     .from('users')
-    .insert({ id: data.user.id, role })
+    .insert({ identifier, role })
   if (profileError) return new Response(profileError.message, { status: 400, headers: corsHeaders })
 
   const [ok, result] = await response.registerToRealtime()

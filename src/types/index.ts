@@ -1,4 +1,3 @@
-import type { Session } from "@supabase/supabase-js"
 import type { User } from "@/lib/user"
 import type { Database } from "./_database"
 import type { Direction } from "radix-ui"
@@ -29,3 +28,8 @@ export interface UserInfo extends Omit<UserData, "email"> {
 }
 
 export type Events = "users-management"
+export interface CreateUser {
+  identifier: string
+  role: Role
+  password: string
+}
