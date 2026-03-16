@@ -78,7 +78,7 @@ export class UserConnection {
  
   public async connect(): Promise<SharedInitResult> {
     if (this.req.method === 'OPTIONS') {
-      return [false, new Response(null, { headers: corsHeaders })]
+      return [false, new Response("Wrong Method", { headers: corsHeaders })]
     }
 
     const user = await this.getUser()

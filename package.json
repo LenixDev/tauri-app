@@ -16,7 +16,8 @@
     "supapush": "supabase db push",
     "start": "pnpm supatypes && pnpm lint && pnpm format && tauri dev",
     "lint": "npx eslint . --quiet",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "supafn": "supabase functions new"
   },
   "dependencies": {
     "@hugeicons/core-free-icons": "^4.0.0",

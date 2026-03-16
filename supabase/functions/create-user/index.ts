@@ -21,7 +21,6 @@ Deno.serve(async (req) => {
   const { error: profileError } = await adminClient
     .from('users')
     .insert({ id: data.user.id, role })
-
   if (profileError) return new Response(profileError.message, { status: 400, headers: corsHeaders })
 
   const result = await adminClient.channel("db-changes").send({

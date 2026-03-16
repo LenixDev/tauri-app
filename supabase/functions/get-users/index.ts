@@ -6,7 +6,7 @@ Deno.serve(async (req) => {
   if (!success) return response
   const { adminClient, corsHeaders } = response
 
-  /* Get the users' data from  `auth.users` */
+  /* Get the users' data from `auth.users` */
   const { data: { users }, error } = await adminClient.auth.admin.listUsers()
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
