@@ -117,7 +117,7 @@ export const CreateUser = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>{t("signup.roles")}</SelectLabel>
+                    <SelectLabel>{t("roles")}</SelectLabel>
                     <SelectItem value="manager">Manager</SelectItem>
                     <SelectItem value="student">Student</SelectItem>
                   </SelectGroup>

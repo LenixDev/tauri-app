@@ -28,6 +28,7 @@ import {
   DropdownMenuContent,
   DropdownMenuCheckboxItem,
   DropdownMenu,
+  DropdownMenuSeparator,
 } from "../ui/dropdown-menu"
 import { useUsers } from "@/hooks/use-users"
 import type { UserInfo } from "@/types"
@@ -35,7 +36,7 @@ import { useTranslation } from "react-i18next"
 import { ArrowUpDown, MoreHorizontal, Settings } from "lucide-react"
 import {
   DropdownMenuItem,
-  DropdownMenuLabel
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "../ui/checkbox"
 
@@ -110,7 +111,7 @@ export const DataTable = <TData, TValue>({
                         column.toggleVisibility(value)
                       }}
                     >
-                      {column.id}
+                      {t(column.id)}
                     </DropdownMenuCheckboxItem>
                   ),
               )}
@@ -202,94 +203,105 @@ export default function DemoPage() {
   const { t } = useTranslation()
   return (
     <div className="max-w-4/5 container mx-auto py-10">
-      <DataTable columns={[
-        {
-          id: "select",
-          header: ({ table }) => (
-            <Checkbox
-              checked={
-                table.getIsAllPageRowsSelected() ||
-                (table.getIsSomePageRowsSelected() && "indeterminate")
-              }
-              onCheckedChange={(value) => {
-                table.toggleAllPageRowsSelected(value === true)
-              }}
-              aria-label="Select all"
-            />
-          ),
-          cell: ({ row }) => (
-            <Checkbox
-              checked={row.getIsSelected()}
-              onCheckedChange={(value) => {
-                row.toggleSelected(value === true)
-              }}
-              aria-label="Select row"
-            />
-          ),
-          enableSorting: false,
-          enableHiding: false,
-        },
-        {
-          accessorKey: "identifier",
-          filterFn: (row, columnId, filterValue: string) =>
-            row.getValue<number>(columnId).toString().includes(filterValue),
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => {
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }}
-            >
-              {t("users.identifier")}
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-        },
-        {
-          accessorKey: t("users.role"),
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => {
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }}
-            >
-              {t("users.role")}
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-        },
-        {
-          id: t("users.actions"),
-          header: () => <div>{t("users.actions")}</div>,
-          cell: ({ row }) => {
-            const payment = row.original
-
-            return (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="h-8 w-8 p-0">
-                    <span className="sr-only">Open menu</span>
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>{t("users.actions")}</DropdownMenuLabel>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      navigator.clipboard
-                        .writeText(payment.identifier.toString())
-                        .catch(() => undefined)
-                    }}
-                  >
-                    {t("users.copy_id")}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )
+      <DataTable
+        columns={[
+          /* improve the padding generated when a column btn has an icon */
+          {
+            id: "select",
+            header: ({ table }) => (
+              <Checkbox
+                checked={
+                  table.getIsAllPageRowsSelected() ||
+                  (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) => {
+                  table.toggleAllPageRowsSelected(value === true)
+                }}
+                aria-label="Select all"
+              />
+            ),
+            cell: ({ row }) => (
+              <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => {
+                  row.toggleSelected(value === true)
+                }}
+                aria-label="Select row"
+              />
+            ),
+            enableSorting: false,
+            enableHiding: false,
           },
-        },
-      ]} data={data} />
+          {
+            accessorKey: "identifier",
+            filterFn: (row, columnId, filterValue: string) =>
+              row.getValue<number>(columnId).toString().includes(filterValue),
+            header: ({ column }) => (
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  column.toggleSorting(column.getIsSorted() === "asc")
+                }}
+              >
+                {t("users.identifier")}
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            ),
+          },
+          {
+            accessorKey: "role",
+            header: ({ column }) => (
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  column.toggleSorting(column.getIsSorted() === "asc")
+                }}
+              >
+                {t("role")}
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            ),
+          },
+          {
+            id: "actions",
+            header: () => <div>{t("actions")}</div>,
+            cell: ({ row }) => {
+              const users = row.original
+
+              return (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                      <span className="sr-only">Open menu</span>
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        navigator.clipboard
+                          .writeText(users.identifier.toString())
+                          .catch(() => undefined)
+                      }}
+                    >
+                      {t("users.copy_id")}
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator/>
+                    <DropdownMenuItem
+                      variant="destructive"
+                      onClick={() => {}}
+                    >
+                      {t("users.delete")}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )
+            },
+          },
+        ]}
+        data={data}
+      />
     </div>
   )
 }

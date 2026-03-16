@@ -8,6 +8,7 @@ export const useUsers = () => {
 
   useEffect(() => {
     const handler = () => {
+      console.log(users)
       User.getUsers()
         .then(([success, data]) => {
           if (success && Array.isArray(data)) setUsers(data)

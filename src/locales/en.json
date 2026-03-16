@@ -5,6 +5,9 @@
   "password": "Password",
   "identification": "Identification Number",
   "dashboard": "Dashboard",
+  "roles": "Roles",
+  "role": "Role",
+  "actions": "Actions",
   "login": {
     "hint": "Enter your credentials below to login to your account",
     "forgotPassword": "Reset Password?",
@@ -19,7 +22,6 @@
     "create_user": "Create A New User",
     "enter_user_information": "Enter the user's information below to create his account",
     "role": "Select The Role",
-    "roles": "Roles",
     "confirm_password": "Confirm Password",
     "password_rule": "Must be at least {{length}} characters long."
   },
@@ -70,10 +72,9 @@
     "previous": "Previous",
     "next": "Next",
     "identifier": "Identifier",
-    "role": "Role",
-    "actions": "Actions",
     "copy_id": "Copy User ID",
     "of": "of",
-    "rows_selected": "row(s) selected."
+    "rows_selected": "row(s) selected.",
+    "delete": "Delete User"
   }
 }
