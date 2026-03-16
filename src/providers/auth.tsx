@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
-import type { AuthState, Email, Role } from "@/types"
+import type { AuthState, Role } from "@/types"
 import { AuthContext } from "@/contexts/auth"
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
@@ -26,18 +26,15 @@ export const AuthProvider = ({
 
       const { data, error } = await supabase
         .from("users")
-        .select("role")
+        .select("role, identifier")
         .eq("id", session.user.id)
-        .single<{ role: Role }>()
+        .single<{ role: Role, identifier: string }>()
 
-      const {
-        user: { email },
-      }: { user: { email?: Email | undefined } } = session
-      if (error || typeof email !== "string") {
+      if (error) {
         setState({ status: "unauthenticated", user: null })
         return
       }
-      const userInstance = new User(email, data.role)
+      const userInstance = new User(data.identifier, data.role)
       setState({ status: "authenticated", user: userInstance })
     })
 

@@ -1,10 +1,10 @@
 import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
-import type { Events, UserInfo } from "@/types"
+import type { Events, UserAccount } from "@/types"
 import { useState, useEffect } from "react"
 
 export const useUsers = () => {
-  const [users, setUsers] = useState<UserInfo[]>([])
+  const [users, setUsers] = useState<UserAccount[]>([])
 
   useEffect(() => {
     const handler = () => {

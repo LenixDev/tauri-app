@@ -17,14 +17,9 @@ export type Response<T = unknown, F = string, U = undefined> = Promise<
 export type IDirectionProvider = React.ComponentProps<
   typeof Direction.DirectionProvider
 >
-// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-export type Email = `${number}@institutte.local` | string
-export interface UserData {
-  email: string | undefined
-  role: "manager" | "student"
-}
-export interface UserInfo extends Omit<UserData, "email"> {
+export interface UserAccount {
   identifier: number
+  role: "manager" | "student"
 }
 
 export type Events = "users-management"

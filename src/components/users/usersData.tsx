@@ -32,7 +32,7 @@ import {
   DropdownMenuSeparator,
 } from "../ui/dropdown-menu"
 import { useUsers } from "@/hooks/use-users"
-import type { UserInfo } from "@/types"
+import type { UserAccount } from "@/types"
 import { useTranslation } from "react-i18next"
 import { ArrowUpDown, MoreHorizontal, Settings } from "lucide-react"
 import {
@@ -204,7 +204,7 @@ export const DataTable = <TData, TValue>({
 }
 
 export default function DemoPage() {
-  const data: UserInfo[] = useUsers()
+  const data: UserAccount[] = useUsers()
   const { t } = useTranslation()
   return (
     <div className="max-w-4/5 container mx-auto py-10">

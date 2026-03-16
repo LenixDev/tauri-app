@@ -4,9 +4,7 @@ import type {
   Role,
   Permission,
   Response,
-  Email,
-  UserData,
-  UserInfo,
+  UserAccount,
   CreateUser,
 } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
@@ -19,11 +17,11 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
 export class User {
   private static readonly IDENTIFIER_LENGTH = 7
   private static readonly PASSWORD_LENGTH = 8
-  private readonly email: Email
+  private readonly identifier: string
   private readonly role: Role
 
-  public constructor(email: Email, role: Role) {
-    this.email = email
+  public constructor(identifier: string, role: Role) {
+    this.identifier = identifier
     this.role = role
   }
 
@@ -31,8 +29,8 @@ export class User {
     return User.PASSWORD_LENGTH
   }
 
-  public get identifier(): number {
-    return User.identifierFromEmail(this.email)
+  public get getIdentifier(): string {
+    return this.identifier
   }
 
   public static async createUser({
@@ -81,19 +79,19 @@ export class User {
     return [true, "alerts.logout_success"]
   }
 
-  public static async getUsers(): Response<UserInfo[]> {
+  public static async getUsers(): Response<UserAccount[]> {
     const { data, error } = (await supabase.functions.invoke("get-users", {
       body: {},
-    })) as { data: UserData[] | null; error: Error | null }
+    })) as { data: UserAccount[] | null; error: Error | null }
     if (error) return User.catchHttpError(error)
 
     if (!data) return [false, "signout.fetch_failed"]
 
     const identifiers = data.map((user) => {
-      if (typeof user.email !== "string")
-        throw new Error("User email is undefined")
+      if (typeof user.identifier !== "string")
+        throw new Error("Identifier email is undefined")
       return {
-        identifier: User.identifierFromEmail(user.email),
+        identifier: user.identifier,
         role: user.role,
       }
     })
@@ -101,10 +99,6 @@ export class User {
   }
 
   // public static deleteUser(email: Email): Response {  }
-
-  private static identifierFromEmail(email: Email): number {
-    return parseInt(email.split("@")[0], 10)
-  }
 
   private static async catchHttpError(
     error: Readonly<Error>,
