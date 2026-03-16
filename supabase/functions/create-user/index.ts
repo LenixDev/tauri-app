@@ -1,8 +1,8 @@
+import { UserConnection } from '../_shared/index.ts'
 import type { Role } from '../_shared/types.ts'
-import { UserConnectionInstance } from '../_shared/index.ts'
 
 Deno.serve(async (req) => {
-  const [success, response] = await UserConnectionInstance(req, 'create:user')
+  const [success, response] = await new UserConnection(req, 'create:user').connection()
   if (!success) return response
   const { adminClient, corsHeaders } = response
 
