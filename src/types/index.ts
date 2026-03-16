@@ -10,7 +10,7 @@ export type AuthState =
   | { status: "unauthenticated"; user: null }
   | { status: "authenticated"; user: User }
 
-export type Response<T = unknown, F = string, U = undefined> = Promise<
+export type Response<T = unknown, F = string, U = string> = Promise<
   [true, T, Record<string, U>?] | [false, F, Record<string, U>?]
 >
 
@@ -29,5 +29,5 @@ export interface CreateUser {
   password: string
 }
 export interface DeleteUser {
-  email: string
+  identifier: string
 }

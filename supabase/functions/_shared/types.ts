@@ -14,5 +14,5 @@ export interface UserAccount {
   role: Role
 }
 export interface DeleteUser {
-  email: string
+  identifier: string
 }

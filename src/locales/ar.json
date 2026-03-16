@@ -25,6 +25,9 @@
     "confirm_password": "تأكيد كلمة المرور",
     "password_rule": "يجب أن تكون على الأقل {{length}} أحرف."
   },
+  "signout": {
+    "delete_success": "تم حذف المستخدم #{{identifier}} بنجاح"
+  },
   "institute": {
     "name": "الطيب محمد بوسنة",
     "plan": "معهد"

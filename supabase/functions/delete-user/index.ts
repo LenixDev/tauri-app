@@ -9,15 +9,16 @@ Deno.serve(async (req) => {
   if (!success) return response
   const { adminClient, corsHeaders } = response
 
-  const { email }: DeleteUser = await req.json()
+  const { identifier }: DeleteUser = await req.json()
 
-  const { data, error: clientError } = await adminClient.auth.admin.listUsers()
+  const { data, error: clientError } = await adminClient
+    .from('users')
+    .select('id')
+    .eq('identifier', identifier)
+    .single<{ id: string }>()
   if (clientError) return new Response(clientError.message, { status: 400, headers: corsHeaders })
 
-  const user = data.users.find(u => u.email === email)
-  if (!user) return new Response('Not found', { status: 404, headers: corsHeaders })
-
-  const { error } = await adminClient.auth.admin.deleteUser(user.id, markAsDeletedInstead)
+  const { error } = await adminClient.auth.admin.deleteUser(data.id, markAsDeletedInstead)
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
   const [ok, result] = await response.registerToRealtime()

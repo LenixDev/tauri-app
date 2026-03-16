@@ -25,6 +25,9 @@
     "confirm_password": "Confirm Password",
     "password_rule": "Must be at least {{length}} characters long."
   },
+  "signout": {
+    "delete_success": "User #{{identifier}} deleted successfully"
+  },
   "institute": {
     "name": "Tayeb Mohamed Boucenna",
     "plan": "Institute"

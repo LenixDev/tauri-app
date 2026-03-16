@@ -6,6 +6,7 @@ import type {
   Response,
   UserAccount,
   CreateUser,
+  DeleteUser,
 } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
 
@@ -75,7 +76,7 @@ export class User {
     return [true, "signup.success", { identifier }]
   }
 
-  public static async signOut(): Response {
+  public static async signOut(): Response<TranslationKey> {
     const { error } = await supabase.auth.signOut({ scope: "local" })
     if (error) return [false, error.message]
     return [true, "alerts.logout_success"]
@@ -92,7 +93,13 @@ export class User {
     return [true, data]
   }
 
-  // public static deleteUser(email: Email): Response {  }
+  public static async deleteUser(identifier: string): Response<TranslationKey> {
+    const { error } = await supabase.functions.invoke("delete-user", {
+      body: { identifier } as DeleteUser,
+    })
+    if (error) return User.catchHttpError(error)
+    return [true, "signout.delete_success", { identifier }]
+  }
 
   private static async catchHttpError(
     error: Readonly<Error>,
