@@ -11,7 +11,7 @@ export type AuthState =
   | { status: "unauthenticated"; session: null; user: null }
   | { status: "authenticated"; session: Session; user: User }
 
-export type Response<T = string, F = string, U = undefined> = Promise<
+export type Response<T = unknown, F = string, U = undefined> = Promise<
   [true, T, Record<string, U>?] | [false, F, Record<string, U>?]
 >
 

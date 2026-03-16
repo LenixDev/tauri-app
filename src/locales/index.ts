@@ -26,18 +26,21 @@ const detect = (obj: Readonly<Translation>) => {
   })
 }
 
-await i18n.use(initReactI18next).init({
-  fallbackLng: "en",
-  lng: "en",
-  resources: {
-    ar: { translation: arabic satisfies typeof english },
-    en: { translation: english satisfies typeof arabic },
+await i18n.use(initReactI18next).init(
+  {
+    fallbackLng: "en",
+    lng: "en",
+    resources: {
+      ar: { translation: arabic satisfies typeof english },
+      en: { translation: english satisfies typeof arabic },
+    },
   },
-}, () => {
-  detect(english)
-  detect(arabic)
-  console.info("Detection of locales finished")
-})
+  () => {
+    detect(english)
+    detect(arabic)
+    console.info("Detection of locales finished")
+  },
+)
 
 type DotNotation<T, Prefix extends string = ""> = {
   [K in keyof T]: T[K] extends Record<string, unknown>

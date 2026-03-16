@@ -40,6 +40,7 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "../ui/checkbox"
+import { CreateUser } from "../createUser"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -118,6 +119,7 @@ export const DataTable = <TData, TValue>({
               )}
           </DropdownMenuContent>
         </DropdownMenu>
+        <CreateUser/>
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>

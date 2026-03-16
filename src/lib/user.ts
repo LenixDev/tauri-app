@@ -45,8 +45,7 @@ export class User {
     password: string
     confirmPassword: string
   }>): Promise<
-    | Response<string, TranslationKey, number | string | undefined>
-    | Response<undefined>
+    | Response<TranslationKey, TranslationKey | string, number | string | undefined>
   > {
     if (identifier.length !== User.IDENTIFIER_LENGTH)
       return [
@@ -75,7 +74,7 @@ export class User {
     )
     const { error } = result
 
-    if (error) return User.catchHttpError(error)
+    if (error) return await User.catchHttpError(error)
     return [true, "signup.success", { identifier }]
   }
 
@@ -110,7 +109,7 @@ export class User {
     return parseInt(email.split("@")[0], 10)
   }
 
-  private static async catchHttpError<T>(error: Readonly<Error>): Response<T> {
+  private static async catchHttpError(error: Readonly<Error>): Promise<[false, string]> {
     if (error instanceof FunctionsHttpError) {
       const errorInstance: { context: { text: () => Promise<string> } } = error
       const message = await errorInstance.context.text()
