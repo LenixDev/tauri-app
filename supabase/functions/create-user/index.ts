@@ -8,7 +8,7 @@ Deno.serve(async (req) => {
 
   const { identifier, role, password }: CreateUser = await req.json()
 
-  const { error } = await adminClient.auth.admin.createUser({
+  const { data, error } = await adminClient.auth.admin.createUser({
     email: `${identifier}@institute.local`,
     password,
     email_confirm: true,
@@ -17,7 +17,7 @@ Deno.serve(async (req) => {
  
   const { error: profileError } = await adminClient
     .from('users')
-    .insert({ identifier, role })
+    .insert({ id: data.user.id, identifier, role })
   if (profileError) return new Response(profileError.message, { status: 400, headers: corsHeaders })
 
   const [ok, result] = await response.registerToRealtime()
