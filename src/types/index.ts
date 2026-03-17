@@ -8,6 +8,7 @@ export type Permission = Database["public"]["Enums"]["user_permissions"]
 export type AuthState =
   | { status: "loading"; user: undefined }
   | { status: "unauthenticated"; user: null }
+  | { status: "unauthorized"; user: null }
   | { status: "authenticated"; user: User }
 
 export type Response<T = unknown, F = string, U = string> = Promise<

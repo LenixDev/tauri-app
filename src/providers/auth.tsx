@@ -24,17 +24,22 @@ export const AuthProvider = ({
         return
       }
 
-      const { data, error } = await supabase
+      if (session.user.deleted_at) {
+        setState({ status: "unauthorized", user: null })
+        return
+      }
+
+      const { data: user, error: userError } = await supabase
         .from("users")
         .select("role, identifier")
         .eq("id", session.user.id)
         .single<UserAccount>()
 
-      if (error) {
+      if (userError) {
         setState({ status: "unauthenticated", user: null })
         return
       }
-      const userInstance = new User(data.identifier, data.role)
+      const userInstance = new User(user.identifier, user.role)
       setState({ status: "authenticated", user: userInstance })
     })
 
