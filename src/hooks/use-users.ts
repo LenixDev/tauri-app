@@ -2,7 +2,6 @@ import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
 import type { Events, UserAccount } from "@/types"
 import { useState, useEffect } from "react"
-import { toast } from "sonner"
 
 export const useUsers = () => {
   const [users, setUsers] = useState<UserAccount[]>([])
@@ -12,7 +11,6 @@ export const useUsers = () => {
       User.getUsers()
         .then(([success, data]) => {
           if (success && Array.isArray(data)) setUsers(data)
-          else toast.error("failed to fetch")
         })
         .catch(() => undefined)
     }

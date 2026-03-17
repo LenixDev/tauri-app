@@ -88,8 +88,6 @@ export class User {
     })) as { data: UserAccount[]; error: Error | null }
     if (error) return await User.catchHttpError(error)
 
-    if (!data) return [false, "signout.fetch_failed"]
-
     return [true, data]
   }
 
