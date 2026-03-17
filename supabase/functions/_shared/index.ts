@@ -26,21 +26,21 @@ export class UserConnection {
       joinRealtimeEvents: () => Promise<RealtimeRegisteration>
     }]
   > {
-    if (req.method === 'OPTIONS') return [false, new Response("Wrong Method", { status: 405, headers: this.corsHeaders })]
+    if (req.method === 'OPTIONS') return [false, new Response(null, { status: 405, headers: this.corsHeaders })]
 
     const Authorization = req.headers.get('Authorization')
     if (!Authorization) throw new Error('Authorization is not defined')
 
     const url = Deno.env.get("SUPABASE_URL")
     const key = Deno.env.get("SUPABASE_ANON_KEY")
-    if (!url || !key) return [false, new Response("Bad request", { status: 400, headers: this.corsHeaders })]
+    if (!url || !key) return [false, new Response(null, { status: 400, headers: this.corsHeaders })]
 
     const admin = createClient(url, key, {
       global: { headers: { Authorization } }
     })
 
     const { data: { user } } = await admin.auth.getUser()
-    if (!user) return [false, new Response("Bad request", { status: 400, headers: this.corsHeaders })]
+    if (!user) return [false, new Response(null, { status: 400, headers: this.corsHeaders })]
 
     const { data: profile, error } = await admin
       .from('users')
@@ -56,7 +56,7 @@ export class UserConnection {
       .single<{ permissions: Permission[] }>()
 
     const isPermissed = rolePermissions?.permissions.includes(permission) ?? false
-    if (!isPermissed) return [false, new Response('Forbidden', { status: 403, headers: this.corsHeaders })]
+    if (!isPermissed) return [false, new Response(null, { status: 403, headers: this.corsHeaders })]
 
     /**
      * Register the admin to the database's changes

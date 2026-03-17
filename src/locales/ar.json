@@ -18,7 +18,7 @@
     "identification_mismatch": "رقم التعريفي يجب أن يتكون بالظبط من {{identifierLength}} أحرف",
     "password_mismatch": "كلمة المرور يجب أن تكون على الأقل {{passwordLength}} أحرف",
     "passwords_unmatched": "كلمات المرور غير متطابقة",
-    "success": "تم إنشاء المستخدم #${{identifier}} بنجاح",
+    "success": "تم إنشاء المستخدم #{{identifier}} بنجاح",
     "create_user": "إنشاء مستخدم جديد",
     "role": "حدد دور المستخدم",
     "enter_user_information": "أدخل معلومات المستخدم أدناه لإنشاء حسابه",
@@ -34,7 +34,7 @@
   },
   "alerts": {
     "signin_success": "تم تسجيل الدخول بنجاح إلى #{{identifier}}",
-    "logout_success": "تم تسجيل الخروج بنجاح من #{{identifier}}"
+    "logout_success": "تم تسجيل الخروج بنجاح"
   },
   "nav": {
     "main": {

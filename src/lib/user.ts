@@ -85,8 +85,8 @@ export class User {
   public static async getUsers(): Response<UserAccount[]> {
     const { data, error } = (await supabase.functions.invoke("get-users", {
       body: {},
-    })) as { data: UserAccount[] | null; error: Error | null }
-    if (error) return User.catchHttpError(error)
+    })) as { data: UserAccount[]; error: Error | null }
+    if (error) return await User.catchHttpError(error)
 
     if (!data) return [false, "signout.fetch_failed"]
 
@@ -97,7 +97,7 @@ export class User {
     const { error } = (await supabase.functions.invoke("delete-user", {
       body: { identifier } as DeleteUser,
     })) as { error: Error | null }
-    if (error) return User.catchHttpError(error)
+    if (error) return await User.catchHttpError(error)
 
     return [true, "signout.delete_success", { identifier }]
   }

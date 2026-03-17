@@ -18,7 +18,7 @@
     "identification_mismatch": "Identification number must be exactly of {{identifierLength}} characters",
     "password_mismatch": "Password must be at least of {{passwordLength}} characters",
     "passwords_unmatched": "Passwords do not match",
-    "success": "User #${{identifier}} created successfully",
+    "success": "User #{{identifier}} created successfully",
     "create_user": "Create A New User",
     "enter_user_information": "Enter the user's information below to create his account",
     "role": "Select The Role",
@@ -34,7 +34,7 @@
   },
   "alerts": {
     "signin_success": "Sign in successful with #{{identifier}}",
-    "logout_success": "Logout successful from {{identifier}}"
+    "logout_success": "Logout successfull"
   },
   "nav": {
     "main": {
