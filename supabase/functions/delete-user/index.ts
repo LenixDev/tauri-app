@@ -5,8 +5,8 @@ import { DeleteUser } from "../_shared/types.ts";
 const markAsDeletedInstead = true
 
 Deno.serve(async (req) => {
-  const connection = new UserConnection()
-  const [success, response] = await connection.connect(req, 'delete:user')
+  const connection = new UserConnection(req)
+  const [success, response] = await connection.connect('delete:user')
   if (!success) return response
   const { admin, corsHeaders, joinRealtimeEvents } = response
 

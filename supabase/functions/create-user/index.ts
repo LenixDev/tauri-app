@@ -2,8 +2,8 @@ import { UserConnection } from '../_shared/index.ts'
 import type { CreateUser } from '../_shared/types.ts'
 
 Deno.serve(async (req) => {
-  const connection = new UserConnection()
-  const [success, response] = await connection.connect(req, 'create:user')
+  const connection = new UserConnection(req)
+  const [success, response] = await connection.connect('create:user')
   if (!success) return response
   const { admin, corsHeaders, joinRealtimeEvents } = response
 

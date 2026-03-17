@@ -2,8 +2,8 @@ import { UserConnection } from '../_shared/index.ts'
 import type { UserAccount } from '../_shared/types.ts'
 
 Deno.serve(async (req) => {
-  const connection = new UserConnection()
-  const [success, response] = await connection.connect(req, 'read:users')
+  const connection = new UserConnection(req)
+  const [success, response] = await connection.connect('read:users')
   if (!success) return response
   const { admin, corsHeaders } = response
 

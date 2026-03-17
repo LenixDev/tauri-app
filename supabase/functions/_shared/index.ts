@@ -7,18 +7,32 @@ import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
 import type { Events, Permission, Role, RealtimeRegisteration } from './types.ts';
 
 export class UserConnection {
-  private readonly corsHeaders = {
-    'Access-Control-Allow-Origin': 'http://localhost:1420',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-  }
+  private readonly req: Request
+  private readonly corsHeaders: Record<string, string>
 
-  constructor() {}
+  constructor(req: Request) {
+    this.req = req
+    const origin = this.req.headers.get('Origin') ?? ''
+    const allowedOrigins = ['http://localhost:1420']
+
+    this.corsHeaders = {
+      'Access-Control-Allow-Headers':
+        this.req.headers.get('Access-Control-Request-Headers') ??
+        'authorization, x-client-info, apikey, content-type',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Credentials': 'true',
+    }
+
+    if (allowedOrigins.includes(origin)) {
+      this.corsHeaders['Access-Control-Allow-Origin'] = origin
+    }
+  }
 
   /**
     Connect the user to the database __PERMISSEVELY__
     @return Admin's functions and the HTTP's headers
   */
-  public async connect(req: Request, permission: Permission): Promise<
+  public async connect(permission: Permission): Promise<
     [false, Response]
     | [true, {
       admin: SupabaseClient
@@ -26,10 +40,10 @@ export class UserConnection {
       joinRealtimeEvents: () => Promise<RealtimeRegisteration>
     }]
   > {
-    if (req.method === 'OPTIONS') return [false, new Response(null, { status: 405, headers: this.corsHeaders })]
+    if (this.req.method === 'OPTIONS') return [false, new Response(null, { status: 204, headers: this.corsHeaders })]
 
-    const Authorization = req.headers.get('Authorization')
-    if (!Authorization) throw new Error('Authorization is not defined')
+    const Authorization = this.req.headers.get('Authorization')
+    if (!Authorization) return [false, new Response('Authorization is not defined', { status: 401, headers: this.corsHeaders })]
 
     const url = Deno.env.get("SUPABASE_URL")
     const key = Deno.env.get("SUPABASE_ANON_KEY")
