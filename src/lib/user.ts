@@ -90,15 +90,15 @@ export class User {
 
     if (!data) return [false, "signout.fetch_failed"]
     
-    console.log(data)
     return [true, data]
   }
 
   public static async deleteUser(identifier: string): Response<TranslationKey> {
-    const { error } = await supabase.functions.invoke("delete-user", {
+    const { data, error } = await supabase.functions.invoke("delete-user", {
       body: { identifier } as DeleteUser,
     })
     if (error) return User.catchHttpError(error)
+    console.debug(data)
     return [true, "signout.delete_success", { identifier }]
   }
 

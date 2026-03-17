@@ -211,9 +211,9 @@ export default function DemoPage() {
   const { t } = useTranslation()
   const handleDelete = async (identifier: string) => {
     setDisabled(true)
-    const [success, result] = await User.deleteUser(identifier)
+    const [success, result, data] = await User.deleteUser(identifier)
     if (success) {
-      toast.success(t(result))
+      toast.success(t(result, data))
       return
     }
     toast.error(t(result))
