@@ -49,7 +49,6 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const DataTable = <TData, TValue>({
   columns,
   data,
@@ -85,7 +84,6 @@ export const DataTable = <TData, TValue>({
         <Input
           placeholder={t("users.search")}
           value={
-            /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
             (table.getColumn("identifier")?.getFilterValue() as string) || ""
           }
           onChange={(event) =>

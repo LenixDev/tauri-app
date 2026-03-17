@@ -94,11 +94,11 @@ export class User {
   }
 
   public static async deleteUser(identifier: string): Response<TranslationKey> {
-    const { data, error } = await supabase.functions.invoke("delete-user", {
+    const { error } = await supabase.functions.invoke("delete-user", {
       body: { identifier } as DeleteUser,
-    })
+    }) as { error: Error | null }
     if (error) return User.catchHttpError(error)
-    console.debug(data)
+
     return [true, "signout.delete_success", { identifier }]
   }
 

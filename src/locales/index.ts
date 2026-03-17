@@ -21,7 +21,7 @@ const detect = (obj: Readonly<Translation>) => {
       detect(value)
       return
     }
-    if (seen.has(value)) console.warn(`Duplicated translation value: ${value}`)
+    if (seen.has(value)) Error(`Duplicated translation value: ${value}`)
     else seen.add(value)
   })
 }
@@ -38,7 +38,6 @@ await i18n.use(initReactI18next).init(
   () => {
     detect(english)
     detect(arabic)
-    console.info("Detection of locales finished")
   },
 )
 
