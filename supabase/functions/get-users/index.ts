@@ -17,8 +17,8 @@ Deno.serve(async (req) => {
 
   /* Security: only send wanted data */
   const usersData = users.flatMap((user) => {
-    // remove the falsy value returned from the method `find` and filters out the deleted users
-    const profile = profiles.find((p) => p.id === user.id && user.deleted_at === null)
+    // remove the falsy value returned from the method `find` and filters out the soft deleted users
+    const profile = profiles.find((p) => p.id === user.id && !user.deleted_at)
     if (!profile) return []
     return [{ identifier: profile.identifier, role: profile.role }]
   })
