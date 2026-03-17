@@ -89,14 +89,14 @@ export class User {
     if (error) return User.catchHttpError(error)
 
     if (!data) return [false, "signout.fetch_failed"]
-    
+
     return [true, data]
   }
 
   public static async deleteUser(identifier: string): Response<TranslationKey> {
-    const { error } = await supabase.functions.invoke("delete-user", {
+    const { error } = (await supabase.functions.invoke("delete-user", {
       body: { identifier } as DeleteUser,
-    }) as { error: Error | null }
+    })) as { error: Error | null }
     if (error) return User.catchHttpError(error)
 
     return [true, "signout.delete_success", { identifier }]

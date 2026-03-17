@@ -304,7 +304,13 @@ export default function DemoPage() {
                       {t("users.copy_id")}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem disabled={disabled} variant="destructive" onClick={() => { handleDelete(user.identifier) }}>
+                    <DropdownMenuItem
+                      disabled={disabled}
+                      variant="destructive"
+                      onClick={() => {
+                        handleDelete(user.identifier)
+                      }}
+                    >
                       {t("users.delete")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
