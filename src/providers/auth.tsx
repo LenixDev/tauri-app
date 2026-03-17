@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabase"
 import { User } from "@/lib/user"
 import type { AuthState, UserAccount } from "@/types"
 import { AuthContext } from "@/contexts/auth"
+import type { Session } from "@supabase/supabase-js"
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const AuthProvider = ({
@@ -15,6 +16,21 @@ export const AuthProvider = ({
     user: undefined,
   })
 
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+  const fetchUser = async (session: Readonly<Session>) => {
+    const { data: user, error: userError } = await supabase
+      .from("users")
+      .select("role, identifier")
+      .eq("id", session.user.id)
+      .single<UserAccount>()
+
+    if (userError) {
+      setState({ status: "unauthenticated", user: null })
+      return undefined
+    }
+    return user
+  }
+
   useEffect(() => {
     const {
       data: { subscription },
@@ -24,21 +40,14 @@ export const AuthProvider = ({
         return
       }
 
-      if (session.user.deleted_at) {
+      if (Boolean(session.user.deleted_at)) {
         setState({ status: "unauthorized", user: null })
         return
       }
 
-      const { data: user, error: userError } = await supabase
-        .from("users")
-        .select("role, identifier")
-        .eq("id", session.user.id)
-        .single<UserAccount>()
+      const user = await fetchUser(session)
+      if (!user) return
 
-      if (userError) {
-        setState({ status: "unauthenticated", user: null })
-        return
-      }
       const userInstance = new User(user.identifier, user.role)
       setState({ status: "authenticated", user: userInstance })
     })
