@@ -3,7 +3,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
 export default [
-  { ignores: ['node_modules', 'eslint.config.mts', 'src/components/ui', '**/_database.ts', 'supabase'] },
+  { ignores: ['node_modules', 'eslint.config.mts', 'src/components/ui', '**/_database.ts'] },
   ...tseslint.configs.strictTypeChecked.map(config => ({ ...config, files: ['**/*.{ts,tsx,mts}'] })),
   js.configs.recommended,
   {

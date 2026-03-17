@@ -1,5 +1,5 @@
 import { UserConnection } from '../_shared/index.ts'
-import { UserAccount } from '../_shared/types.ts'
+import type { UserAccount } from '../_shared/types.ts'
 
 Deno.serve(async (req) => {
   const [success, response] = await new UserConnection(req, 'read:users').connect()

@@ -10,6 +10,7 @@ export interface CreateUser {
   password: string
 }
 export interface UserAccount {
+  id: string
   identifier: string
   role: Role
 }
