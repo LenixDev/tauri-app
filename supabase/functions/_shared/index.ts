@@ -3,7 +3,7 @@
 // This enables autocomplete, go to definition, etc.
 
 // Setup type definitions for built-in Supabase Runtime APIs
-import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
+import { createClient, SupabaseClient, User } from 'jsr:@supabase/supabase-js@2'
 import type { Events, Permission, Role, RealtimeRegisteration } from './types.ts';
 
 const corsHeaders = {
@@ -11,51 +11,61 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-export class UserConnection {
+class Server {
+  protected accessor url: string
+  protected accessor key: string
+  protected constructor() {
+    this.url = this.initUrl()
+    this.key = this.initKey()
+  }
+
+  private initUrl() {
+    const url = Deno.env.get('SUPABASE_URL')
+    if (!url) throw new Error('SUPABASE_URL is not defined')
+    return url
+  }
+  private initKey() {
+    const key = Deno.env.get('SUPABASE_ANON_KEY')
+    if (!key) throw new Error('SUPABASE_ANON_KEY is not defined')
+    return key
+  }
+}
+
+export class UserConnection extends Server {
   private readonly req: Request
   private readonly permission: Permission
   private readonly supabaseClient: SupabaseClient
   private readonly admin: SupabaseClient
-  
+
   constructor(req: Request, permission: Permission) {
+    super()
     this.req = req
     this.permission = permission
     this.supabaseClient = this.createSupabaseClient()
-    this.admin = this.createAdminClient()
+    this.admin = createClient(this.url, this.key)
   }
 
   private createSupabaseClient() {
-    return createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_ANON_KEY')!,
-      { global: { headers: { Authorization: this.req.headers.get('Authorization')! } } }
-    )
+    const Authorization = this.req.headers.get('Authorization')
+    if (!Authorization) throw new Error('Authorization header is not defined')
+
+    return createClient(this.url, this.key, {
+      global: { headers: { Authorization } }
+    })
   }
 
-  private async getUser() {
+  private async isSafeConnection(): Promise<[true] | [false, Response]> {
+    if (this.req.method === 'OPTIONS') return [false, new Response("Wrong Method", { status: 405, headers: corsHeaders })]
+
     const { data: { user } } = await this.supabaseClient.auth.getUser()
-    return user
-  }
+    if (!user) return [false, new Response("Bad request", { status: 400, headers: corsHeaders })]
 
-  private async getProfile(supabaseClient: SupabaseClient, id: string) {
-    const { data: profile } = await supabaseClient
+    const { data: profile, error } = await this.supabaseClient
       .from('users')
       .select('role')
-      .eq('id', id)
+      .eq('id', user.id)
       .single<{ role: Role }>()
-    return profile
-  }
-
-  private createAdminClient() {
-    return createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    )
-  }
-
-  private async isRolePermissed(id: string) {
-    const profile = await this.getProfile(this.supabaseClient, id)
-    if (!profile?.role) return false
+    if (error) return [false, new Response(error.message, { status: 400, headers: corsHeaders })]
 
     const { data: rolePermissions } = await this.supabaseClient
       .from('role_permissions')
@@ -63,7 +73,9 @@ export class UserConnection {
       .eq('role', profile?.role)
       .single<{ permissions: Permission[] }>()
 
-    return rolePermissions?.permissions.includes(this.permission) ?? false
+    const isPermissed = rolePermissions?.permissions.includes(this.permission) ?? false
+    if (!isPermissed) return [false, new Response('Forbidden', { status: 403, headers: corsHeaders })]
+    return [true]
   }
 
   /** 
@@ -92,18 +104,8 @@ export class UserConnection {
       registerToRealtime: RealtimeRegisteration
     }]
   > {
-    if (this.req.method === 'OPTIONS') {
-      return [false, new Response("Wrong Method", { headers: corsHeaders })]
-    }
-
-    const user = await this.getUser()
-    if (!user) {
-      return [false, new Response('Unauthorized', { status: 401, headers: corsHeaders })]
-    }
-
-    if (!await this.isRolePermissed(user.id)) {
-      return [false, new Response('Forbidden', { status: 403, headers: corsHeaders })]
-    }
+    const [success, response] = await this.isSafeConnection()
+    if (!success) return [false, response]
 
     return [true, {
       adminClient: this.admin,
