@@ -2,15 +2,16 @@ import { UserConnection } from '../_shared/index.ts'
 import type { UserAccount } from '../_shared/types.ts'
 
 Deno.serve(async (req) => {
-  const [success, response] = await new UserConnection(req, 'read:users').connect()
+  const connection = new UserConnection()
+  const [success, response] = await connection.connect(req, 'read:users')
   if (!success) return response
-  const { adminClient, corsHeaders } = response
+  const { admin, corsHeaders } = response
 
-  const { data: { users }, error } = await adminClient.auth.admin.listUsers()
+  const { data: { users }, error } = await admin.auth.admin.listUsers()
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
   /* Get the users's `role` and `id` from `public.users` */
-  const { data: profiles, error: postgresError } = await adminClient
+  const { data: profiles, error: postgresError } = await admin
     .from('users')
     .select('id, role, identifier').overrideTypes<UserAccount[]>()
   if (postgresError) return new Response(postgresError.message, { status: 400, headers: corsHeaders })

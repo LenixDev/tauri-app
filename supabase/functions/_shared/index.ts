@@ -6,111 +6,75 @@
 import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
 import type { Events, Permission, Role, RealtimeRegisteration } from './types.ts';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': 'http://localhost:1420',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
-
-class Edge {
-  private readonly req: Request
-  protected static readonly url: string = this.getENV("SUPABASE_URL")
-  protected static readonly key: string = this.getENV("SUPABASE_ANON_KEY")
-  protected readonly supabaseClient: SupabaseClient
-
-  protected constructor(req: Request) {
-    this.req = req
-    this.supabaseClient = this.createSupabaseClient(Edge.url, Edge.key)
+export class UserConnection {
+  private readonly corsHeaders = {
+    'Access-Control-Allow-Origin': 'http://localhost:1420',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   }
 
-  private static getENV(key: "SUPABASE_ANON_KEY" | "SUPABASE_URL") {
-    const value = Deno.env.get(key)
-    if (!value) throw new Error(`${key} is not defined`)
-    return value
-  }
-
-  private createSupabaseClient(url: string, key: string) {
-    const Authorization = this.req.headers.get('Authorization')
-    if (!Authorization) throw new Error('Authorization header is not defined')
-
-    return createClient(url, key, {
-      global: { headers: { Authorization } }
-    })
-  }
-
-  protected checkMethod(): [true] | [false, Response] {
-    if (this.req.method === 'OPTIONS') return [false, new Response("Wrong Method", { status: 405, headers: corsHeaders })]
-    return [true]
-  }
-}
-
-export class UserConnection extends Edge {
-  private readonly permission: Permission
-  private readonly admin: SupabaseClient
-
-  constructor(req: Request, permission: Permission) {
-    super(req)
-    this.permission = permission
-    this.admin = createClient(Edge.url, Edge.key)
-  }
-
-  private async isSafeConnection(): Promise<[true] | [false, Response]> {
-    const [success, response] = this.checkMethod()
-    if (!success) return [false, response]
-
-    const { data: { user } } = await this.supabaseClient.auth.getUser()
-    if (!user) return [false, new Response("Bad request", { status: 400, headers: corsHeaders })]
-
-    const { data: profile, error } = await this.supabaseClient
-      .from('users')
-      .select('role')
-      .eq('id', user.id)
-      .single<{ role: Role }>()
-    if (error) return [false, new Response(error.message, { status: 400, headers: corsHeaders })]
-
-    const { data: rolePermissions } = await this.supabaseClient
-      .from('role_permissions')
-      .select('permissions')
-      .eq('role', profile?.role)
-      .single<{ permissions: Permission[] }>()
-
-    const isPermissed = rolePermissions?.permissions.includes(this.permission) ?? false
-    if (!isPermissed) return [false, new Response('Forbidden', { status: 403, headers: corsHeaders })]
-    return [true]
-  }
-
-  /**
-   * Register the admin to the database's changes
-   * @return
-  */
-  private realtimeSubscription: RealtimeRegisteration = async () => {
-    const result = await this.admin.channel("db-changes").send({
-      type: "broadcast",
-      event: "users-management" satisfies Events,
-      payload: {},
-    })
-    if (result !== 'ok') return [false, new Response(result, { status: 500, headers: corsHeaders })]
-    return [true]
-  }
+  constructor() {}
 
   /**
     Connect the user to the database __PERMISSEVELY__
     @return Admin's functions and the HTTP's headers
   */
-  public async connect(): Promise<
+  public async connect(req: Request, permission: Permission): Promise<
     [false, Response]
     | [true, {
-      adminClient: SupabaseClient
-      corsHeaders: typeof corsHeaders
-      registerToRealtime: RealtimeRegisteration
+      admin: SupabaseClient
+      corsHeaders: typeof UserConnection.prototype.corsHeaders
+      joinRealtimeEvents: () => Promise<RealtimeRegisteration>
     }]
   > {
-    const [success, response] = await this.isSafeConnection()
-    if (!success) return [false, response]
+    if (req.method === 'OPTIONS') return [false, new Response("Wrong Method", { status: 405, headers: this.corsHeaders })]
 
+    const Authorization = req.headers.get('Authorization')
+    if (!Authorization) throw new Error('Authorization is not defined')
+
+    const url = Deno.env.get("SUPABASE_URL")
+    const key = Deno.env.get("SUPABASE_ANON_KEY")
+    if (!url || !key) return [false, new Response("Bad request", { status: 400, headers: this.corsHeaders })]
+
+    const admin = createClient(url, key, {
+      global: { headers: { Authorization } }
+    })
+
+    const { data: { user } } = await admin.auth.getUser()
+    if (!user) return [false, new Response("Bad request", { status: 400, headers: this.corsHeaders })]
+
+    const { data: profile, error } = await admin
+      .from('users')
+      .select('role')
+      .eq('id', user.id)
+      .single<{ role: Role }>()
+    if (error) return [false, new Response(error.message, { status: 400, headers: this.corsHeaders })]
+
+    const { data: rolePermissions } = await admin
+      .from('role_permissions')
+      .select('permissions')
+      .eq('role', profile?.role)
+      .single<{ permissions: Permission[] }>()
+
+    const isPermissed = rolePermissions?.permissions.includes(permission) ?? false
+    if (!isPermissed) return [false, new Response('Forbidden', { status: 403, headers: this.corsHeaders })]
+
+    /**
+     * Register the admin to the database's changes
+     * @return
+    */
+    const joinRealtimeEvents = async (): Promise<RealtimeRegisteration> => {
+      const result = await admin.channel("db-changes").send({
+        type: "broadcast",
+        event: "users-management" satisfies Events,
+        payload: {},
+      })
+      if (result !== 'ok') return [false, new Response(result, { status: 500, headers: this.corsHeaders })]
+      return [true]
+    }
     return [true, {
-      adminClient: this.admin,
-      corsHeaders,
-      registerToRealtime: this.realtimeSubscription
+      admin,
+      corsHeaders: this.corsHeaders,
+      joinRealtimeEvents 
     }]
   }
 }

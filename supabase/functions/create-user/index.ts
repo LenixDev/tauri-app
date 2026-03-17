@@ -2,13 +2,14 @@ import { UserConnection } from '../_shared/index.ts'
 import type { CreateUser } from '../_shared/types.ts'
 
 Deno.serve(async (req) => {
-  const [success, response] = await new UserConnection(req, 'create:user').connect()
+  const connection = new UserConnection()
+  const [success, response] = await connection.connect(req, 'create:user')
   if (!success) return response
-  const { adminClient, corsHeaders } = response
+  const { admin, corsHeaders, joinRealtimeEvents } = response
 
   const { identifier, role, password }: CreateUser = await req.json()
 
-  const { dadta: user, error: clientError } = await adminClient
+  const { data: user, error: clientError } = await admin
     .from('users')
     .select('id')
     .eq('identifier', identifier)
@@ -17,19 +18,19 @@ Deno.serve(async (req) => {
 
   if (user.id) return new Response('User already exists', { status: 400, headers: corsHeaders })
 
-  const { data, error } = await adminClient.auth.admin.createUser({
+  const { data, error } = await admin.auth.admin.createUser({
     email: `${identifier}@institute.local`,
     password,
     email_confirm: true,
   })
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
-  const { error: profileError } = await adminClient
+  const { error: profileError } = await admin
     .from('users')
     .insert({ id: data.user.id, identifier, role })
   if (profileError) return new Response(profileError.message, { status: 400, headers: corsHeaders })
 
-  const [ok, result] = await response.registerToRealtime()
+  const [ok, result] = await joinRealtimeEvents()
   if (!ok) return result
 
   return new Response('OK', { status: 200, headers: corsHeaders })
