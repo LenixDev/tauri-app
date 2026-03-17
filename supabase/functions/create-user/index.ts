@@ -8,7 +8,7 @@ Deno.serve(async (req) => {
 
   const { identifier, role, password }: CreateUser = await req.json()
 
-  const { data: user, error: clientError } = await adminClient
+  const { dadta: user, error: clientError } = await adminClient
     .from('users')
     .select('id')
     .eq('identifier', identifier)
