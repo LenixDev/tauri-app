@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
   })
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
-  const { error: profileError } = await client
+  const { error: profileError } = await priviledged
     .from('users')
     .insert({ id: data.user.id, identifier, role })
   if (profileError) return new Response(profileError.message, { status: 400, headers: corsHeaders })
