@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/sidebar"
 import { Link } from "react-router"
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const NavSecondary = ({
   items,
   ...props

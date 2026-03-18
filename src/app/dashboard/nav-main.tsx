@@ -20,7 +20,6 @@ import { Link } from "react-router"
 import { useTranslation } from "react-i18next"
 import { useDir } from "@/hooks/use-dir"
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const NavMain = ({
   items,
 }: {

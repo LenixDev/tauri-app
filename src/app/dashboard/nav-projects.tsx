@@ -26,7 +26,6 @@ import {
 import { Link } from "react-router"
 import { t } from "i18next"
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const NavProjects = ({
   projects,
 }: {

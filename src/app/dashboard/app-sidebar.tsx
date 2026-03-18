@@ -28,7 +28,6 @@ import { useUser } from "@/hooks/use-user"
 import { useTranslation } from "react-i18next"
 import { ROUTES } from "@/lib/routes"
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const AppSidebar = ({
   ...props
 }: React.ComponentProps<typeof Sidebar>) => {

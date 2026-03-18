@@ -8,14 +8,12 @@ import { toast } from "sonner"
 import { signIn } from "@/lib/auth"
 import { useTranslation } from "react-i18next"
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const LoginForm = ({ className }: React.ComponentProps<"form">) => {
   const [identifier, setIdentifier] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
   const { t } = useTranslation()
 
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault()
     const [success, result] = await signIn(identifier, password)

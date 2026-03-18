@@ -5,7 +5,6 @@ import type { AuthState, UserAccount } from "@/types"
 import { AuthContext } from "@/contexts/auth"
 import type { Session } from "@supabase/supabase-js"
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const AuthProvider = ({
   children,
 }: {
@@ -16,7 +15,6 @@ export const AuthProvider = ({
     user: undefined,
   })
 
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   const fetchUser = async (session: Readonly<Session>) => {
     const { data: user, error: userError } = await supabase
       .from("users")

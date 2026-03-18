@@ -38,7 +38,6 @@ import { useTranslation } from "react-i18next"
 import { useDir } from "@/hooks/use-dir"
 import { User } from "@/lib/user"
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const NavUser = ({
   user,
 }: {

@@ -10,7 +10,6 @@ i18n.on("languageChanged", (lng) => {
   document.documentElement.lang = lng
 })
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const detect = (obj: Readonly<Translation>) => {
   const seen = new Set<string>()
   Object.values(obj).forEach((value): void => {
