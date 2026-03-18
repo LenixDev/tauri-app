@@ -4,6 +4,7 @@ import { Input } from "../ui/input"
 import zxcvbn from "zxcvbn"
 import { User } from "@/lib/user"
 import { OnChange } from "@/types"
+import { Star } from "../required"
 
 export const Password = ({
   password, confirmPassword, onChange
@@ -24,11 +25,12 @@ export const Password = ({
     "bg-green-400",
     "bg-green-500",
   ]
+  const isConfirmed = password !== confirmPassword
   return(
     <Field>
       <Field className="grid grid-rows-2 gap-4">
         <Field>
-          <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
+          <FieldLabel htmlFor="password">{t("password")}<Star /></FieldLabel>
           <Input
             id="password"
             type="password"
@@ -37,9 +39,9 @@ export const Password = ({
             onChange={(event) => onChange("password", event.target.value)}
           />
         </Field>
-        <Field>
+        <Field data-invalid={isConfirmed}>
           <FieldLabel htmlFor="confirm-password">
-            {t("signup.confirm_password")}
+            {t("signup.confirm_password")}<Star />
           </FieldLabel>
           <Input
             id="confirm-password"
@@ -47,9 +49,11 @@ export const Password = ({
             required
             value={confirmPassword}
             onChange={(event) => onChange("confirmPassword", event.target.value)}
+            aria-invalid={isConfirmed}
           />
         </Field>
       </Field>
+
       {password && (
         <>
           <div className="h-1 pb-1 w-full bg-muted rounded-full">

@@ -1,0 +1,1 @@
+export const Star = () => <span className="text-destructive">*</span>

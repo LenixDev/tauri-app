@@ -3,6 +3,7 @@ import { Field, FieldLabel, FieldError } from "../ui/field"
 import { Input } from "../ui/input"
 import { User } from "@/lib/user"
 import { OnChange } from "@/types"
+import { Star } from "../required"
 
 export const Identifier = ({
   identifier, onChange
@@ -14,7 +15,7 @@ export const Identifier = ({
   
   return (
     <Field data-invalid={isIdentifierInvalid}>
-      <FieldLabel htmlFor="identifier">{t("identification")}</FieldLabel>
+      <FieldLabel htmlFor="identifier">{t("identification")}<Star /></FieldLabel>
       <Input
         id="identifier"
         name="identifier"

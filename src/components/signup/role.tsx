@@ -1,8 +1,9 @@
 import { t } from "i18next"
-import { Field } from "../ui/field"
+import { Field, FieldLabel } from "../ui/field"
 import { isRole } from "@/lib"
 import { SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem, Select } from "../ui/select"
 import { OnChange } from "@/types"
+import { Star } from "../required"
 
 export const RoleSelector = ({
   onChange
@@ -11,6 +12,7 @@ export const RoleSelector = ({
 }) => {
   return (
     <Field>
+      <FieldLabel>{t("role")}<Star /></FieldLabel>
       <Select
         defaultValue="student"
         onValueChange={(value) => isRole(value) && onChange("role", value)}
