@@ -5,15 +5,15 @@ Deno.serve(async (req) => {
   const connection = new UserConnection(req)
   const [success, response] = await connection.connect('read:users')
   if (!success) return response
-  const { client, priviledged, corsHeaders } = response
+  const { priviledged, corsHeaders } = response
 
   const { data: { users }, error } = await priviledged.auth.admin.listUsers()
 
   // why its throwing User not allowed here?
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
-  /* Get the users's `role` and `id` from `public.users` */
-  const { data: profiles, error: postgresError } = await client
+  /* Get the users's data from `public.users` */
+  const { data: profiles, error: postgresError } = await priviledged
     .from('users')
     .select('id, role, identifier').overrideTypes<UserAccount[]>()
   if (postgresError) return new Response(postgresError.message, { status: 400, headers: corsHeaders })
