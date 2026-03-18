@@ -36,7 +36,7 @@ export class UserConnection {
     [false, Response]
     | [true, {
       client: SupabaseClient
-      priviledged: SupabaseClient
+      privilege: SupabaseClient
       corsHeaders: typeof UserConnection.prototype.corsHeaders
       sendDbBroadcastChanges: () => Promise<RealtimeRegisteration>
     }]
@@ -74,7 +74,7 @@ export class UserConnection {
     const isPermissed = rolePermissions?.permissions.includes(permission) ?? false
     if (!isPermissed) return [false, new Response(null, { status: 403, headers: this.corsHeaders })]
 
-    const priviledged = createClient(url, role)
+    const privilege = createClient(url, role)
 
     /**
      * Register the admin to the database's changes
@@ -91,7 +91,7 @@ export class UserConnection {
     }
     return [true, {
       client,
-      priviledged,
+      privilege,
       corsHeaders: this.corsHeaders,
       sendDbBroadcastChanges 
     }]

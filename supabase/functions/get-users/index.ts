@@ -5,7 +5,7 @@ Deno.serve(async (req) => {
   const connection = new UserConnection(req)
   const [success, response] = await connection.connect('read:users')
   if (!success) return response
-  const { priviledged, corsHeaders } = response
+  const { privilege: priviledged, corsHeaders } = response
 
   const { data: { users }, error } = await priviledged.auth.admin.listUsers()
 

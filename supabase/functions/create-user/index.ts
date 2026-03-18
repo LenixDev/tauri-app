@@ -5,7 +5,7 @@ Deno.serve(async (req) => {
   const connection = new UserConnection(req)
   const [success, response] = await connection.connect('create:user')
   if (!success) return response
-  const { client, priviledged, corsHeaders, sendDbBroadcastChanges } = response
+  const { client, privilege: priviledged, corsHeaders, sendDbBroadcastChanges } = response
 
   const { identifier, role, password }: CreateUser = await req.json()
 

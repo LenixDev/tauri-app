@@ -8,11 +8,11 @@ Deno.serve(async (req) => {
   const connection = new UserConnection(req)
   const [success, response] = await connection.connect('delete:user')
   if (!success) return response
-  const { priviledged, corsHeaders, sendDbBroadcastChanges } = response
+  const { privilege: privilege, corsHeaders, sendDbBroadcastChanges } = response
 
   const { identifier }: DeleteUser = await req.json()
 
-  const { data, error: clientError } = await priviledged
+  const { data, error: clientError } = await privilege
     .from('users')
     .select('id')
     .eq('identifier', identifier)
@@ -20,7 +20,7 @@ Deno.serve(async (req) => {
   if (clientError) return new Response(clientError.message, { status: 400, headers: corsHeaders })
   if (!data?.id) return new Response('User not found', { status: 400, headers: corsHeaders })
 
-  const { error } = await priviledged.auth.admin.deleteUser(data.id, markAsDeletedInstead)
+  const { error } = await privilege.auth.admin.deleteUser(data.id, markAsDeletedInstead)
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
   const [ok, result] = await sendDbBroadcastChanges()
