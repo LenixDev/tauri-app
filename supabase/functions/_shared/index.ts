@@ -7,24 +7,25 @@ import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
 import type { Events, Permission, Role, RealtimeRegisteration } from './types.ts';
 
 export class UserConnection {
-  private readonly req: Request
   private readonly corsHeaders: Record<string, string>
+  private static readonly ALLOWED_ORIGINS = [
+    'http://localhost:1420',
+    'http://localhost:4173',
+  ] as const
 
-  constructor(req: Request) {
-    this.req = req
+  constructor(private readonly req: Request) {
+    this.corsHeaders = this.buildCorsHeaders()
+  }
+
+  private buildCorsHeaders(): Record<string, string> {
     const origin = this.req.headers.get('Origin') ?? ''
-    const allowedOrigins = ['http://localhost:1420', 'http://localhost:4173']
-
-    this.corsHeaders = {
-      'Access-Control-Allow-Headers':
-        this.req.headers.get('Access-Control-Request-Headers') ??
-        'authorization, x-client-info, apikey, content-type',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Credentials': 'true',
-    }
-
-    if (allowedOrigins.includes(origin)) {
-      this.corsHeaders['Access-Control-Allow-Origin'] = origin
+    return {
+      'Access-Control-Allow-Origin': UserConnection.ALLOWED_ORIGINS
+        .includes(origin as typeof UserConnection.ALLOWED_ORIGINS[number])
+        ? origin : '',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': this.req.headers.get('Access-Control-Request-Headers') 
+        ?? 'authorization, content-type',
     }
   }
 
