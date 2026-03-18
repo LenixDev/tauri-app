@@ -16,7 +16,6 @@ Deno.serve(async (req) => {
     .eq('identifier', identifier)
     .maybeSingle<{ id: string }>()
   if (clientError) return new Response(clientError.message, { status: 400, headers: corsHeaders })
-
   if (user?.id) return new Response('User already exists', { status: 400, headers: corsHeaders })
 
   const { data, error } = await priviledged.auth.admin.createUser({

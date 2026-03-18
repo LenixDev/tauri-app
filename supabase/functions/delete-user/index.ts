@@ -8,16 +8,17 @@ Deno.serve(async (req) => {
   const connection = new UserConnection(req)
   const [success, response] = await connection.connect('delete:user')
   if (!success) return response
-  const { client, priviledged, corsHeaders, sendDbBroadcastChanges } = response
+  const { priviledged, corsHeaders, sendDbBroadcastChanges } = response
 
   const { identifier }: DeleteUser = await req.json()
 
-  const { data, error: clientError } = await client
+  const { data, error: clientError } = await priviledged
     .from('users')
     .select('id')
     .eq('identifier', identifier)
-    .single<{ id: string }>()
+    .maybeSingle<{ id: string }>()
   if (clientError) return new Response(clientError.message, { status: 400, headers: corsHeaders })
+  if (!data?.id) return new Response('User not found', { status: 400, headers: corsHeaders })
 
   const { error } = await priviledged.auth.admin.deleteUser(data.id, markAsDeletedInstead)
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
