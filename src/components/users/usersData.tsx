@@ -43,6 +43,7 @@ import { Checkbox } from "../ui/checkbox"
 import { CreateUser } from "../createUser"
 import { User } from "@/lib/user"
 import { toast } from "sonner"
+import { useUser } from "@/hooks/use-user"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -205,9 +206,14 @@ export const DataTable = <TData, TValue>({
 
 export default function DemoPage() {
   const data: UserAccount[] = useUsers()
+  const user = useUser()
   const [disabled, setDisabled] = useState(false)
   const { t } = useTranslation()
   const handleDelete = async (identifier: string) => {
+    if (user.getIdentifier === identifier) {
+      toast.error(t("alerts.delete_yourself"))
+      return
+    }
     setDisabled(true)
     const [success, result, data] = await User.deleteUser(identifier)
     if (success) {

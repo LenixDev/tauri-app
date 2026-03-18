@@ -34,7 +34,8 @@
   },
   "alerts": {
     "signin_success": "Sign in successful with #{{identifier}}",
-    "logout_success": "Logout successfull"
+    "logout_success": "Logout successfull",
+    "delete_yourself": "You cannot delete yourself"
   },
   "nav": {
     "main": {
