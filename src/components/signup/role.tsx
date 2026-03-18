@@ -1,6 +1,6 @@
 import { t } from "i18next"
 import { Field, FieldLabel } from "../ui/field"
-import { isRole } from "@/lib"
+import { isRole, ROLE_PERMISSIONS } from "@/lib"
 import { SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem, Select } from "../ui/select"
 import { OnChange } from "@/types"
 import { Star } from "../required"
@@ -23,8 +23,11 @@ export const RoleSelector = ({
         <SelectContent>
           <SelectGroup>
             <SelectLabel>{t("roles")}</SelectLabel>
-            <SelectItem value="manager">Manager</SelectItem>
-            <SelectItem value="student">Student</SelectItem>
+            {Object.keys(ROLE_PERMISSIONS).map(role => (
+              <SelectItem key={role} value={role}>
+                {t(`roles_alias.${role}`)}
+              </SelectItem>
+            ))}
           </SelectGroup>
         </SelectContent>
       </Select>

@@ -1,4 +1,3 @@
-import type { TranslationKey } from "@/locales"
 import { supabase } from "./supabase"
 import type {
   Role,
@@ -7,13 +6,10 @@ import type {
   UserAccount,
   CreateUser,
   DeleteUser,
+  TranslationKey,
 } from "@/types"
 import { FunctionsHttpError } from "@supabase/supabase-js"
-
-const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
-  manager: ["create:user", "read:users", "delete:user"],
-  student: [],
-} as const
+import { ROLE_PERMISSIONS } from "."
 
 export class User {
   private static readonly IDENTIFIER_LENGTH = 7
