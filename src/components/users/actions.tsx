@@ -3,11 +3,22 @@ import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
 import { Button } from "../ui/button"
-import { DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator, DropdownMenu } from "../ui/dropdown-menu"
+import {
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenu,
+} from "../ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
 import { User } from "@/lib/user"
 
-export const ActionsCell = ({ identifier }: { readonly identifier: string }) => {
+export const ActionsCell = ({
+  identifier,
+}: {
+  readonly identifier: string
+}) => {
   const { t } = useTranslation()
   const currentUser = useUser()
   const [disabled, setDisabled] = useState(false)
@@ -39,9 +50,7 @@ export const ActionsCell = ({ identifier }: { readonly identifier: string }) => 
         <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
         <DropdownMenuItem
           onClick={() => {
-            navigator.clipboard
-              .writeText(identifier)
-              .catch(() => undefined)
+            navigator.clipboard.writeText(identifier).catch(() => undefined)
           }}
         >
           {t("users.copy_id")}

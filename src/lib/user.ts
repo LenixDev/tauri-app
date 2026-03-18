@@ -71,6 +71,7 @@ export class User {
     )
     const { error } = result
 
+    console.log("triggered")
     if (error) return await User.catchHttpError(error)
     return [true, "signup.success", { identifier }]
   }

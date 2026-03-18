@@ -6,16 +6,21 @@ import type { OnChange } from "@/types"
 import { Star } from "../required"
 
 export const Identifier = ({
-  identifier, onChange
+  identifier,
+  onChange,
 }: {
   readonly identifier: string
   readonly onChange: OnChange
 }) => {
-  const isIdentifierInvalid = identifier.length > 0 && identifier.length !== User.static.identifier
-  
+  const isIdentifierInvalid =
+    identifier.length > 0 && identifier.length !== User.static.identifier
+
   return (
     <Field data-invalid={isIdentifierInvalid}>
-      <FieldLabel htmlFor="identifier">{t("identification")}<Star /></FieldLabel>
+      <FieldLabel htmlFor="identifier">
+        {t("identification")}
+        <Star />
+      </FieldLabel>
       <Input
         id="identifier"
         name="identifier"
@@ -23,12 +28,20 @@ export const Identifier = ({
         aria-invalid={isIdentifierInvalid}
         value={identifier}
         type="number"
-        onChange={(event) => { onChange("identifier", event.target.value) }}
+        onChange={(event) => {
+          onChange("identifier", event.target.value)
+        }}
       />
       {isIdentifierInvalid && (
-        <FieldError errors={[
-          { message: t("signup.identification_mismatch", { identifierLength: User.static.identifier }) }
-        ]} />
+        <FieldError
+          errors={[
+            {
+              message: t("signup.identification_mismatch", {
+                identifierLength: User.static.identifier,
+              }),
+            },
+          ]}
+        />
       )}
     </Field>
   )

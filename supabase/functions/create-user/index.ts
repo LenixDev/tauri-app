@@ -9,7 +9,7 @@ Deno.serve(async (req) => {
 
   const { identifier, role, password }: CreateUser = await req.json()
 
-  /* Check if the user already exists before creating it */
+  /* Check if the user already exists before creating him */
   const { data: user, error: clientError } = await client
     .from('users')
     .select('id')

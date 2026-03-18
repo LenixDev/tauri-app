@@ -10,11 +10,13 @@ export interface Translation {
   [key: string]: string | Translation
 }
 export interface RolesAlias {
-  "roles_alias": Record<Role, string>
+  roles_alias: Record<Role, string>
 }
 
 type DotNotation<T, Prefix extends string = ""> = {
-  [K in keyof T]: T[K] extends Record<string, unknown> ? DotNotation<T[K], `${Prefix}${K & string}.`> : `${Prefix}${K & string}`
+  [K in keyof T]: T[K] extends Record<string, unknown>
+    ? DotNotation<T[K], `${Prefix}${K & string}.`>
+    : `${Prefix}${K & string}`
 }[keyof T]
 
 export type TranslationKey = DotNotation<Translations>
@@ -50,4 +52,5 @@ export interface DeleteUser {
   identifier: string
 }
 
+// eslint-disable-next-line no-unused-vars
 export type OnChange = (key: string, value: string) => void

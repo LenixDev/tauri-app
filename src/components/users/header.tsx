@@ -18,8 +18,10 @@ export const Header = <TData,>({ table }: { readonly table: Table<TData> }) => {
     <div className="flex items-center justify-between gap-2">
       <Input
         placeholder={t("users.search")}
-        // eslint disable-next-line @typescript-eslint/no-unsafe-type-assertion
-        value={(table.getColumn("identifier")?.getFilterValue() as string) || ""}
+        value={
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+          (table.getColumn("identifier")?.getFilterValue() as string) || ""
+        }
         onChange={(event) =>
           table.getColumn("identifier")?.setFilterValue(event.target.value)
         }

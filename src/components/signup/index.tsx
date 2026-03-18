@@ -9,9 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-  FieldGroup
-} from "@/components/ui/field"
+import { FieldGroup } from "@/components/ui/field"
 import React, { useState } from "react"
 import { toast } from "sonner"
 import { useTranslation } from "react-i18next"
@@ -23,7 +21,7 @@ import { Password } from "./password"
 
 export const CreateUser = () => {
   const { t } = useTranslation()
-
+  const [open, setOpen] = useState(false)
   const [{ identifier, role, password, confirmPassword }, setUser] = useState<{
     identifier: string
     role: Role
@@ -35,11 +33,14 @@ export const CreateUser = () => {
     password: "",
     role: "student" satisfies Role,
   })
-  const onChange: OnChange = (key: string, value: string) => { setUser(prev => ({ ...prev, [key]: value })) }
+  const onChange: OnChange = (key: string, value: string) => {
+    setUser((prev) => ({ ...prev, [key]: value }))
+  }
 
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault()
 
+    console.log("clicked")
     const [success, result, data] = await User.createUser({
       confirmPassword,
       identifier,
@@ -57,9 +58,10 @@ export const CreateUser = () => {
       confirmPassword: "",
     })
     toast.success(t(result, data))
+    setOpen(false)
   }
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">{t("signup.create_user")}</Button>
       </DialogTrigger>
@@ -70,7 +72,9 @@ export const CreateUser = () => {
             {t("signup.enter_user_information")}
           </DialogDescription>
         </DialogHeader>
-        <form id="dialog" className="gap-6"
+        <form
+          id="dialog"
+          className="gap-6"
           onSubmit={(event) => {
             handleSubmit(event).catch(() => undefined)
           }}

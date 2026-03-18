@@ -74,10 +74,10 @@ export const NavUser = ({
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-sm leading-tight">
+              <p className="grid flex-1 text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
-              </div>
+              </p>
               <HugeiconsIcon
                 icon={UnfoldMoreIcon}
                 strokeWidth={2}
@@ -97,10 +97,10 @@ export const NavUser = ({
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
-                <div className="grid flex-1 rtl:text-right text-sm leading-tight">
+                <p className="grid flex-1 rtl:text-right text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
                   <span className="truncate text-xs">{user.email}</span>
-                </div>
+                </p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />

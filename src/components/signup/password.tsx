@@ -7,7 +7,9 @@ import type { OnChange } from "@/types"
 import { Star } from "../required"
 
 export const Password = ({
-  password, confirmPassword, onChange
+  password,
+  confirmPassword,
+  onChange,
 }: {
   readonly password: string
   readonly confirmPassword: string
@@ -24,29 +26,37 @@ export const Password = ({
     "bg-green-500",
   ]
   const isConfirmed = password !== confirmPassword
-  return(
+  return (
     <Field>
       <Field className="grid grid-rows-2 gap-4">
         <Field>
-          <FieldLabel htmlFor="password">{t("password")}<Star /></FieldLabel>
+          <FieldLabel htmlFor="password">
+            {t("password")}
+            <Star />
+          </FieldLabel>
           <Input
             id="password"
             type="password"
             required
             value={password}
-            onChange={(event) => { onChange("password", event.target.value) }}
+            onChange={(event) => {
+              onChange("password", event.target.value)
+            }}
           />
         </Field>
         <Field data-invalid={isConfirmed}>
           <FieldLabel htmlFor="confirm-password">
-            {t("signup.confirm_password")}<Star />
+            {t("signup.confirm_password")}
+            <Star />
           </FieldLabel>
           <Input
             id="confirm-password"
             type="password"
             required
             value={confirmPassword}
-            onChange={(event) => { onChange("confirmPassword", event.target.value) }}
+            onChange={(event) => {
+              onChange("confirmPassword", event.target.value)
+            }}
             aria-invalid={isConfirmed}
           />
         </Field>

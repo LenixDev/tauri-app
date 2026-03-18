@@ -99,14 +99,14 @@ export const AppSidebar = ({
                     className="size-4"
                   />
                 </div>
-                <div className="grid flex-1 rtl:text-right text-sm leading-tight">
+                <p className="grid flex-1 rtl:text-right text-sm leading-tight">
                   <span className="truncate font-medium">
                     {t("institute.name")}
                   </span>
                   <span className="truncate text-xs">
                     {t("institute.plan")}
                   </span>
-                </div>
+                </p>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

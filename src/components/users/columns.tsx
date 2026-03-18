@@ -68,7 +68,7 @@ export const useColumns = (): ColumnDef<UserAccount>[] => {
     },
     {
       id: "actions",
-      header: () => <div>{t("actions")}</div>,
+      header: () => <p>{t("actions")}</p>,
       cell: ({ row }) => <ActionsCell identifier={row.original.identifier} />,
     },
   ]
