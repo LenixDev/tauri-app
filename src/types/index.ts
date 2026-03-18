@@ -32,3 +32,5 @@ export interface CreateUser {
 export interface DeleteUser {
   identifier: string
 }
+
+export type OnChange = (key: string, value: string) => void
