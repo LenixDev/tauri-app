@@ -8,18 +8,18 @@ Deno.serve(async (req) => {
   const connection = new UserConnection(req)
   const [success, response] = await connection.connect('delete:user')
   if (!success) return response
-  const { admin, corsHeaders, joinRealtimeEvents } = response
+  const { client, corsHeaders, joinRealtimeEvents } = response
 
   const { identifier }: DeleteUser = await req.json()
 
-  const { data, error: clientError } = await admin
+  const { data, error: clientError } = await client
     .from('users')
     .select('id')
     .eq('identifier', identifier)
     .single<{ id: string }>()
   if (clientError) return new Response(clientError.message, { status: 400, headers: corsHeaders })
 
-  const { error } = await admin.auth.admin.deleteUser(data.id, markAsDeletedInstead)
+  const { error } = await client.auth.admin.deleteUser(data.id, markAsDeletedInstead)
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
   const [ok, result] = await joinRealtimeEvents()

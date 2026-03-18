@@ -30,12 +30,12 @@ export class UserConnection {
 
   /**
     Connect the user to the database __PERMISSEVELY__
-    @return Admin's functions and the HTTP's headers
+    @return Client's functions and the HTTP's headers
   */
   public async connect(permission: Permission): Promise<
     [false, Response]
     | [true, {
-      admin: SupabaseClient
+      client: SupabaseClient
       corsHeaders: typeof UserConnection.prototype.corsHeaders
       joinRealtimeEvents: () => Promise<RealtimeRegisteration>
     }]
@@ -49,21 +49,21 @@ export class UserConnection {
     const key = Deno.env.get("SUPABASE_ANON_KEY")
     if (!url || !key) return [false, new Response(null, { status: 400, headers: this.corsHeaders })]
 
-    const admin = createClient(url, key, {
+    const client = createClient(url, key, {
       global: { headers: { Authorization } }
     })
 
-    const { data: { user } } = await admin.auth.getUser()
+    const { data: { user } } = await client.auth.getUser()
     if (!user) return [false, new Response(null, { status: 400, headers: this.corsHeaders })]
 
-    const { data: profile, error } = await admin
+    const { data: profile, error } = await client
       .from('users')
       .select('role')
       .eq('id', user.id)
       .single<{ role: Role }>()
     if (error) return [false, new Response(error.message, { status: 400, headers: this.corsHeaders })]
 
-    const { data: rolePermissions } = await admin
+    const { data: rolePermissions } = await client
       .from('role_permissions')
       .select('permissions')
       .eq('role', profile?.role)
@@ -77,7 +77,7 @@ export class UserConnection {
      * @return
     */
     const joinRealtimeEvents = async (): Promise<RealtimeRegisteration> => {
-      const result = await admin.channel("db-changes").send({
+      const result = await client.channel("db-changes").send({
         type: "broadcast",
         event: "users-management" satisfies Events,
         payload: {},
@@ -86,7 +86,7 @@ export class UserConnection {
       return [true]
     }
     return [true, {
-      admin,
+      client,
       corsHeaders: this.corsHeaders,
       joinRealtimeEvents 
     }]

@@ -5,11 +5,11 @@ Deno.serve(async (req) => {
   const connection = new UserConnection(req)
   const [success, response] = await connection.connect('create:user')
   if (!success) return response
-  const { admin, corsHeaders, joinRealtimeEvents } = response
+  const { client, corsHeaders, joinRealtimeEvents } = response
 
   const { identifier, role, password }: CreateUser = await req.json()
 
-  const { data: user, error: clientError } = await admin
+  const { data: user, error: clientError } = await client
     .from('users')
     .select('id')
     .eq('identifier', identifier)
@@ -18,14 +18,14 @@ Deno.serve(async (req) => {
 
   if (user.id) return new Response('User already exists', { status: 400, headers: corsHeaders })
 
-  const { data, error } = await admin.auth.admin.createUser({
+  const { data, error } = await client.auth.admin.createUser({
     email: `${identifier}@institute.local`,
     password,
     email_confirm: true,
   })
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
-  const { error: profileError } = await admin
+  const { error: profileError } = await client
     .from('users')
     .insert({ id: data.user.id, identifier, role })
   if (profileError) return new Response(profileError.message, { status: 400, headers: corsHeaders })
