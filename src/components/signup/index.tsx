@@ -62,38 +62,36 @@ export const CreateUser = () => {
   return (
     /* TODO: improve submition and semantics */
     <Dialog>
-      <form
-        id="dialog"
-        onSubmit={(event) => {
-          handleSubmit(event).catch(() => undefined)
-        }}
-      >
-        <DialogTrigger asChild>
-          <Button variant="outline">{t("signup.create_user")}</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-sm">
-          <DialogHeader>
-            <DialogTitle>{t("signup.create_user")}</DialogTitle>
-            <DialogDescription>
-              {t("signup.enter_user_information")}
-            </DialogDescription>
-          </DialogHeader>
-          {/* TODO: verify the credentials are correct */}
+      <DialogTrigger asChild>
+        <Button variant="outline">{t("signup.create_user")}</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-sm ">
+        <DialogHeader>
+          <DialogTitle>{t("signup.create_user")}</DialogTitle>
+          <DialogDescription>
+            {t("signup.enter_user_information")}
+          </DialogDescription>
+        </DialogHeader>
+        <form id="dialog" className="gap-6"
+          onSubmit={(event) => {
+            handleSubmit(event).catch(() => undefined)
+          }}
+        >
           <FieldGroup>
             <Identifier {...{ identifier, setUser, onChange }} />
             <RoleSelector {...{ setUser, onChange }} />
             <Password {...{ password, confirmPassword, onChange }} />
           </FieldGroup>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">{t("cancel")}</Button>
-            </DialogClose>
-            <Button type="submit" form="dialog">
-              {t("create")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline">{t("cancel")}</Button>
+          </DialogClose>
+          <Button type="submit" form="dialog">
+            {t("create")}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   )
 }
