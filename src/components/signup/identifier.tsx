@@ -27,7 +27,7 @@ export const Identifier = ({
       />
       {isIdentifierInvalid && (
         <FieldError errors={[
-          { message: t("signup.identification_mismatch", { identifierLength: User.getPasswordLength }) }
+          { message: t("signup.identification_mismatch", { identifierLength: User.static.identifier }) }
         ]} />
       )}
     </Field>

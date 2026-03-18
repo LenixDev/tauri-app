@@ -22,8 +22,11 @@ export class User {
     this.role = role
   }
 
-  public static get getPasswordLength(): number {
-    return User.PASSWORD_LENGTH
+  public static get static() {
+    return {
+      password: User.PASSWORD_LENGTH,
+      identifier: User.IDENTIFIER_LENGTH,
+    }
   }
 
   public get getIdentifier(): string {

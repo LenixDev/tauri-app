@@ -13,13 +13,11 @@ export const Password = ({
   confirmPassword: string
   onChange: OnChange
 }) => {
-  const strength = zxcvbn(password),
-    weaknessThreshold = 3
-  const isWeak = strength.score < weaknessThreshold
+  const strength = zxcvbn(password)
 
   const widths = ["1%", "20%", "60%", "80%", "100%"]
   const colors = [
-    "bg-red-500",
+    "bg-destructive",
     "bg-red-400",
     "bg-yellow-400",
     "bg-green-400",
@@ -53,24 +51,14 @@ export const Password = ({
           />
         </Field>
       </Field>
-
-      {password && (
-        <>
-          <div className="h-1 pb-1 w-full bg-muted rounded-full">
-            <div
-              className={`h-1 rounded-full transition-all ${colors[strength.score]}`}
-              style={{ width: widths[strength.score] }}
-            />
-          </div>
-          {isWeak && (
-            <p className="text-destructive text-sm">
-              {strength.feedback.suggestions[0]}
-            </p>
-          )}
-        </>
-      )}
+      <div hidden={!password} className="h-1 pb-1 w-full bg-muted rounded-full">
+        <div
+          className={`h-1 rounded-full transition-all ${colors[strength.score]}`}
+          style={{ width: widths[strength.score] }}
+        />
+      </div>
       <FieldDescription>
-        {t("signup.password_rule", { length: User.getPasswordLength })}
+        {t("signup.password_rule", { length: User.static.password })}
       </FieldDescription>
     </Field>
   )
