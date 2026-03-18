@@ -37,7 +37,7 @@ export const useColumns = (): ColumnDef<UserAccount>[] => {
       enableHiding: false,
     },
     {
-      accessorKey: "identifier",
+      accessorKey: "identifier" satisfies keyof UserAccount,
       filterFn: (row, columnId, filterValue: string) =>
         row.getValue<number>(columnId).toString().includes(filterValue),
       header: ({ column }) => (
@@ -53,7 +53,7 @@ export const useColumns = (): ColumnDef<UserAccount>[] => {
       ),
     },
     {
-      accessorKey: "role",
+      accessorKey: "roleLabel" satisfies keyof UserAccount,
       header: ({ column }) => (
         <Button
           variant="ghost"

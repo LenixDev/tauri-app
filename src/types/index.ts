@@ -35,6 +35,7 @@ export type IDirectionProvider = React.ComponentProps<
 export interface UserAccount {
   identifier: string
   role: "manager" | "student"
+  roleLabel: Translations["roles_alias"][Role]
 }
 
 export type Events = "users-management"

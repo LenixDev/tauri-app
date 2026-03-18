@@ -7,11 +7,10 @@ import { isRole } from "@/lib"
 
 export const UsersTable = () => {
   const { t } = useTranslation()
-  const data: UserAccount[] = useUsers().map(user => {
-    const alias = t(`roles_alias.${user.role}`)
-    const role = isRole(alias) ? alias : user.role
-    return { ...user, role }
-  })
+
+  const data: UserAccount[] = useUsers().map(user => (
+    { ...user, roleLabel: isRole(user.role) ? t(`roles_alias.${user.role}`) : user.role }
+  ))
   const columns = useColumns()
 
   return (
