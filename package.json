@@ -8,15 +8,15 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
+    "start": "pnpm lint && pnpm format && tauri dev",
+    "lint": "npx eslint . --quiet",
+    "format": "prettier --write src",
     "supagen": "supabase gen types typescript --project-id sphtvhctzbciykargfjt >",
     "supatypes": "pnpm supagen src/types/_database.ts && pnpm supagen supabase/functions/_shared/_database.ts",
     "supapull": "supabase db pull",
     "supadeploy": "supabase functions deploy",
     "supalink": "supabase link --project-ref sphtvhctzbciykargfjt",
     "supapush": "supabase db push",
-    "start": "pnpm lint && pnpm format && tauri dev",
-    "lint": "npx eslint . --quiet",
-    "format": "prettier --write src",
     "supafn": "supabase functions new"
   },
   "dependencies": {

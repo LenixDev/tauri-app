@@ -40,7 +40,7 @@ export const AuthProvider = ({
         return
       }
 
-      if (Boolean(session.user.deleted_at)) {
+      if (session.user.deleted_at !== undefined) {
         setState({ status: "unauthorized", user: null })
         return
       }

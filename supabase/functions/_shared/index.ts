@@ -13,7 +13,7 @@ export class UserConnection {
   constructor(req: Request) {
     this.req = req
     const origin = this.req.headers.get('Origin') ?? ''
-    const allowedOrigins = ['http://localhost:1420']
+    const allowedOrigins = ['http://localhost:1420', 'http://localhost:4173']
 
     this.corsHeaders = {
       'Access-Control-Allow-Headers':
