@@ -11,7 +11,7 @@ import type {
 import { FunctionsHttpError } from "@supabase/supabase-js"
 
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
-  manager: ["create:user"],
+  manager: ["create:user", "read:users", "delete:user"],
   student: [],
 } as const
 
