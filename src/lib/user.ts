@@ -83,12 +83,19 @@ export class User {
   }
 
   public static async getUsers(): Response<UserAccount[]> {
-    const { data, error } = (await supabase.functions.invoke("get-users", {
-      body: {},
-    })) as { data: UserAccount[]; error: Error | null }
-    if (error) return await User.catchHttpError(error)
+    const reponse = await supabase.functions.invoke<UserAccount[]>(
+      "get-users",
+      {
+        body: {},
+      },
+    )
 
-    return [true, data]
+    if (!reponse.data) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+      return await User.catchHttpError(reponse.error as Error)
+    }
+
+    return [true, reponse.data]
   }
 
   public static async deleteUser(identifier: string): Response<TranslationKey> {
