@@ -1,3 +1,4 @@
+import type { RolesAlias, Translation } from "@/types"
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 
@@ -8,10 +9,6 @@ i18n.on("languageChanged", (lng) => {
   document.documentElement.dir = i18n.dir(lng)
   document.documentElement.lang = lng
 })
-
-interface Translation {
-  [key: string]: string | Translation
-}
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const detect = (obj: Readonly<Translation>) => {
@@ -31,8 +28,8 @@ await i18n.use(initReactI18next).init(
     fallbackLng: "en",
     lng: "en",
     resources: {
-      ar: { translation: arabic satisfies typeof english },
-      en: { translation: english satisfies typeof arabic },
+      ar: { translation: arabic satisfies typeof english & RolesAlias },
+      en: { translation: english satisfies typeof arabic & RolesAlias },
     },
   },
   () => {
@@ -41,12 +38,6 @@ await i18n.use(initReactI18next).init(
   },
 )
 
-type DotNotation<T, Prefix extends string = ""> = {
-  [K in keyof T]: T[K] extends Record<string, unknown>
-    ? DotNotation<T[K], `${Prefix}${K & string}.`>
-    : `${Prefix}${K & string}`
-}[keyof T]
-
-export type TranslationKey = DotNotation<typeof english>
+export type Translations = typeof english & typeof arabic
 
 export default i18n

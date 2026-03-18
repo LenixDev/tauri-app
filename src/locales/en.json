@@ -8,6 +8,11 @@
   "roles": "Roles",
   "role": "Role",
   "actions": "Actions",
+  "type": "Type",
+  "roles_alias": {
+    "manager": "Manager",
+    "student": "Student"
+  },
   "login": {
     "hint": "Enter your credentials below to login to your account",
     "forgotPassword": "Reset Password?",
