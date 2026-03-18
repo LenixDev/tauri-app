@@ -40,7 +40,8 @@
   "alerts": {
     "signin_success": "Sign in successful with #{{identifier}}",
     "logout_success": "Logout successfull",
-    "delete_yourself": "You cannot delete yourself"
+    "delete_yourself": "You cannot delete yourself",
+    "feature_unavailable": "This feature is not available yet"
   },
   "nav": {
     "main": {

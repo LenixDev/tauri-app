@@ -40,7 +40,6 @@ export const CreateUser = () => {
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault()
 
-    console.log("clicked")
     const [success, result, data] = await User.createUser({
       confirmPassword,
       identifier,

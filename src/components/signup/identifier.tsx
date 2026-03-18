@@ -31,6 +31,7 @@ export const Identifier = ({
         onChange={(event) => {
           onChange("identifier", event.target.value)
         }}
+        required
       />
       {isIdentifierInvalid && (
         <FieldError

@@ -41,7 +41,7 @@ import { User } from "@/lib/user"
 export const NavUser = ({
   user,
 }: {
-  user: {
+  readonly user: {
     name: string
     email: string
     avatar: string

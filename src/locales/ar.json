@@ -40,7 +40,8 @@
   "alerts": {
     "signin_success": "تم تسجيل الدخول بنجاح إلى #{{identifier}}",
     "logout_success": "تم تسجيل الخروج بنجاح",
-    "delete_yourself": "لا يمكنك حذف نفسك"
+    "delete_yourself": "لا يمكنك حذف نفسك",
+    "feature_unavailable": "هذه الميزة غير متوفرة حتى الان"
   },
   "nav": {
     "main": {

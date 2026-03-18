@@ -1,18 +1,26 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
 import { signIn } from "@/lib/auth"
 import { useTranslation } from "react-i18next"
+import { User } from "@/lib/user"
 
 export const LoginForm = ({ className }: React.ComponentProps<"form">) => {
   const [identifier, setIdentifier] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const isIdentifierInvalid =
+    identifier.length > 0 && identifier.length !== User.static.identifier
 
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault()
@@ -39,33 +47,35 @@ export const LoginForm = ({ className }: React.ComponentProps<"form">) => {
             {/* TODO: add explaination where we can find the id */}
           </p>
         </div>
-        <Field>
-          <FieldLabel htmlFor="id">{t("identification")}</FieldLabel>
+        <Field data-invalid={isIdentifierInvalid}>
+          <FieldLabel htmlFor="identifier">{t("identification")}</FieldLabel>
           <Input
             value={identifier}
             onChange={(event) => {
               setIdentifier(event.target.value)
             }}
-            id="id"
+            id="identifier"
+            name="identifier"
             type="number"
             placeholder="6901120"
             required
+            aria-invalid={isIdentifierInvalid}
             className="bg-background"
-            /* Strict within nim and max */
           />
+          {isIdentifierInvalid && (
+            <FieldError
+              errors={[
+                {
+                  message: t("signup.identification_mismatch", {
+                    identifierLength: User.static.identifier,
+                  }),
+                },
+              ]}
+            />
+          )}
         </Field>
         <Field>
-          {/* TODO: ignore the focus on forgot password when pressing tab */}
-          <div className="flex items-center justify-between">
-            <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
-            <a
-              /* TODO: implement the logic */
-              href="#"
-              className="text-sm underline-offset-4 hover:underline"
-            >
-              {t("login.forgotPassword")}
-            </a>
-          </div>
+          <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
           <Input
             value={password}
             onChange={(event) => {
@@ -76,6 +86,16 @@ export const LoginForm = ({ className }: React.ComponentProps<"form">) => {
             required
             className="bg-background"
           />
+          <div className="flex items-center justify-end">
+            <Button
+              variant={null}
+              type="button"
+              onClick={() => toast.message(t("alerts.feature_unavailable"))}
+              className="cursor-default text-sm underline-offset-4 hover:underline"
+            >
+              {t("login.forgotPassword")}
+            </Button>
+          </div>
         </Field>
         <Field>
           <Button type="submit">{t("login.login")}</Button>
