@@ -1,10 +1,12 @@
 import { DataTable } from "@/components/users/rows"
 import { useColumns } from "@/components/users/columns"
 import { useUsers } from "@/hooks/use-users"
-import type { UserAccount } from "@/types"
+import type { Role, UserAccount } from "@/types"
+import { useTranslation } from "react-i18next"
 
-export const UsersPage = () => {
-  const data: UserAccount[] = useUsers()
+export const UsersTable = () => {
+  const { t } = useTranslation()
+  const data: UserAccount[] = useUsers().map(user => ({ ...user, role: (t(`roles_alias.${user.role}`) as Role)}))
   const columns = useColumns()
 
   return (
