@@ -21,6 +21,7 @@ import {
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
@@ -32,6 +33,7 @@ import { useTranslation } from "react-i18next"
 import { User } from "@/lib/user"
 import { isRole } from "@/lib"
 import type { Role } from "@/types"
+import zxcvbn from "zxcvbn"
 
 export const CreateUser = () => {
   const [{ identifier, role, password, confirmPassword }, setUser] = useState<{
@@ -45,7 +47,21 @@ export const CreateUser = () => {
     password: "",
     role: "student" satisfies Role,
   })
+  const isIdentifierInvalid =  identifier.length > 0 && identifier.length < 7 || identifier.length > 7
   const { t } = useTranslation()
+
+  const strength = zxcvbn(password),
+    weaknessThreshold = 3
+  const isWeak = strength.score < weaknessThreshold
+
+  const widths = ["5%", "20%", "60%", "80%", "100%"]
+  const colors = [
+    "bg-red-500",
+    "bg-red-400",
+    "bg-yellow-400",
+    "bg-green-400",
+    "bg-green-500",
+  ]
 
   // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
@@ -90,13 +106,15 @@ export const CreateUser = () => {
           </DialogHeader>
           {/* TODO: verify the credentials are correct */}
           <FieldGroup>
-            <Field>
+            <Field data-invalid={isIdentifierInvalid}>
               <Label htmlFor="identifier">{t("identification")}</Label>
               <Input
                 id="identifier"
                 name="identifier"
                 placeholder="6901120"
+                aria-invalid={isIdentifierInvalid}
                 value={identifier}
+                type="number"
                 onChange={(event) => {
                   setUser((prev) => ({
                     ...prev,
@@ -104,9 +122,15 @@ export const CreateUser = () => {
                   }))
                 }}
               />
+              {isIdentifierInvalid && (
+                <FieldError errors={[
+                  { message: t("signup.identification_mismatch", { identifierLength: User.getPasswordLength}) }
+                ]}/>
+              )}
             </Field>
             <Field>
               <Select
+                defaultValue="student"
                 onValueChange={(value) => {
                   if (isRole(value))
                     setUser((prev) => ({ ...prev, role: value }))
@@ -125,7 +149,7 @@ export const CreateUser = () => {
               </Select>
             </Field>
             <Field>
-              <Field className="grid grid-cols-2 gap-4">
+              <Field className="grid grid-rows-2 gap-4">
                 <Field>
                   <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
                   <Input
@@ -159,7 +183,21 @@ export const CreateUser = () => {
                   />
                 </Field>
               </Field>
-              {/* TODO: add strong passwords requirement */}
+              {password && (
+                <>
+                  <div className="h-1 pb-1 w-full bg-muted rounded-full">
+                    <div
+                      className={`h-1 rounded-full transition-all ${colors[strength.score]}`}
+                      style={{ width: widths[strength.score] }}
+                    />
+                  </div>
+                  {isWeak && (
+                    <p className="text-destructive text-sm">
+                      {strength.feedback.suggestions[0]}
+                    </p>
+                  )}
+                </>
+              )}
               <FieldDescription>
                 {t("signup.password_rule", { length: User.getPasswordLength })}
               </FieldDescription>

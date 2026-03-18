@@ -40,7 +40,7 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "../ui/checkbox"
-import { CreateUser } from "../createUser"
+import { CreateUser } from "../signup"
 import { User } from "@/lib/user"
 import { toast } from "sonner"
 import { useUser } from "@/hooks/use-user"
