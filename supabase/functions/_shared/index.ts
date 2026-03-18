@@ -36,8 +36,9 @@ export class UserConnection {
     [false, Response]
     | [true, {
       client: SupabaseClient
+      priviledged: SupabaseClient
       corsHeaders: typeof UserConnection.prototype.corsHeaders
-      joinRealtimeEvents: () => Promise<RealtimeRegisteration>
+      sendDbBroadcastChanges: () => Promise<RealtimeRegisteration>
     }]
   > {
     if (this.req.method === 'OPTIONS') return [false, new Response(null, { status: 204, headers: this.corsHeaders })]
@@ -46,10 +47,11 @@ export class UserConnection {
     if (!Authorization) return [false, new Response('Authorization is not defined', { status: 401, headers: this.corsHeaders })]
 
     const url = Deno.env.get("SUPABASE_URL")
-    const key = Deno.env.get("SUPABASE_ANON_KEY")
-    if (!url || !key) return [false, new Response(null, { status: 400, headers: this.corsHeaders })]
+    const anon = Deno.env.get("SUPABASE_ANON_KEY")
+    const role = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+    if (!url || !anon || !role) return [false, new Response(null, { status: 400, headers: this.corsHeaders })]
 
-    const client = createClient(url, key, {
+    const client = createClient(url, anon, {
       global: { headers: { Authorization } }
     })
 
@@ -72,11 +74,13 @@ export class UserConnection {
     const isPermissed = rolePermissions?.permissions.includes(permission) ?? false
     if (!isPermissed) return [false, new Response(null, { status: 403, headers: this.corsHeaders })]
 
+    const priviledged = createClient(url, role)
+
     /**
      * Register the admin to the database's changes
      * @return
     */
-    const joinRealtimeEvents = async (): Promise<RealtimeRegisteration> => {
+    const sendDbBroadcastChanges = async (): Promise<RealtimeRegisteration> => {
       const result = await client.channel("db-changes").send({
         type: "broadcast",
         event: "users-management" satisfies Events,
@@ -87,8 +91,9 @@ export class UserConnection {
     }
     return [true, {
       client,
+      priviledged,
       corsHeaders: this.corsHeaders,
-      joinRealtimeEvents 
+      sendDbBroadcastChanges 
     }]
   }
 }

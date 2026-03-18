@@ -5,10 +5,11 @@ Deno.serve(async (req) => {
   const connection = new UserConnection(req)
   const [success, response] = await connection.connect('read:users')
   if (!success) return response
-  const { client, corsHeaders } = response
+  const { client, priviledged, corsHeaders } = response
 
-  const { data: { users }, error } = await client.auth.admin.listUsers()
+  const { data: { users }, error } = await priviledged.auth.admin.listUsers()
 
+  // why its throwing User not allowed here?
   if (error) return new Response(error.message, { status: 400, headers: corsHeaders })
 
   /* Get the users's `role` and `id` from `public.users` */
