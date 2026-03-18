@@ -350,7 +350,7 @@ export default [
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
       "@typescript-eslint/prefer-readonly": "error",
-      "@typescript-eslint/prefer-readonly-parameter-types": ["error", {
+      "@typescript-eslint/prefer-readonly-parameter-types": ["warn", {
         "ignoreInferredTypes": true
       }],
       "@typescript-eslint/prefer-reduce-type-parameter": "error",

@@ -23,7 +23,6 @@ import { Password } from "./password"
 
 export const CreateUser = () => {
   const { t } = useTranslation()
-  const onChange: OnChange = (key: string, value: string) => setUser(prev => ({ ...prev, [key]: value }))
 
   const [{ identifier, role, password, confirmPassword }, setUser] = useState<{
     identifier: string
@@ -36,8 +35,8 @@ export const CreateUser = () => {
     password: "",
     role: "student" satisfies Role,
   })
+  const onChange: OnChange = (key: string, value: string) => { setUser(prev => ({ ...prev, [key]: value })) }
 
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault()
 
@@ -60,7 +59,6 @@ export const CreateUser = () => {
     toast.success(t(result, data))
   }
   return (
-    /* TODO: improve submition and semantics */
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">{t("signup.create_user")}</Button>

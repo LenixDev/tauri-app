@@ -28,6 +28,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
+
 export const DataTable = <TData, TValue>({
   columns,
   data,

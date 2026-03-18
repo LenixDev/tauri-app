@@ -2,16 +2,16 @@ import { t } from "i18next"
 import { Field, FieldLabel, FieldError } from "../ui/field"
 import { Input } from "../ui/input"
 import { User } from "@/lib/user"
-import { OnChange } from "@/types"
+import type { OnChange } from "@/types"
 import { Star } from "../required"
 
 export const Identifier = ({
   identifier, onChange
 }: {
-  identifier: string
-  onChange: OnChange
+  readonly identifier: string
+  readonly onChange: OnChange
 }) => {
-  const isIdentifierInvalid = identifier.length > 0 && identifier.length < 7 || identifier.length > 7
+  const isIdentifierInvalid = identifier.length > 0 && identifier.length !== User.static.identifier
   
   return (
     <Field data-invalid={isIdentifierInvalid}>
@@ -23,7 +23,7 @@ export const Identifier = ({
         aria-invalid={isIdentifierInvalid}
         value={identifier}
         type="number"
-        onChange={(event) => onChange("identifier", event.target.value)}
+        onChange={(event) => { onChange("identifier", event.target.value) }}
       />
       {isIdentifierInvalid && (
         <FieldError errors={[

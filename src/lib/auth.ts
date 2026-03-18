@@ -1,6 +1,5 @@
-import type { TranslationKey } from "@/locales"
 import { supabase } from "./supabase"
-import type { Response } from "@/types"
+import type { Response, TranslationKey } from "@/types"
 
 export const signIn = async (
   identifier: string,

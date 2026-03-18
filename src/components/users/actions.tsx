@@ -7,7 +7,7 @@ import { DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMe
 import { MoreHorizontal } from "lucide-react"
 import { User } from "@/lib/user"
 
-export const ActionsCell = ({ identifier }: { identifier: string }) => {
+export const ActionsCell = ({ identifier }: { readonly identifier: string }) => {
   const { t } = useTranslation()
   const currentUser = useUser()
   const [disabled, setDisabled] = useState(false)
@@ -40,7 +40,7 @@ export const ActionsCell = ({ identifier }: { identifier: string }) => {
         <DropdownMenuItem
           onClick={() => {
             navigator.clipboard
-              .writeText(identifier.toString())
+              .writeText(identifier)
               .catch(() => undefined)
           }}
         >

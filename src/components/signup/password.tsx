@@ -3,15 +3,15 @@ import { Field, FieldLabel, FieldDescription } from "../ui/field"
 import { Input } from "../ui/input"
 import zxcvbn from "zxcvbn"
 import { User } from "@/lib/user"
-import { OnChange } from "@/types"
+import type { OnChange } from "@/types"
 import { Star } from "../required"
 
 export const Password = ({
   password, confirmPassword, onChange
 }: {
-  password: string
-  confirmPassword: string
-  onChange: OnChange
+  readonly password: string
+  readonly confirmPassword: string
+  readonly onChange: OnChange
 }) => {
   const strength = zxcvbn(password)
 
@@ -34,7 +34,7 @@ export const Password = ({
             type="password"
             required
             value={password}
-            onChange={(event) => onChange("password", event.target.value)}
+            onChange={(event) => { onChange("password", event.target.value) }}
           />
         </Field>
         <Field data-invalid={isConfirmed}>
@@ -46,7 +46,7 @@ export const Password = ({
             type="password"
             required
             value={confirmPassword}
-            onChange={(event) => onChange("confirmPassword", event.target.value)}
+            onChange={(event) => { onChange("confirmPassword", event.target.value) }}
             aria-invalid={isConfirmed}
           />
         </Field>

@@ -10,9 +10,7 @@ export interface Translation {
   [key: string]: string | Translation
 }
 export interface RolesAlias {
-  "roles_alias": {
-    [K in Role]: string
-  }
+  "roles_alias": Record<Role, string>
 }
 
 type DotNotation<T, Prefix extends string = ""> = {
