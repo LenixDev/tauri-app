@@ -86,6 +86,7 @@
     "copy_id": "Copy User ID",
     "of": "of",
     "rows_selected": "row(s) selected.",
-    "delete": "Delete User"
+    "delete": "Delete User",
+    "copied": "User ID: {{identifier}} copied to clipboard."
   }
 }

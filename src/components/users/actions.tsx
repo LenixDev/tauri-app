@@ -13,6 +13,7 @@ import {
 } from "../ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
 import { User } from "@/lib/user"
+import { useDir } from "@/hooks/use-dir.ts";
 
 export const ActionsCell = ({
   identifier,
@@ -20,6 +21,7 @@ export const ActionsCell = ({
   readonly identifier: string
 }) => {
   const { t } = useTranslation()
+  const dir = useDir()
   const currentUser = useUser()
   const [disabled, setDisabled] = useState(false)
 
@@ -39,7 +41,7 @@ export const ActionsCell = ({
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu dir={dir}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
           <span className="sr-only">Open menu</span>
@@ -51,6 +53,7 @@ export const ActionsCell = ({
         <DropdownMenuItem
           onClick={() => {
             navigator.clipboard.writeText(identifier).catch(() => undefined)
+            toast.success(t("users.copied", { identifier }))
           }}
         >
           {t("users.copy_id")}
