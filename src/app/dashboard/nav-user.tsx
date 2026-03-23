@@ -120,10 +120,10 @@ export const NavUser = ({
                 i18n.changeLanguage(value).catch(() => undefined)
               }}
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger dir={dir} className="w-full">
                 <SelectValue placeholder={t("nav.user.change_language")} />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent dir={dir}>
                 <SelectGroup>
                   <SelectLabel>{t("nav.user.languages")}</SelectLabel>
                   <SelectItem value="en" disabled={i18n.language === "en"}>

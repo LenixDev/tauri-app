@@ -53,7 +53,7 @@ export const NavMain = ({
                 <>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuAction
-                      className={`rtl:left-1 rtl:right-auto data-[state=open]:${dir === "rtl" ? "-" : ""}rotate-90`}
+                      className={`rtl:left-1 rtl:right-auto rtl:data-[state=open]:-rotate-90 data-[state=open]:rotate-90`}
                     >
                       <HugeiconsIcon
                         className="rtl:rotate-180"

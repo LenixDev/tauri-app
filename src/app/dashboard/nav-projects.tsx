@@ -25,6 +25,7 @@ import {
 } from "@hugeicons/core-free-icons"
 import { Link } from "react-router"
 import { t } from "i18next"
+import { useDir } from "@/hooks/use-dir.ts";
 
 export const NavProjects = ({
   projects,
@@ -36,7 +37,7 @@ export const NavProjects = ({
   }[]
 }) => {
   const { isMobile } = useSidebar()
-
+  const dir = useDir()
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>{t("nav.projects.title")}</SidebarGroupLabel>
@@ -49,7 +50,7 @@ export const NavProjects = ({
                 <span>{item.name}</span>
               </Link>
             </SidebarMenuButton>
-            <DropdownMenu>
+            <DropdownMenu dir={dir}>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuAction
                   showOnHover
@@ -64,7 +65,7 @@ export const NavProjects = ({
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-48"
-                side={isMobile ? "bottom" : "right"}
+                side={isMobile || dir === "rtl" ? "bottom" : "right"}
                 align={isMobile ? "end" : "start"}
               >
                 <DropdownMenuItem>

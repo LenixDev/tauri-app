@@ -84,7 +84,7 @@ function BreadcrumbSeparator({
       {...props}
     >
       {children ?? (
-        <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={2} className="rtl:rotate-180" />
+        <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={2} />
       )}
     </li>
   )

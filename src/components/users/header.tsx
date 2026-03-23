@@ -10,9 +10,11 @@ import { Settings } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import { CreateUser } from "@/components/signup"
 import type { Table } from "@tanstack/react-table"
+import { useDir } from "@/hooks/use-dir.ts";
 
 export const Header = <TData,>({ table }: { readonly table: Table<TData> }) => {
   const { t } = useTranslation()
+  const dir = useDir()
 
   return (
     <div className="flex items-center justify-between gap-2">
@@ -43,6 +45,7 @@ export const Header = <TData,>({ table }: { readonly table: Table<TData> }) => {
                 (column): React.ReactNode =>
                   column.id !== "identifier" && (
                     <DropdownMenuCheckboxItem
+                      dir={dir}
                       key={column.id}
                       className="capitalize"
                       checked={column.getIsVisible()}
