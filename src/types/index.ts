@@ -35,7 +35,10 @@ export type Response<T = unknown, F = string, U = string> = Promise<
 export type IDirectionProvider = React.ComponentProps<
   typeof Direction.DirectionProvider
 >
-export type UserAccount = edge.UserAccount<Role, Translations["roles_alias"][Role][]>
+export type UserAccount = edge.UserAccount<
+  Role,
+  Translations["roles_alias"][Role][]
+>
 export type Events = edge.Events
 export type CreateUser = edge.CreateUser<Role>
 export type DeleteUser = edge.DeleteUser

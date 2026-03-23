@@ -2,6 +2,7 @@ import type { RolesAlias, Translation } from "@/types"
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 
+const supportedLngs = ["en", "ar"] as const
 const english = await import("./en.json").then((file) => file.default)
 const arabic = await import("./ar.json").then((file) => file.default)
 
@@ -24,8 +25,9 @@ const detect = (obj: Readonly<Translation>) => {
 
 await i18n.use(initReactI18next).init(
   {
-    fallbackLng: "en",
-    lng: "en",
+    fallbackLng: "en" satisfies typeof supportedLngs[number],
+    lng: navigator.language === "ar" ? "ar" : "en",
+    supportedLngs,
     resources: {
       ar: { translation: arabic satisfies typeof english & RolesAlias },
       en: { translation: english satisfies typeof arabic & RolesAlias },

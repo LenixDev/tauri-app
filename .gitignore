@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 
 _database.ts
+.env
