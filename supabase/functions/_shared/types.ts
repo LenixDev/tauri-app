@@ -1,19 +1,11 @@
 import type { Database } from './_database.ts'
+import type { edge } from 'lenix'
 
 export type Role = Database['public']['Tables']['users']['Row']['role']
 export type Permission = Database["public"]["Enums"]["user_permissions"]
-export type Events = "users-management"
 export type RealtimeRegisteration = [true] | [false, Response]
-export interface CreateUser {
-  identifier: string
-  role: Role
-  password: string
-}
-export interface UserAccount {
-  id: string
-  identifier: string
-  role: Role
-}
-export interface DeleteUser {
-  identifier: string
-}
+
+export type UserAccount = edge.UserAccount<Role>
+export type Events = edge.Events
+export type CreateUser = edge.CreateUser<Role>
+export type DeleteUser = edge.DeleteUser

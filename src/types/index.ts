@@ -2,6 +2,7 @@ import type { User } from "@/lib/user"
 import type { Database } from "./_database"
 import type { Direction } from "radix-ui"
 import type { Translations } from "@/locales"
+import type { edge } from "lenix"
 
 export type Role = Database["public"]["Tables"]["users"]["Row"]["role"]
 export type Permission = Database["public"]["Enums"]["user_permissions"]
@@ -34,23 +35,10 @@ export type Response<T = unknown, F = string, U = string> = Promise<
 export type IDirectionProvider = React.ComponentProps<
   typeof Direction.DirectionProvider
 >
-export interface UserAccount {
-  identifier: string
-  role: "manager" | "student"
-  roleLabel: Translations["roles_alias"][Role]
-}
-
-export type Events = "users-management"
-
-export interface CreateUser {
-  identifier: string
-  role: Role
-  password: string
-}
-
-export interface DeleteUser {
-  identifier: string
-}
+export type UserAccount = edge.UserAccount<Role, Translations["roles_alias"][Role][]>
+export type Events = edge.Events
+export type CreateUser = edge.CreateUser<Role>
+export type DeleteUser = edge.DeleteUser
 
 // eslint-disable-next-line no-unused-vars
 export type OnChange = (key: string, value: string) => void
