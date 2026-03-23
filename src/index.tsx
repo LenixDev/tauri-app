@@ -11,8 +11,6 @@ import "@/locales"
 import { DirectionProvider } from "./components/ui/direction"
 import { ROUTES } from "./lib/routes"
 
-const Dashboard = ROUTES["/"].element
-
 const root = () => {
   const element = document.getElementById("root")
   if (!element) throw new Error("Root element not found")
@@ -27,6 +25,8 @@ window
   .addEventListener("change", (event) => {
     document.documentElement.classList.toggle("dark", event.matches)
   })
+
+const Dashboard = ROUTES["/"].element
 
 ReactDOM.createRoot(root()).render(
   <React.StrictMode>

@@ -8,6 +8,7 @@
   "roles": "الأدوار",
   "role": "الدور",
   "actions": "الإجراءات",
+  "RoleLabel": "الدور",
   "type": "نوع",
   "roles_alias": {
     "manager": "مدير",

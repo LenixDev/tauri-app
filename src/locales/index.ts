@@ -25,7 +25,7 @@ const detect = (obj: Readonly<Translation>) => {
 
 await i18n.use(initReactI18next).init(
   {
-    fallbackLng: "en" satisfies typeof supportedLngs[number],
+    fallbackLng: "en" satisfies (typeof supportedLngs)[number],
     lng: navigator.language === "ar" ? "ar" : "en",
     supportedLngs,
     resources: {
